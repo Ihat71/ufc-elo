@@ -4,7 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import sqlite3 as sq
 import pandas as pd
-from my_app.scraper import get_ufc_fighters, get_fighter_records
+from my_app.scraper import get_ufc_fighters, get_fighter_records, get_advanced_stats
 import logging
 
 logging.basicConfig(
@@ -49,6 +49,21 @@ def db_tables_setup():
                        foreign key (fighter_2) references fighters(fighter_id)
                        );
                 """)
+        cursor.execute("""CREATE TABLE if not exists advanced_stats(
+                       fighter_id integer,
+                       url varchar(100),
+                       SLpM float,
+                       str_acc varchar(100),
+                       SApM float,
+                       str_def varchar(100),
+                       td_avg float,
+                       td_acc varchar(100),
+                       td_def varchar(100),
+                       sub_avg float,
+                       foreign key (fighter_id) references fighters(fighter_id)                    
+                       );""")
+                    
+                
         conn.commit()
 def fighters_table_setup():
     fighters = get_ufc_fighters()
@@ -85,8 +100,8 @@ def records_table_setup():
             method = record['method']
             round_ended = int(record['round']) if record['round'].isdigit() else None
             time = record['time']
-            id_1 = cursor.execute('SELECT id FROM fighters WHERE name = ?', (fighter_1_name,)).fetchone()
-            id_2 = cursor.execute('SELECT id FROM fighters WHERE name = ?', (fighter_2_name,)).fetchone()
+            id_1 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_1_name,)).fetchone()
+            id_2 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_2_name,)).fetchone()
 
             if not id_1 or not id_2:
                 logging.warning(f"Could not find id of both fighters: {fighter_1_name}, {fighter_2_name}")
@@ -100,15 +115,36 @@ def records_table_setup():
 
         conn.commit()
 
+def advanced_table_setup():
+    advanced_fighters = get_advanced_stats()
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+        for advanced_fighter in advanced_fighters:
+            url = advanced_fighter['url']
+            fighter_id = cursor.execute('select fighter_id from fighters where url = ?', (url,)).fetchone()
+            slpm = advanced_fighter.get('slpm')
+            str_acc = advanced_fighter.get('str_acc')
+            sapm = advanced_fighter.get('sapm')
+            str_def = advanced_fighter.get('str_def')
+            td_avg = advanced_fighter.get('td_avg')
+            td_acc = advanced_fighter.get('td_acc')
+            td_def = advanced_fighter.get('td_def')
+            sub_avg = advanced_fighter.get('sub_avg')
 
+            cursor.execute("""insert into advanced_stats (url, fighter_id, SLpM, str_acc, SApM, 
+                        str_def, td_avg, td_acc, td_def, sub_avg) values (?,?,?,?,?,?,?,?,?,?)""", 
+                        (url, fighter_id[0], slpm, str_acc, sapm, 
+                        str_def, td_avg, td_acc, td_def, sub_avg))
+        conn.commit()
 
 
 
 
 def main():
-    db_tables_setup()
-    fighters_table_setup()
-    records_table_setup()
+    #db_tables_setup()
+    #fighters_table_setup()
+    #records_table_setup()
+    advanced_table_setup()
 
 
 if __name__ == "__main__":

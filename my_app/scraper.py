@@ -135,15 +135,38 @@ def get_fighter_records():
     return fighters_records
         
 
+def get_advanced_stats():
+    advanced_fighters = []
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+        url = cursor.execute("select url from fighters;").fetchall()
 
+    session = requests.Session()
+    for fighter_url in url:
+        advanced_fighter = {}
+        try:
+            page = session.get(fighter_url[0])
+            page.raise_for_status()
+            logging.info(f"Fetched {fighter_url[0]} successfuly")
+        except Exception:
+            logging.warning(f"Warning: could not connect to {fighter_url[0]}")
+            continue
+        if page.status_code == 200:
+            soup = BeautifulSoup(page.text, 'html.parser')
+            left_stats_div = soup.find('div', class_='b-list__info-box-left')
+            right_stats_div = soup.find('div', class_='b-list__info-box_style-margin-right')
 
+            left_stats = left_stats_div.find_all('li')
+            right_stats = right_stats_div.find_all('li')
 
+            advanced_fighter['url'] = fighter_url[0]
+            for i in left_stats:
+                tag = i.find('i').text.strip()
+                advanced_fighter[tag.replace(":", "").replace(".", "").replace(" ", "_").lower()] = i.text.strip().replace(tag, "")
+            for j in right_stats:
+                tag = j.find('i').text.strip()
+                advanced_fighter[tag.replace(":", "").replace(".", "").replace(" ", "_").lower()] = j.text.strip().replace(tag, "")              
+            advanced_fighters.append(advanced_fighter)
+           
 
-
-
-
-
-                
-
-
-
+    return advanced_fighters

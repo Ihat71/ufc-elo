@@ -4,7 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import sqlite3 as sq
 import pandas as pd
-from my_app.scraper import get_ufc_fighters, get_fighter_records, get_advanced_stats
+from my_app.scraper import get_ufc_fighters, get_events, get_fighter_records, get_advanced_stats
 import logging
 
 logging.basicConfig(
@@ -38,17 +38,21 @@ def db_tables_setup():
         # the "url" column is the url of the fighter's record page
         cursor.execute("""CREATE TABLE if not exists records(
                        url varchar(100),
+                       event_id integer,
+                       date varchar(100),
                        fight_id integer primary key,
                        fighter_1 integer,
                        fighter_2 integer,
-                       w_l varcahr(100),
+                       result varchar(100),
                        method varchar(100),
                        round_num integer,
                        fight_time varchar(100),
-                       foreign key (fighter_1) references fighters(fighter_id)
-                       foreign key (fighter_2) references fighters(fighter_id)
+                       foreign key (fighter_1) references fighters(fighter_id),
+                       foreign key (fighter_2) references fighters(fighter_id),
+                       foreign key (event_id) references events(event_id)
                        );
                 """)
+        
         cursor.execute("""CREATE TABLE if not exists advanced_stats(
                        fighter_id integer,
                        url varchar(100),
@@ -62,7 +66,13 @@ def db_tables_setup():
                        sub_avg float,
                        foreign key (fighter_id) references fighters(fighter_id)                    
                        );""")
-                    
+        
+        cursor.execute("""CREATE TABLE if not exists events(
+                       event_id integer primary key,
+                       event_name varchar(100),
+                       event_date varchar(100),
+                       event_location varchar(100)         
+                       );""")
                 
         conn.commit()
 def fighters_table_setup():
@@ -71,10 +81,10 @@ def fighters_table_setup():
     with sq.connect(db_path) as conn:
         cursor = conn.cursor()
         for fighter in fighters:
-            name = fighter["first_name"] + " " + fighter["last_name"]
+            name = (fighter["first_name"] + " " + fighter["last_name"]).strip()
             height = fighter["height"]
             weight = fighter["weight"]        
-            reach = fighter["reach"].replace(r'""', '')
+            reach = fighter["reach"].replace("''", "")
             stance = fighter["stance"]
             wins = fighter["wins"]
             losses = fighter["losses"]
@@ -88,6 +98,19 @@ def fighters_table_setup():
                                                 , losses, draws, belt, url))
         conn.commit()
 
+
+def events_table_setup():
+    events = get_events()
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+        for event in events:
+            name = event['event_name']
+            date = event['event_date']
+            location = event['event_location']
+            cursor.execute('insert into events (event_name, event_date, event_location) values (?, ?, ?)', (name, date, location))
+        conn.commit()
+
+
 def records_table_setup():
     records = get_fighter_records()
     with sq.connect(db_path) as conn:
@@ -95,23 +118,30 @@ def records_table_setup():
         for record in records:
             win_loss = record['win_loss']
             url = record['url']
-            fighter_1_name= record['fighter_1']
+            fighter_1_name = record['fighter_1']
             fighter_2_name  = record['fighter_2']
+            event = record['event']
+            date = record['event_date']
             method = record['method']
             round_ended = int(record['round']) if record['round'].isdigit() else None
             time = record['time']
-            id_1 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_1_name,)).fetchone()
-            id_2 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_2_name,)).fetchone()
+            id_1 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_1_name.strip(),)).fetchone()
+            id_2 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_2_name.strip(),)).fetchone()
 
             if not id_1 or not id_2:
                 logging.warning(f"Could not find id of both fighters: {fighter_1_name}, {fighter_2_name}")
                 continue
 
+            event_id_row = cursor.execute('select event_id from events where event_name = ?', (event,)).fetchone()
+            event_id = event_id_row[0] if event_id_row else None
+            
             fighter_1_id, fighter_2_id = id_1[0], id_2[0]
             try:
-                cursor.execute('insert into records (url, fighter_1, fighter_2, w_l, method, round_num, fight_time) values (?, ?, ?, ?, ?, ?, ?)', (url, fighter_1_id, fighter_2_id, win_loss, method, round_ended, time))
+                cursor.execute('insert into records (url, event_id, date, fighter_1, fighter_2, result, method, round_num, fight_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', (url, event_id, date, fighter_1_id, fighter_2_id, win_loss, method, round_ended, time))
+                logging.info(f"Successfully inserted into the records table the url: f{url}, ids: {fighter_1_id} vs {fighter_2_id}")
             except Exception:
                 logging.error(f"failed to insert record for url: {url}, {fighter_1_name} vs {fighter_2_name}")
+            
 
         conn.commit()
 
@@ -130,21 +160,28 @@ def advanced_table_setup():
             td_acc = advanced_fighter.get('td_acc')
             td_def = advanced_fighter.get('td_def')
             sub_avg = advanced_fighter.get('sub_avg')
-
-            cursor.execute("""insert into advanced_stats (url, fighter_id, SLpM, str_acc, SApM, 
+            try:
+                cursor.execute("""insert into advanced_stats (url, fighter_id, SLpM, str_acc, SApM, 
                         str_def, td_avg, td_acc, td_def, sub_avg) values (?,?,?,?,?,?,?,?,?,?)""", 
                         (url, fighter_id[0], slpm, str_acc, sapm, 
                         str_def, td_avg, td_acc, td_def, sub_avg))
+                logging.info(f"Successfully inserted into the advanced_stats table the url: f{url}, id: {fighter_id[0]}")
+            except Exception:
+                logging.error(f"Failed to insert into advanced_stats table the url: f{url}, id: {fighter_id[0]}")
+            
+            
         conn.commit()
 
 
 
 
 def main():
-    #db_tables_setup()
-    #fighters_table_setup()
-    #records_table_setup()
-    advanced_table_setup()
+    db_tables_setup()
+    # fighters_table_setup()
+    # events_table_setup()
+    # records_table_setup()
+    # advanced_table_setup()
+    
 
 
 if __name__ == "__main__":

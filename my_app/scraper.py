@@ -52,7 +52,7 @@ def get_ufc_fighters():
                     try:
                         fighters[field] = td[index].find("a").text.strip()
                     except:
-                        fighters[field] = "--"
+                        fighters[field] = ""
 
                 fighters["height"] = td[3].text.strip()
                 fighters["weight"] = td[4].text.strip()
@@ -65,7 +65,7 @@ def get_ufc_fighters():
                 belt = td[10]
                 
                 for field in ["height", "weight", "reach", "stance"]:
-                    if fighters[field] == "--":
+                    if fighters[field] == "--" or fighters[field] == "''":
                         fighters[field] = "Unknown"
 
                 #if there is an image tag then that means the fighter is a champion
@@ -79,6 +79,34 @@ def get_ufc_fighters():
     #[{first_name, last_name, nick_name, height, weight, reach, stance, wins, losses, draws, belt, url}, ...]
     return fighters_list
 
+def get_events():
+    all_events = []
+    url = "http://ufcstats.com/statistics/events/completed?page=all"
+  
+
+    session = requests.Session()
+
+    page = session.get(url)
+    if page.status_code == 200:
+        logging.info("Successfully fethed event data! ")
+        soup = BeautifulSoup(page.text, "html.parser")
+        tbody = soup.find('tbody')
+        tr_list = tbody.find_all('tr')
+        for x, tr in enumerate(tr_list):
+            event_data = {}
+            if x == 0:
+                continue
+            elif tr.find('img'):
+                continue
+            td_list = tr.find_all('td')
+            event_data['event_name'] = td_list[0].find('a').text.strip()
+            event_data['event_date'] = td_list[0].find('span').text.strip()
+            event_data['event_location'] = td_list[1].text.strip()
+            all_events.append(event_data)
+
+    return all_events
+    
+        
 def get_fighter_records():
     fighters_records = []
     with sq.connect(db_path) as conn:
@@ -89,48 +117,49 @@ def get_fighter_records():
         try:
             page = session.get(i[0])
             page.raise_for_status()
-            logging.info(f"Fetched {i[0]} successfuly")
+            logging.info(f"Fetched (Records) {i[0]} successfuly")
         except Exception:
-            logging.warning(f"Warning: could not connect to {i[0]}")
+            logging.warning(f"Warning (Records): could not connect to {i[0]}")
             continue
-        if page.status_code == 200:
-            soup = BeautifulSoup(page.text, 'html.parser')
-            tbody = soup.find('tbody')
-            tr_list = tbody.find_all('tr')
+        soup = BeautifulSoup(page.text, 'html.parser')
+        tbody = soup.find('tbody')
+        tr_list = tbody.find_all('tr')
             
-            for x, tr in enumerate(tr_list):
-                fighter = {}
-                if x == 0:
-                    continue
+        for x, tr in enumerate(tr_list):
+            fighter = {}
+            if x == 0:
+                continue
 
-                td_list = tr.find_all('td')
-                win_loss = td_list[0].find_all('i')
+            td_list = tr.find_all('td')
+            win_loss = td_list[0].find_all('i')
     
-                for tag in win_loss:
-                    i_tag = "--"
-                    if tag.text.strip() in ['win', 'loss', 'nc', 'draw', 'next']:
-                        #I named it i_tag because in the website the information is inside <i>
-                        i_tag = tag.text.strip()
-                        break
+            for tag in win_loss:
+                i_tag = "--"
+                if tag.text.strip() in ['win', 'loss', 'nc', 'draw', 'next']:
+                    #I named it i_tag because in the website the information is inside <i>
+                    i_tag = tag.text.strip()
+                    break
                     
-                if i_tag == 'next':
-                    continue
-                fighter['url'] = i[0]
-                fighter['win_loss'] = i_tag
-                opponents = td_list[1].find_all('p')
-                fighter['fighter_1'] = opponents[0].text.strip()
-                fighter['fighter_2'] = opponents[1].text.strip()
-                method = td_list[7].find('p')
-                fighter['method'] = method.text.strip()
-                round_ended = td_list[8].find('p')
-                fighter['round'] = round_ended.text.strip()
-                time_ended = td_list[9].find('p')
-                fighter['time'] = time_ended.text.strip()
+            if i_tag == 'next':
+                continue
+            fighter['url'] = i[0]
+            fighter['win_loss'] = i_tag
+            opponents = td_list[1].find_all('p')
+            fighter['fighter_1'] = opponents[0].text.strip()
+            fighter['fighter_2'] = opponents[1].text.strip()
+            fighter['event'] = td_list[6].find('a').text.strip()
+            fighter['event_date'] = (td_list[6].find_all('p'))[1].text.strip()
+            method = td_list[7].find('p')
+            fighter['method'] = method.text.strip()
+            round_ended = td_list[8].find('p')
+            fighter['round'] = round_ended.text.strip()
+            time_ended = td_list[9].find('p')
+            fighter['time'] = time_ended.text.strip()
                 
-                fighters_records.append(fighter)
+            fighters_records.append(fighter)
             #time.sleep(random.uniform(1, 3))
-        else:
-            continue
+        
+        
 
     return fighters_records
         
@@ -147,26 +176,27 @@ def get_advanced_stats():
         try:
             page = session.get(fighter_url[0])
             page.raise_for_status()
-            logging.info(f"Fetched {fighter_url[0]} successfuly")
+            logging.info(f"Fetched (Advanced_stats) {fighter_url[0]} successfuly")
         except Exception:
-            logging.warning(f"Warning: could not connect to {fighter_url[0]}")
+            logging.warning(f"Warning (Adcanced_stats): could not connect to {fighter_url[0]}")
             continue
-        if page.status_code == 200:
-            soup = BeautifulSoup(page.text, 'html.parser')
-            left_stats_div = soup.find('div', class_='b-list__info-box-left')
-            right_stats_div = soup.find('div', class_='b-list__info-box_style-margin-right')
+   
+        soup = BeautifulSoup(page.text, 'html.parser')
+        left_stats_div = soup.find('div', class_='b-list__info-box-left')
+        right_stats_div = soup.find('div', class_='b-list__info-box_style-margin-right')
 
-            left_stats = left_stats_div.find_all('li')
-            right_stats = right_stats_div.find_all('li')
+        left_stats = left_stats_div.find_all('li')
+        right_stats = right_stats_div.find_all('li')
 
-            advanced_fighter['url'] = fighter_url[0]
-            for i in left_stats:
-                tag = i.find('i').text.strip()
-                advanced_fighter[tag.replace(":", "").replace(".", "").replace(" ", "_").lower()] = i.text.strip().replace(tag, "")
-            for j in right_stats:
-                tag = j.find('i').text.strip()
-                advanced_fighter[tag.replace(":", "").replace(".", "").replace(" ", "_").lower()] = j.text.strip().replace(tag, "")              
-            advanced_fighters.append(advanced_fighter)
+        advanced_fighter['url'] = fighter_url[0]
+        for i in left_stats:
+            tag = i.find('i').text.strip()
+            advanced_fighter[tag.replace(":", "").replace(".", "").replace(" ", "_").lower()] = i.text.strip().replace(tag, "")
+        for j in right_stats:
+            tag = j.find('i').text.strip()
+            advanced_fighter[tag.replace(":", "").replace(".", "").replace(" ", "_").lower()] = j.text.strip().replace(tag, "")              
+        advanced_fighters.append(advanced_fighter)
+        
            
 
     return advanced_fighters

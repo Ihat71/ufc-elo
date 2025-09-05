@@ -1,0 +1,500 @@
+2025-09-05 21:56:07,455 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/93fe7332d16c6ad9 successfuly
+2025-09-05 21:56:07,455 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/4961467134abd8be successfuly
+2025-09-05 21:56:07,455 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/15df64c02b6b0fde successfuly
+2025-09-05 21:56:07,455 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/59a9d6dac61c2540 successfuly
+2025-09-05 21:56:07,463 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/b361180739bed4b0 successfuly
+2025-09-05 21:56:07,602 [ERROR] Error processing http://ufcstats.com/fighter-details/4961467134abd8be: local variable 'e' referenced before assignment
+2025-09-05 21:56:07,602 [ERROR] Error processing http://ufcstats.com/fighter-details/59a9d6dac61c2540: local variable 'e' referenced before assignment
+2025-09-05 21:56:07,603 [ERROR] Error processing http://ufcstats.com/fighter-details/b361180739bed4b0: local variable 'e' referenced before assignment
+2025-09-05 21:56:08,247 [INFO] successfully got the event url and weight class Lightweight of the fight of Danny Abbadi vs Jorge Gurgel winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date September 23, 2006
+2025-09-05 21:56:08,250 [INFO] successfully got the event url and weight class None of the fight of Tom Aaron vs Matt Ricehouse winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date December 04, 2010
+2025-09-05 21:56:08,256 [ERROR] Error processing http://ufcstats.com/fighter-details/93fe7332d16c6ad9: local variable 'e' referenced before assignment
+2025-09-05 21:56:08,571 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/3329d692aea4dc28 successfuly
+2025-09-05 21:56:08,571 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/841695e02c99a521 successfuly
+2025-09-05 21:56:08,571 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/2f5cbecbbe18bac4 successfuly
+2025-09-05 21:56:08,720 [INFO] successfully got the event url and weight class Middleweight of the fight of Danny Abbadi vs Kalib Starnes winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 1 | 2:56 ), in event date June 24, 2006
+2025-09-05 21:56:09,037 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/c0ed7b208197e8de successfuly
+2025-09-05 21:56:09,076 [ERROR] Error processing http://ufcstats.com/fighter-details/c0ed7b208197e8de: local variable 'e' referenced before assignment
+2025-09-05 21:56:09,216 [INFO] successfully got the event url and weight class Heavyweight of the fight of Hamdy Abdelwahab vs Mohammed Usman winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date June 21, 2025
+2025-09-05 21:56:09,306 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/5140122c3eecd307 successfuly
+2025-09-05 21:56:09,332 [INFO] successfully got the event url and weight class Middleweight of the fight of Mansur Abdul-Malik vs Cody Brundage winner: draw, method: Overturned, round and time ended: ( 3 | 0:36 ), in event date June 14, 2025
+2025-09-05 21:56:09,481 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Jailton Almeida winner: loss, method: KO/TKO (Punches), round and time ended: ( 2 | 2:56 ), in event date January 21, 2023
+2025-09-05 21:56:09,555 [INFO] successfully got the event url and weight class Heavyweight of the fight of Hamdy Abdelwahab vs Jamal Pogues winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date February 01, 2025
+2025-09-05 21:56:09,610 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/c9f6385af6df66d7 successfuly
+2025-09-05 21:56:10,314 [INFO] successfully got the event url and weight class Welterweight of the fight of Daichi Abe vs Li Jingliang winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date June 23, 2018
+2025-09-05 21:56:10,448 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Sergei Pavlovich winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 4:03 ), in event date March 19, 2022
+2025-09-05 21:56:10,496 [INFO] successfully got the event url and weight class Middleweight of the fight of Mansur Abdul-Malik vs Nick Klein winner: win, method: KO/TKO (Punches), round and time ended: ( 2 | 3:24 ), in event date February 22, 2025
+2025-09-05 21:56:10,518 [INFO] successfully got the event url and weight class Middleweight of the fight of Papy Abedi vs Dylan Andrews winner: loss, method: KO/TKO (Punch), round and time ended: ( 3 | 1:32 ), in event date August 28, 2013
+2025-09-05 21:56:10,539 [INFO] successfully got the event url and weight class Heavyweight of the fight of Hamdy Abdelwahab vs Don'Tale Mayes winner: nc, method: Overturned, round and time ended: ( 3 | 5:00 ), in event date July 30, 2022
+2025-09-05 21:56:11,011 [INFO] successfully got the event url and weight class Middleweight of the fight of Mansur Abdul-Malik vs Dusko Todorovic winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 2:44 ), in event date November 09, 2024
+2025-09-05 21:56:11,077 [ERROR] Error processing http://ufcstats.com/fighter-details/841695e02c99a521: local variable 'e' referenced before assignment
+2025-09-05 21:56:11,134 [INFO] successfully got the event url and weight class Welterweight of the fight of Daichi Abe vs Luke Jumeau winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date February 10, 2018
+2025-09-05 21:56:11,284 [INFO] successfully got the event url and weight class Welterweight of the fight of Papy Abedi vs Besam Yousef winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date April 06, 2013
+2025-09-05 21:56:11,288 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Chris Daukaus winner: loss, method: KO/TKO (Punch), round and time ended: ( 2 | 1:23 ), in event date September 25, 2021
+2025-09-05 21:56:11,319 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/aa6e591c2a2cdecd successfuly
+2025-09-05 21:56:11,560 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Curtis Blaydes winner: loss, method: KO/TKO (Elbow), round and time ended: ( 2 | 2:22 ), in event date September 07, 2019
+2025-09-05 21:56:11,641 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7279654c7674cd24
+2025-09-05 21:56:11,642 [ERROR] Error processing http://ufcstats.com/fighter-details/7279654c7674cd24: 'NoneType' object is not iterable
+2025-09-05 21:56:11,756 [INFO] successfully got the event url and weight class Welterweight of the fight of Papy Abedi vs James Head winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 1 | 4:33 ), in event date April 14, 2012
+2025-09-05 21:56:11,803 [INFO] successfully got the event url and weight class Middleweight of the fight of Ricardo Abreu vs Jake Collier winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date June 06, 2015
+2025-09-05 21:56:11,813 [INFO] successfully got the event url and weight class Welterweight of the fight of Daichi Abe vs Hyun Gyu Lim winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date September 22, 2017
+2025-09-05 21:56:12,004 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Marcin Tybura winner: win, method: KO/TKO (Punches), round and time ended: ( 2 | 3:15 ), in event date April 20, 2019
+2025-09-05 21:56:12,228 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1c5879330d42255f
+2025-09-05 21:56:12,230 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/f689bd7bbd14b392 successfuly
+2025-09-05 21:56:12,249 [ERROR] Error processing http://ufcstats.com/fighter-details/1c5879330d42255f: 'NoneType' object is not iterable
+2025-09-05 21:56:12,386 [INFO] successfully got the event url and weight class Welterweight of the fight of Papy Abedi vs Thiago Alves winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 1 | 3:32 ), in event date November 05, 2011
+2025-09-05 21:56:12,411 [INFO] successfully got the event url and weight class Middleweight of the fight of Ricardo Abreu vs Wagner Silva winner: win, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 1:06 ), in event date May 31, 2014
+2025-09-05 21:56:12,764 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Andrei Arlovski winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date September 15, 2018
+2025-09-05 21:56:13,215 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/989b85f6540c86b1 successfuly
+2025-09-05 21:56:13,216 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/83b00f7597e5ac83
+2025-09-05 21:56:13,216 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/2620f3eb21c79614 successfuly
+2025-09-05 21:56:13,216 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/a77633a989013265 successfuly
+2025-09-05 21:56:13,319 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Chase Sherman winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 1:24 ), in event date November 25, 2017
+2025-09-05 21:56:13,319 [ERROR] Error processing http://ufcstats.com/fighter-details/83b00f7597e5ac83: 'NoneType' object is not iterable
+2025-09-05 21:56:13,482 [ERROR] Error processing http://ufcstats.com/fighter-details/989b85f6540c86b1: local variable 'e' referenced before assignment
+2025-09-05 21:56:13,483 [ERROR] Error processing http://ufcstats.com/fighter-details/a77633a989013265: local variable 'e' referenced before assignment
+2025-09-05 21:56:13,772 [INFO] successfully got the event url and weight class Heavyweight of the fight of Scott Adams vs Ian Freeman winner: win, method: SUB (Heel Hook), round and time ended: ( 1 | 3:09 ), in event date March 10, 2000
+2025-09-05 21:56:13,880 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/0e9869d712e81f8f
+2025-09-05 21:56:13,881 [ERROR] Error processing http://ufcstats.com/fighter-details/0e9869d712e81f8f: 'NoneType' object is not iterable
+2025-09-05 21:56:13,886 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1338e2c7480bdf9e
+2025-09-05 21:56:13,886 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/79cb2a690b9ba5e8
+2025-09-05 21:56:13,887 [ERROR] Error processing http://ufcstats.com/fighter-details/1338e2c7480bdf9e: 'NoneType' object is not iterable
+2025-09-05 21:56:13,887 [ERROR] Error processing http://ufcstats.com/fighter-details/79cb2a690b9ba5e8: 'NoneType' object is not iterable
+2025-09-05 21:56:14,001 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Derrick Lewis winner: loss, method: KO/TKO (Punches), round and time ended: ( 4 | 3:42 ), in event date December 09, 2016
+2025-09-05 21:56:14,240 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/ebc5af72ad5a28cb
+2025-09-05 21:56:14,242 [ERROR] Error processing http://ufcstats.com/fighter-details/ebc5af72ad5a28cb: 'NoneType' object is not iterable
+2025-09-05 21:56:14,249 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/a08ddd04eaffd81d
+2025-09-05 21:56:14,251 [ERROR] Error processing http://ufcstats.com/fighter-details/a08ddd04eaffd81d: 'NoneType' object is not iterable
+2025-09-05 21:56:14,258 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/26f4288e83188c61
+2025-09-05 21:56:14,261 [ERROR] Error processing http://ufcstats.com/fighter-details/26f4288e83188c61: 'NoneType' object is not iterable
+2025-09-05 21:56:14,278 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/7a846fcbf182a7c8 successfuly
+2025-09-05 21:56:14,324 [ERROR] Error processing http://ufcstats.com/fighter-details/7a846fcbf182a7c8: local variable 'e' referenced before assignment
+2025-09-05 21:56:14,557 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Walt Harris winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date October 01, 2016
+2025-09-05 21:56:14,611 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/44aa652b181bcf68
+2025-09-05 21:56:14,612 [ERROR] Error processing http://ufcstats.com/fighter-details/44aa652b181bcf68: 'NoneType' object is not iterable
+2025-09-05 21:56:14,614 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/501821d7fb7b95c1
+2025-09-05 21:56:14,621 [ERROR] Error processing http://ufcstats.com/fighter-details/501821d7fb7b95c1: 'NoneType' object is not iterable
+2025-09-05 21:56:14,622 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6cadc0a0ba7dc015
+2025-09-05 21:56:14,624 [ERROR] Error processing http://ufcstats.com/fighter-details/6cadc0a0ba7dc015: 'NoneType' object is not iterable
+2025-09-05 21:56:14,685 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/8f382b3baa954d2a
+2025-09-05 21:56:14,687 [ERROR] Error processing http://ufcstats.com/fighter-details/8f382b3baa954d2a: 'NoneType' object is not iterable
+2025-09-05 21:56:15,085 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/cf946e03ba2e7666
+2025-09-05 21:56:15,119 [ERROR] Error processing http://ufcstats.com/fighter-details/cf946e03ba2e7666: 'NoneType' object is not iterable
+2025-09-05 21:56:15,147 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/ae071698e1a3ccd4
+2025-09-05 21:56:15,150 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c051c2e12d692b8a
+2025-09-05 21:56:15,150 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/0978385b2bd9ef9b
+2025-09-05 21:56:15,178 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Anthony Hamilton winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date February 21, 2016
+2025-09-05 21:56:15,187 [ERROR] Error processing http://ufcstats.com/fighter-details/ae071698e1a3ccd4: 'NoneType' object is not iterable
+2025-09-05 21:56:15,192 [ERROR] Error processing http://ufcstats.com/fighter-details/c051c2e12d692b8a: 'NoneType' object is not iterable
+2025-09-05 21:56:15,192 [ERROR] Error processing http://ufcstats.com/fighter-details/0978385b2bd9ef9b: 'NoneType' object is not iterable
+2025-09-05 21:56:15,599 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/b2efa582adf73604
+2025-09-05 21:56:15,600 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/49dea784f6cfed71
+2025-09-05 21:56:15,601 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/9e3dbb9c68ed5d1a
+2025-09-05 21:56:15,601 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/ff584c17bccbae0b
+2025-09-05 21:56:15,602 [ERROR] Error processing http://ufcstats.com/fighter-details/b2efa582adf73604: 'NoneType' object is not iterable
+2025-09-05 21:56:15,605 [ERROR] Error processing http://ufcstats.com/fighter-details/49dea784f6cfed71: 'NoneType' object is not iterable
+2025-09-05 21:56:15,606 [ERROR] Error processing http://ufcstats.com/fighter-details/9e3dbb9c68ed5d1a: 'NoneType' object is not iterable
+2025-09-05 21:56:15,606 [ERROR] Error processing http://ufcstats.com/fighter-details/ff584c17bccbae0b: 'NoneType' object is not iterable
+2025-09-05 21:56:15,682 [INFO] successfully got the event url and weight class Heavyweight of the fight of Shamil Abdurakhimov vs Timothy Johnson winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 4:57 ), in event date April 04, 2015
+2025-09-05 21:56:15,971 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/b0550072e5f0afa7
+2025-09-05 21:56:15,971 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1fc64507a0cb38cf
+2025-09-05 21:56:15,973 [ERROR] Error processing http://ufcstats.com/fighter-details/b0550072e5f0afa7: 'NoneType' object is not iterable
+2025-09-05 21:56:15,974 [ERROR] Error processing http://ufcstats.com/fighter-details/1fc64507a0cb38cf: 'NoneType' object is not iterable
+2025-09-05 21:56:15,980 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/16690d100f995f8f
+2025-09-05 21:56:15,985 [ERROR] Error processing http://ufcstats.com/fighter-details/16690d100f995f8f: 'NoneType' object is not iterable
+2025-09-05 21:56:16,039 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/38b50fd1e1b5b656
+2025-09-05 21:56:16,040 [ERROR] Error processing http://ufcstats.com/fighter-details/38b50fd1e1b5b656: 'NoneType' object is not iterable
+2025-09-05 21:56:16,109 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/2eada40ac8801559 successfuly
+2025-09-05 21:56:16,162 [ERROR] Error processing http://ufcstats.com/fighter-details/2eada40ac8801559: local variable 'e' referenced before assignment
+2025-09-05 21:56:16,423 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1cf1310684a841f5
+2025-09-05 21:56:16,425 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/2144954270be834d
+2025-09-05 21:56:16,426 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/597499ac7a5aac62
+2025-09-05 21:56:16,427 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7578cc6bd750206b
+2025-09-05 21:56:16,428 [ERROR] Error processing http://ufcstats.com/fighter-details/1cf1310684a841f5: 'NoneType' object is not iterable
+2025-09-05 21:56:16,428 [ERROR] Error processing http://ufcstats.com/fighter-details/2144954270be834d: 'NoneType' object is not iterable
+2025-09-05 21:56:16,428 [ERROR] Error processing http://ufcstats.com/fighter-details/597499ac7a5aac62: 'NoneType' object is not iterable
+2025-09-05 21:56:16,428 [ERROR] Error processing http://ufcstats.com/fighter-details/7578cc6bd750206b: 'NoneType' object is not iterable
+2025-09-05 21:56:16,666 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1897b7b913736a7c
+2025-09-05 21:56:16,667 [ERROR] Error processing http://ufcstats.com/fighter-details/1897b7b913736a7c: 'NoneType' object is not iterable
+2025-09-05 21:56:16,845 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6d35bf94f7d30241
+2025-09-05 21:56:16,846 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/9b28292abe3166d5
+2025-09-05 21:56:16,847 [ERROR] Error processing http://ufcstats.com/fighter-details/6d35bf94f7d30241: 'NoneType' object is not iterable
+2025-09-05 21:56:16,848 [ERROR] Error processing http://ufcstats.com/fighter-details/9b28292abe3166d5: 'NoneType' object is not iterable
+2025-09-05 21:56:16,849 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c482c8605455a213
+2025-09-05 21:56:16,851 [ERROR] Error processing http://ufcstats.com/fighter-details/c482c8605455a213: 'NoneType' object is not iterable
+2025-09-05 21:56:16,856 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7bd94b60d7521e4a
+2025-09-05 21:56:16,862 [ERROR] Error processing http://ufcstats.com/fighter-details/7bd94b60d7521e4a: 'NoneType' object is not iterable
+2025-09-05 21:56:17,326 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/184b955181bdef52
+2025-09-05 21:56:17,327 [ERROR] Error processing http://ufcstats.com/fighter-details/184b955181bdef52: 'NoneType' object is not iterable
+2025-09-05 21:56:17,574 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e76d9f656ceb82ab
+2025-09-05 21:56:17,576 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/2f95a3c6d58b2aad
+2025-09-05 21:56:17,577 [ERROR] Error processing http://ufcstats.com/fighter-details/e76d9f656ceb82ab: 'NoneType' object is not iterable
+2025-09-05 21:56:17,577 [ERROR] Error processing http://ufcstats.com/fighter-details/2f95a3c6d58b2aad: 'NoneType' object is not iterable
+2025-09-05 21:56:17,577 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/dd1b90eea08887f6
+2025-09-05 21:56:17,577 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/39f62b833e4cf126
+2025-09-05 21:56:17,578 [ERROR] Error processing http://ufcstats.com/fighter-details/dd1b90eea08887f6: 'NoneType' object is not iterable
+2025-09-05 21:56:17,583 [ERROR] Error processing http://ufcstats.com/fighter-details/39f62b833e4cf126: 'NoneType' object is not iterable
+2025-09-05 21:56:17,819 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7c6e87729e824ef4
+2025-09-05 21:56:17,820 [ERROR] Error processing http://ufcstats.com/fighter-details/7c6e87729e824ef4: 'NoneType' object is not iterable
+2025-09-05 21:56:17,997 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d26934530dc5b248
+2025-09-05 21:56:18,002 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1e38bba6738b7b10
+2025-09-05 21:56:18,002 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c487223b0289bda9
+2025-09-05 21:56:18,003 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/578ef12674df1e6a
+2025-09-05 21:56:18,003 [ERROR] Error processing http://ufcstats.com/fighter-details/d26934530dc5b248: 'NoneType' object is not iterable
+2025-09-05 21:56:18,014 [ERROR] Error processing http://ufcstats.com/fighter-details/1e38bba6738b7b10: 'NoneType' object is not iterable
+2025-09-05 21:56:18,017 [ERROR] Error processing http://ufcstats.com/fighter-details/c487223b0289bda9: 'NoneType' object is not iterable
+2025-09-05 21:56:18,017 [ERROR] Error processing http://ufcstats.com/fighter-details/578ef12674df1e6a: 'NoneType' object is not iterable
+2025-09-05 21:56:18,187 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7460ddef986d3144
+2025-09-05 21:56:18,189 [ERROR] Error processing http://ufcstats.com/fighter-details/7460ddef986d3144: 'NoneType' object is not iterable
+2025-09-05 21:56:18,569 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d35298b6df168456
+2025-09-05 21:56:18,569 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6fd953151d981979
+2025-09-05 21:56:18,570 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/103e2e33a60683e1
+2025-09-05 21:56:18,570 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d0f3959b4a9747e6
+2025-09-05 21:56:18,573 [ERROR] Error processing http://ufcstats.com/fighter-details/d35298b6df168456: 'NoneType' object is not iterable
+2025-09-05 21:56:18,581 [ERROR] Error processing http://ufcstats.com/fighter-details/6fd953151d981979: 'NoneType' object is not iterable
+2025-09-05 21:56:18,581 [ERROR] Error processing http://ufcstats.com/fighter-details/103e2e33a60683e1: 'NoneType' object is not iterable
+2025-09-05 21:56:18,581 [ERROR] Error processing http://ufcstats.com/fighter-details/d0f3959b4a9747e6: 'NoneType' object is not iterable
+2025-09-05 21:56:18,741 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/fe5a9547479396ab
+2025-09-05 21:56:18,742 [ERROR] Error processing http://ufcstats.com/fighter-details/fe5a9547479396ab: 'NoneType' object is not iterable
+2025-09-05 21:56:19,138 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/8fd76e1b49c00ae2 successfuly
+2025-09-05 21:56:19,146 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/11583163f45c7b31 successfuly
+2025-09-05 21:56:19,161 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d53482bef23235ba
+2025-09-05 21:56:19,193 [ERROR] Error processing http://ufcstats.com/fighter-details/d53482bef23235ba: 'NoneType' object is not iterable
+2025-09-05 21:56:19,195 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/0541480fbf719d86 successfuly
+2025-09-05 21:56:19,238 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/7a15f3694c5cbc02 successfuly
+2025-09-05 21:56:19,240 [ERROR] Error processing http://ufcstats.com/fighter-details/8fd76e1b49c00ae2: local variable 'e' referenced before assignment
+2025-09-05 21:56:19,555 [INFO] successfully got the event url and weight class Featherweight of the fight of Lucas Alexander vs Bogdan Grad winner: loss, method: KO/TKO (Punches), round and time ended: ( 2 | 4:22 ), in event date February 01, 2025
+2025-09-05 21:56:19,599 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/4b37a0bc2ab4cae1
+2025-09-05 21:56:19,601 [ERROR] Error processing http://ufcstats.com/fighter-details/4b37a0bc2ab4cae1: 'NoneType' object is not iterable
+2025-09-05 21:56:19,605 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/b757c73f443d4fca
+2025-09-05 21:56:19,606 [ERROR] Error processing http://ufcstats.com/fighter-details/b757c73f443d4fca: 'NoneType' object is not iterable
+2025-09-05 21:56:19,680 [INFO] successfully got the event url and weight class Catch Weight of the fight of Houston Alexander vs Kevin Ferguson winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date December 05, 2009
+2025-09-05 21:56:19,842 [INFO] successfully got the event url and weight class Lightweight of the fight of John Alessio vs Shane Roller winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date July 07, 2012
+2025-09-05 21:56:19,988 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/41b34b7f11f6d085
+2025-09-05 21:56:19,988 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/9abc648e76c4493a
+2025-09-05 21:56:20,035 [ERROR] Error processing http://ufcstats.com/fighter-details/41b34b7f11f6d085: 'NoneType' object is not iterable
+2025-09-05 21:56:20,044 [INFO] successfully got the event url and weight class Featherweight of the fight of Lucas Alexander vs Jeka Saragih winner: loss, method: KO/TKO (Punch), round and time ended: ( 1 | 1:31 ), in event date November 18, 2023
+2025-09-05 21:56:20,046 [ERROR] Error processing http://ufcstats.com/fighter-details/9abc648e76c4493a: 'NoneType' object is not iterable
+2025-09-05 21:56:20,168 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Houston Alexander vs Eric Schafer winner: loss, method: SUB (Arm Triangle), round and time ended: ( 1 | 4:53 ), in event date September 17, 2008
+2025-09-05 21:56:20,324 [INFO] successfully got the event url and weight class Lightweight of the fight of John Alessio vs Mark Bocek winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date April 21, 2012
+2025-09-05 21:56:20,326 [ERROR] Error processing http://ufcstats.com/fighter-details/7a15f3694c5cbc02: local variable 'e' referenced before assignment
+2025-09-05 21:56:20,411 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e17770faae3ca54c
+2025-09-05 21:56:20,412 [ERROR] Error processing http://ufcstats.com/fighter-details/e17770faae3ca54c: 'NoneType' object is not iterable
+2025-09-05 21:56:20,415 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/669a3cb6e394f515
+2025-09-05 21:56:20,416 [ERROR] Error processing http://ufcstats.com/fighter-details/669a3cb6e394f515: 'NoneType' object is not iterable
+2025-09-05 21:56:20,495 [INFO] successfully got the event url and weight class Featherweight of the fight of Lucas Alexander vs Steven Peterson winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date March 25, 2023
+2025-09-05 21:56:20,604 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Houston Alexander vs James Irvin winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 0:08 ), in event date April 02, 2008
+2025-09-05 21:56:20,684 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e70de1859b7ee78e
+2025-09-05 21:56:20,685 [ERROR] Error processing http://ufcstats.com/fighter-details/e70de1859b7ee78e: 'NoneType' object is not iterable
+2025-09-05 21:56:20,767 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/ca28cdf526d6b6e9
+2025-09-05 21:56:20,768 [ERROR] Error processing http://ufcstats.com/fighter-details/ca28cdf526d6b6e9: 'NoneType' object is not iterable
+2025-09-05 21:56:20,809 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/b07aed698fba8624
+2025-09-05 21:56:20,811 [ERROR] Error processing http://ufcstats.com/fighter-details/b07aed698fba8624: 'NoneType' object is not iterable
+2025-09-05 21:56:21,044 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6db394bf6c3b017c
+2025-09-05 21:56:21,045 [ERROR] Error processing http://ufcstats.com/fighter-details/6db394bf6c3b017c: 'NoneType' object is not iterable
+2025-09-05 21:56:21,143 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Houston Alexander vs Thiago Silva winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 3:25 ), in event date November 17, 2007
+2025-09-05 21:56:21,163 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6ebe96a116e79e52
+2025-09-05 21:56:21,165 [ERROR] Error processing http://ufcstats.com/fighter-details/6ebe96a116e79e52: 'NoneType' object is not iterable
+2025-09-05 21:56:21,192 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1e13936d708bcff7
+2025-09-05 21:56:21,209 [ERROR] Error processing http://ufcstats.com/fighter-details/1e13936d708bcff7: 'NoneType' object is not iterable
+2025-09-05 21:56:21,222 [INFO] successfully got the event url and weight class Featherweight of the fight of Lucas Alexander vs Joanderson Brito winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 1 | 2:02 ), in event date October 15, 2022
+2025-09-05 21:56:21,403 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/040a74bb0a465c54
+2025-09-05 21:56:21,406 [ERROR] Error processing http://ufcstats.com/fighter-details/040a74bb0a465c54: 'NoneType' object is not iterable
+2025-09-05 21:56:21,693 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c4fe2e9a06ea5bcb
+2025-09-05 21:56:21,693 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/2f181c0467965b98
+2025-09-05 21:56:21,697 [ERROR] Error processing http://ufcstats.com/fighter-details/c4fe2e9a06ea5bcb: 'NoneType' object is not iterable
+2025-09-05 21:56:21,698 [ERROR] Error processing http://ufcstats.com/fighter-details/2f181c0467965b98: 'NoneType' object is not iterable
+2025-09-05 21:56:21,723 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/adf9a901308fb8e3 successfuly
+2025-09-05 21:56:21,926 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Houston Alexander vs Alessio Sakara winner: win, method: KO/TKO (Knee), round and time ended: ( 1 | 1:01 ), in event date September 08, 2007
+2025-09-05 21:56:21,928 [ERROR] Error processing http://ufcstats.com/fighter-details/adf9a901308fb8e3: local variable 'e' referenced before assignment
+2025-09-05 21:56:22,188 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/8d3273573b85be09 successfuly
+2025-09-05 21:56:22,335 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Houston Alexander vs Keith Jardine winner: win, method: KO/TKO (Punch), round and time ended: ( 1 | 0:48 ), in event date May 26, 2007
+2025-09-05 21:56:22,363 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/91186547a7f3f758
+2025-09-05 21:56:22,366 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/a4dc0f2b95df4cc1
+2025-09-05 21:56:22,368 [ERROR] Error processing http://ufcstats.com/fighter-details/91186547a7f3f758: 'NoneType' object is not iterable
+2025-09-05 21:56:22,368 [ERROR] Error processing http://ufcstats.com/fighter-details/a4dc0f2b95df4cc1: 'NoneType' object is not iterable
+2025-09-05 21:56:22,539 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/088aa1b19b2dc14a successfuly
+2025-09-05 21:56:22,562 [ERROR] Error processing http://ufcstats.com/fighter-details/088aa1b19b2dc14a: local variable 'e' referenced before assignment
+2025-09-05 21:56:22,765 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/2b074403b7c6cdb4
+2025-09-05 21:56:22,772 [INFO] successfully got the event url and weight class Flyweight of the fight of Asu Almabayev vs Jose Ochoa winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date July 26, 2025
+2025-09-05 21:56:22,772 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/67a992d4cff22466
+2025-09-05 21:56:22,774 [ERROR] Error processing http://ufcstats.com/fighter-details/2b074403b7c6cdb4: 'NoneType' object is not iterable
+2025-09-05 21:56:22,775 [ERROR] Error processing http://ufcstats.com/fighter-details/67a992d4cff22466: 'NoneType' object is not iterable
+2025-09-05 21:56:22,846 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/d615d6a10a4704cd successfuly
+2025-09-05 21:56:22,900 [ERROR] Error processing http://ufcstats.com/fighter-details/d615d6a10a4704cd: local variable 'e' referenced before assignment
+2025-09-05 21:56:22,920 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/f16ddfa31236efed
+2025-09-05 21:56:22,921 [ERROR] Error processing http://ufcstats.com/fighter-details/f16ddfa31236efed: 'NoneType' object is not iterable
+2025-09-05 21:56:23,177 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/41e83a89929d1327
+2025-09-05 21:56:23,202 [ERROR] Error processing http://ufcstats.com/fighter-details/41e83a89929d1327: 'NoneType' object is not iterable
+2025-09-05 21:56:23,202 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/710f0f8c5d5c9d41
+2025-09-05 21:56:23,252 [ERROR] Error processing http://ufcstats.com/fighter-details/710f0f8c5d5c9d41: 'NoneType' object is not iterable
+2025-09-05 21:56:23,329 [INFO] successfully got the event url and weight class Flyweight of the fight of Asu Almabayev vs Manel Kape winner: loss, method: KO/TKO (Punches), round and time ended: ( 3 | 2:16 ), in event date March 01, 2025
+2025-09-05 21:56:23,352 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/64d47ef881a437a4
+2025-09-05 21:56:23,353 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c6bf75775b278ed8
+2025-09-05 21:56:23,386 [ERROR] Error processing http://ufcstats.com/fighter-details/64d47ef881a437a4: 'NoneType' object is not iterable
+2025-09-05 21:56:23,393 [ERROR] Error processing http://ufcstats.com/fighter-details/c6bf75775b278ed8: 'NoneType' object is not iterable
+2025-09-05 21:56:23,622 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/49b130de1da2e1bf
+2025-09-05 21:56:23,623 [ERROR] Error processing http://ufcstats.com/fighter-details/49b130de1da2e1bf: 'NoneType' object is not iterable
+2025-09-05 21:56:23,684 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e87a13e02c01331d
+2025-09-05 21:56:23,684 [ERROR] Error processing http://ufcstats.com/fighter-details/e87a13e02c01331d: 'NoneType' object is not iterable
+2025-09-05 21:56:23,764 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/dc7927cd622676a7
+2025-09-05 21:56:23,765 [ERROR] Error processing http://ufcstats.com/fighter-details/dc7927cd622676a7: 'NoneType' object is not iterable
+2025-09-05 21:56:23,774 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c61b49cec6abd6b9
+2025-09-05 21:56:23,775 [ERROR] Error processing http://ufcstats.com/fighter-details/c61b49cec6abd6b9: 'NoneType' object is not iterable
+2025-09-05 21:56:23,832 [INFO] successfully got the event url and weight class Flyweight of the fight of Asu Almabayev vs Matheus Nicolau winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date October 19, 2024
+2025-09-05 21:56:23,982 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c11036da9162cb5f
+2025-09-05 21:56:23,983 [ERROR] Error processing http://ufcstats.com/fighter-details/c11036da9162cb5f: 'NoneType' object is not iterable
+2025-09-05 21:56:24,043 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/430c533614d45813
+2025-09-05 21:56:24,043 [ERROR] Error processing http://ufcstats.com/fighter-details/430c533614d45813: 'NoneType' object is not iterable
+2025-09-05 21:56:24,118 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e741536153227386
+2025-09-05 21:56:24,119 [ERROR] Error processing http://ufcstats.com/fighter-details/e741536153227386: 'NoneType' object is not iterable
+2025-09-05 21:56:24,127 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/33a331684283900f
+2025-09-05 21:56:24,128 [ERROR] Error processing http://ufcstats.com/fighter-details/33a331684283900f: 'NoneType' object is not iterable
+2025-09-05 21:56:24,366 [INFO] successfully got the event url and weight class Flyweight of the fight of Asu Almabayev vs Jose Johnson winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date June 15, 2024
+2025-09-05 21:56:24,367 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/4438482bd1d5a029
+2025-09-05 21:56:24,370 [ERROR] Error processing http://ufcstats.com/fighter-details/4438482bd1d5a029: 'NoneType' object is not iterable
+2025-09-05 21:56:24,412 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/58bbef3770bb2dfc
+2025-09-05 21:56:24,413 [ERROR] Error processing http://ufcstats.com/fighter-details/58bbef3770bb2dfc: 'NoneType' object is not iterable
+2025-09-05 21:56:24,483 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/31ee470ef5dc8d7f
+2025-09-05 21:56:24,485 [ERROR] Error processing http://ufcstats.com/fighter-details/31ee470ef5dc8d7f: 'NoneType' object is not iterable
+2025-09-05 21:56:24,491 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/bd92cf5da5413d2a
+2025-09-05 21:56:24,493 [ERROR] Error processing http://ufcstats.com/fighter-details/bd92cf5da5413d2a: 'NoneType' object is not iterable
+2025-09-05 21:56:24,728 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/dc5a6b2fdb27e7dc
+2025-09-05 21:56:24,736 [ERROR] Error processing http://ufcstats.com/fighter-details/dc5a6b2fdb27e7dc: 'NoneType' object is not iterable
+2025-09-05 21:56:24,805 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d317a5e2b3f88c5f
+2025-09-05 21:56:24,820 [ERROR] Error processing http://ufcstats.com/fighter-details/d317a5e2b3f88c5f: 'NoneType' object is not iterable
+2025-09-05 21:56:24,842 [INFO] successfully got the event url and weight class Flyweight of the fight of Asu Almabayev vs CJ Vergara winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date March 09, 2024
+2025-09-05 21:56:25,037 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/029afd138865d20a successfuly
+2025-09-05 21:56:25,089 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/d156513a19acf856 successfuly
+2025-09-05 21:56:25,198 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/86c1441676af2c73
+2025-09-05 21:56:25,199 [ERROR] Error processing http://ufcstats.com/fighter-details/86c1441676af2c73: 'NoneType' object is not iterable
+2025-09-05 21:56:25,222 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/f4abf9aeda861283 successfuly
+2025-09-05 21:56:25,296 [INFO] successfully got the event url and weight class Flyweight of the fight of Asu Almabayev vs Ode Osbourne winner: win, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 3:11 ), in event date August 05, 2023
+2025-09-05 21:56:25,576 [INFO] successfully got the event url and weight class Lightweight of the fight of Rafael Alves vs Nurullo Aliev winner: loss, method: M-DEC, round and time ended: ( 3 | 5:00 ), in event date February 25, 2023
+2025-09-05 21:56:25,657 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Michal Oleksiejczuk winner: loss, method: KO/TKO (Punch), round and time ended: ( 1 | 1:56 ), in event date August 06, 2022
+2025-09-05 21:56:25,728 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/247fbbfafea60bb1
+2025-09-05 21:56:25,730 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/20821819c401ced8 successfuly
+2025-09-05 21:56:25,730 [ERROR] Error processing http://ufcstats.com/fighter-details/247fbbfafea60bb1: 'NoneType' object is not iterable
+2025-09-05 21:56:25,781 [ERROR] Error processing http://ufcstats.com/fighter-details/20821819c401ced8: local variable 'e' referenced before assignment
+2025-09-05 21:56:25,910 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/1e327b281ef6a745 successfuly
+2025-09-05 21:56:25,927 [INFO] successfully got the event url and weight class Lightweight of the fight of Rafael Alves vs Drew Dober winner: loss, method: KO/TKO (Punch), round and time ended: ( 3 | 1:30 ), in event date July 30, 2022
+2025-09-05 21:56:26,155 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/ee0b69e307c857e5
+2025-09-05 21:56:26,175 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c912f676692c353a
+2025-09-05 21:56:26,191 [ERROR] Error processing http://ufcstats.com/fighter-details/ee0b69e307c857e5: 'NoneType' object is not iterable
+2025-09-05 21:56:26,191 [ERROR] Error processing http://ufcstats.com/fighter-details/c912f676692c353a: 'NoneType' object is not iterable
+2025-09-05 21:56:26,225 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Brendan Allen winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 2:10 ), in event date February 05, 2022
+2025-09-05 21:56:26,565 [INFO] successfully got the event url and weight class Welterweight of the fight of Adlan Amagov vs TJ Waldburger winner: win, method: KO/TKO (Punch), round and time ended: ( 1 | 3:00 ), in event date October 19, 2013
+2025-09-05 21:56:26,700 [INFO] successfully got the event url and weight class Lightweight of the fight of Rafael Alves vs Marc Diakiese winner: win, method: SUB (Guillotine Choke), round and time ended: ( 1 | 1:48 ), in event date November 13, 2021
+2025-09-05 21:56:26,715 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/70fa1c64a2c439ef
+2025-09-05 21:56:26,717 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d562b12b8fe88336
+2025-09-05 21:56:26,737 [ERROR] Error processing http://ufcstats.com/fighter-details/70fa1c64a2c439ef: 'NoneType' object is not iterable
+2025-09-05 21:56:26,785 [ERROR] Error processing http://ufcstats.com/fighter-details/d562b12b8fe88336: 'NoneType' object is not iterable
+2025-09-05 21:56:26,808 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Wellington Turman winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date August 28, 2021
+2025-09-05 21:56:27,011 [INFO] successfully got the event url and weight class Welterweight of the fight of Adlan Amagov vs Chris Spang winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date April 06, 2013
+2025-09-05 21:56:27,012 [ERROR] Error processing http://ufcstats.com/fighter-details/1e327b281ef6a745: local variable 'e' referenced before assignment
+2025-09-05 21:56:27,161 [INFO] successfully got the event url and weight class Lightweight of the fight of Rafael Alves vs Damir Ismagulov winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date May 22, 2021
+2025-09-05 21:56:27,162 [ERROR] Error processing http://ufcstats.com/fighter-details/029afd138865d20a: local variable 'e' referenced before assignment
+2025-09-05 21:56:27,166 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6c40705cf6c0d7e2
+2025-09-05 21:56:27,167 [ERROR] Error processing http://ufcstats.com/fighter-details/6c40705cf6c0d7e2: 'NoneType' object is not iterable
+2025-09-05 21:56:27,167 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/41cc71cbf210e0fe
+2025-09-05 21:56:27,167 [ERROR] Error processing http://ufcstats.com/fighter-details/41cc71cbf210e0fe: 'NoneType' object is not iterable
+2025-09-05 21:56:27,260 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Julian Marquez winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 2:07 ), in event date April 10, 2021
+2025-09-05 21:56:27,371 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/87a1dc546b1c5caf
+2025-09-05 21:56:27,372 [ERROR] Error processing http://ufcstats.com/fighter-details/87a1dc546b1c5caf: 'NoneType' object is not iterable
+2025-09-05 21:56:27,519 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/bc7d1ad49fcb2d08
+2025-09-05 21:56:27,522 [ERROR] Error processing http://ufcstats.com/fighter-details/bc7d1ad49fcb2d08: 'NoneType' object is not iterable
+2025-09-05 21:56:27,524 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/53adf5b845d91e4a
+2025-09-05 21:56:27,527 [ERROR] Error processing http://ufcstats.com/fighter-details/53adf5b845d91e4a: 'NoneType' object is not iterable
+2025-09-05 21:56:27,534 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/23a8c33869bf5392
+2025-09-05 21:56:27,539 [ERROR] Error processing http://ufcstats.com/fighter-details/23a8c33869bf5392: 'NoneType' object is not iterable
+2025-09-05 21:56:27,740 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/cad24459b28592ca
+2025-09-05 21:56:27,768 [ERROR] Error processing http://ufcstats.com/fighter-details/cad24459b28592ca: 'NoneType' object is not iterable
+2025-09-05 21:56:27,865 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Da Woon Jung winner: draw, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date October 24, 2020
+2025-09-05 21:56:27,898 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/9199e0735b83dd32
+2025-09-05 21:56:27,899 [ERROR] Error processing http://ufcstats.com/fighter-details/9199e0735b83dd32: 'NoneType' object is not iterable
+2025-09-05 21:56:27,902 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1ffc38f67785797b
+2025-09-05 21:56:27,904 [ERROR] Error processing http://ufcstats.com/fighter-details/1ffc38f67785797b: 'NoneType' object is not iterable
+2025-09-05 21:56:27,907 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/8738eacd62e82a32 successfuly
+2025-09-05 21:56:28,167 [INFO] successfully got the event url and weight class Open Weight of the fight of Matt Andersen vs Rafael Carino winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 5:32 ), in event date May 17, 1996
+2025-09-05 21:56:28,211 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/5e4eec08896c9423
+2025-09-05 21:56:28,212 [ERROR] Error processing http://ufcstats.com/fighter-details/5e4eec08896c9423: 'NoneType' object is not iterable
+2025-09-05 21:56:28,269 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/19ba965651486013
+2025-09-05 21:56:28,269 [ERROR] Error processing http://ufcstats.com/fighter-details/19ba965651486013: 'NoneType' object is not iterable
+2025-09-05 21:56:28,325 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/a0e75f4a13eb73f1
+2025-09-05 21:56:28,356 [ERROR] Error processing http://ufcstats.com/fighter-details/a0e75f4a13eb73f1: 'NoneType' object is not iterable
+2025-09-05 21:56:28,387 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Ryan Spann winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date May 09, 2020
+2025-09-05 21:56:28,571 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/17615148dd4be6f6
+2025-09-05 21:56:28,573 [ERROR] Error processing http://ufcstats.com/fighter-details/17615148dd4be6f6: 'NoneType' object is not iterable
+2025-09-05 21:56:28,622 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1562b12763cc8d67
+2025-09-05 21:56:28,624 [ERROR] Error processing http://ufcstats.com/fighter-details/1562b12763cc8d67: 'NoneType' object is not iterable
+2025-09-05 21:56:28,670 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/b03a0c78ca45facf successfuly
+2025-09-05 21:56:28,728 [ERROR] Error processing http://ufcstats.com/fighter-details/b03a0c78ca45facf: local variable 'e' referenced before assignment
+2025-09-05 21:56:28,745 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/6a1901c62ab3870f
+2025-09-05 21:56:28,747 [ERROR] Error processing http://ufcstats.com/fighter-details/6a1901c62ab3870f: 'NoneType' object is not iterable
+2025-09-05 21:56:28,995 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d221ee27afc7a60e
+2025-09-05 21:56:29,012 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/9bad58fa651d6196
+2025-09-05 21:56:29,025 [ERROR] Error processing http://ufcstats.com/fighter-details/d221ee27afc7a60e: 'NoneType' object is not iterable
+2025-09-05 21:56:29,057 [ERROR] Error processing http://ufcstats.com/fighter-details/9bad58fa651d6196: 'NoneType' object is not iterable
+2025-09-05 21:56:29,087 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Klidson Abreu winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date July 20, 2019
+2025-09-05 21:56:29,108 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7977fb0fd9c5955d
+2025-09-05 21:56:29,109 [ERROR] Error processing http://ufcstats.com/fighter-details/7977fb0fd9c5955d: 'NoneType' object is not iterable
+2025-09-05 21:56:29,515 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/46e2ca71fd5089cb
+2025-09-05 21:56:29,516 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d6a3e131ad4ba064
+2025-09-05 21:56:29,518 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e20ad078a7d63361
+2025-09-05 21:56:29,555 [ERROR] Error processing http://ufcstats.com/fighter-details/46e2ca71fd5089cb: 'NoneType' object is not iterable
+2025-09-05 21:56:29,602 [ERROR] Error processing http://ufcstats.com/fighter-details/d6a3e131ad4ba064: 'NoneType' object is not iterable
+2025-09-05 21:56:29,649 [ERROR] Error processing http://ufcstats.com/fighter-details/e20ad078a7d63361: 'NoneType' object is not iterable
+2025-09-05 21:56:29,654 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Jimmy Crute winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 2:49 ), in event date February 09, 2019
+2025-09-05 21:56:29,674 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/00debc804e2b1cd4
+2025-09-05 21:56:29,676 [ERROR] Error processing http://ufcstats.com/fighter-details/00debc804e2b1cd4: 'NoneType' object is not iterable
+2025-09-05 21:56:30,174 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c7c39e2fb70248b3
+2025-09-05 21:56:30,174 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d802174b0c0c1f4e
+2025-09-05 21:56:30,175 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/047a91d3d9c79b05
+2025-09-05 21:56:30,175 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/e06fd1260ac865a7
+2025-09-05 21:56:30,237 [ERROR] Error processing http://ufcstats.com/fighter-details/c7c39e2fb70248b3: 'NoneType' object is not iterable
+2025-09-05 21:56:30,246 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Rogerio Nogueira winner: loss, method: KO/TKO (Punch), round and time ended: ( 2 | 1:00 ), in event date September 22, 2018
+2025-09-05 21:56:30,255 [ERROR] Error processing http://ufcstats.com/fighter-details/d802174b0c0c1f4e: 'NoneType' object is not iterable
+2025-09-05 21:56:30,258 [ERROR] Error processing http://ufcstats.com/fighter-details/047a91d3d9c79b05: 'NoneType' object is not iterable
+2025-09-05 21:56:30,258 [ERROR] Error processing http://ufcstats.com/fighter-details/e06fd1260ac865a7: 'NoneType' object is not iterable
+2025-09-05 21:56:30,672 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/cc49ada1ea955b13
+2025-09-05 21:56:30,674 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/dbd198f780286aca
+2025-09-05 21:56:30,675 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/af997f7611673880
+2025-09-05 21:56:30,675 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/25b31165758402dd
+2025-09-05 21:56:30,676 [ERROR] Error processing http://ufcstats.com/fighter-details/cc49ada1ea955b13: 'NoneType' object is not iterable
+2025-09-05 21:56:30,752 [ERROR] Error processing http://ufcstats.com/fighter-details/dbd198f780286aca: 'NoneType' object is not iterable
+2025-09-05 21:56:30,769 [ERROR] Error processing http://ufcstats.com/fighter-details/af997f7611673880: 'NoneType' object is not iterable
+2025-09-05 21:56:30,783 [ERROR] Error processing http://ufcstats.com/fighter-details/25b31165758402dd: 'NoneType' object is not iterable
+2025-09-05 21:56:30,870 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Gian Villante winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date June 01, 2018
+2025-09-05 21:56:31,156 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/031da10a00c8ccd4
+2025-09-05 21:56:31,157 [ERROR] Error processing http://ufcstats.com/fighter-details/031da10a00c8ccd4: 'NoneType' object is not iterable
+2025-09-05 21:56:31,169 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/79ded75550efc139
+2025-09-05 21:56:31,170 [ERROR] Error processing http://ufcstats.com/fighter-details/79ded75550efc139: 'NoneType' object is not iterable
+2025-09-05 21:56:31,273 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/4665f9f909cd7214 successfuly
+2025-09-05 21:56:31,356 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/78d48d3874dacafd successfuly
+2025-09-05 21:56:31,544 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/7d420039bbfe7c1a
+2025-09-05 21:56:31,553 [INFO] successfully got the event url and weight class Light Heavyweight of the fight of Sam Alvey vs Marcin Prachnio winner: win, method: KO/TKO (Punch), round and time ended: ( 1 | 4:23 ), in event date February 24, 2018
+2025-09-05 21:56:31,554 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/0c1a04afca64e38f
+2025-09-05 21:56:31,556 [ERROR] Error processing http://ufcstats.com/fighter-details/7d420039bbfe7c1a: 'NoneType' object is not iterable
+2025-09-05 21:56:31,559 [ERROR] Error processing http://ufcstats.com/fighter-details/0c1a04afca64e38f: 'NoneType' object is not iterable
+2025-09-05 21:56:31,929 [INFO] successfully got the event url and weight class Welterweight of the fight of Shinsho Anzai vs Jake Matthews winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 1 | 2:44 ), in event date June 23, 2018
+2025-09-05 21:56:31,932 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/269d103c96a4c3a5
+2025-09-05 21:56:31,934 [ERROR] Error processing http://ufcstats.com/fighter-details/269d103c96a4c3a5: 'NoneType' object is not iterable
+2025-09-05 21:56:31,944 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1ccff7f0cfdf85eb
+2025-09-05 21:56:31,948 [ERROR] Error processing http://ufcstats.com/fighter-details/1ccff7f0cfdf85eb: 'NoneType' object is not iterable
+2025-09-05 21:56:32,164 [INFO] successfully got the event url and weight class Heavyweight of the fight of Azunna Anyanwu vs Justin Ledet winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date September 16, 2017
+2025-09-05 21:56:32,214 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Ramazan Emeev winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date October 21, 2017
+2025-09-05 21:56:32,217 [ERROR] Error processing http://ufcstats.com/fighter-details/78d48d3874dacafd: local variable 'e' referenced before assignment
+2025-09-05 21:56:32,441 [INFO] successfully got the event url and weight class Welterweight of the fight of Shinsho Anzai vs Luke Jumeau winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date September 22, 2017
+2025-09-05 21:56:32,491 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/71002dbc1743b9a7
+2025-09-05 21:56:32,492 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/73ef22f25d0f70e2
+2025-09-05 21:56:32,493 [ERROR] Error processing http://ufcstats.com/fighter-details/71002dbc1743b9a7: 'NoneType' object is not iterable
+2025-09-05 21:56:32,496 [ERROR] Error processing http://ufcstats.com/fighter-details/73ef22f25d0f70e2: 'NoneType' object is not iterable
+2025-09-05 21:56:32,598 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/dbea8c1cb327ab3d
+2025-09-05 21:56:32,599 [ERROR] Error processing http://ufcstats.com/fighter-details/dbea8c1cb327ab3d: 'NoneType' object is not iterable
+2025-09-05 21:56:32,778 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Rashad Evans winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date August 05, 2017
+2025-09-05 21:56:32,881 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/36541f1e6c5d4955
+2025-09-05 21:56:33,078 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/1291edf2d566a71a
+2025-09-05 21:56:33,120 [INFO] successfully got the event url and weight class Welterweight of the fight of Shinsho Anzai vs Roger Zapata winner: win, method: KO/TKO, round and time ended: ( 3 | 0:47 ), in event date September 26, 2015
+2025-09-05 21:56:33,121 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/d25e39e74efb0a77
+2025-09-05 21:56:33,121 [ERROR] Error processing http://ufcstats.com/fighter-details/36541f1e6c5d4955: 'NoneType' object is not iterable
+2025-09-05 21:56:33,124 [ERROR] Error processing http://ufcstats.com/fighter-details/1291edf2d566a71a: 'NoneType' object is not iterable
+2025-09-05 21:56:33,127 [ERROR] Error processing http://ufcstats.com/fighter-details/d25e39e74efb0a77: 'NoneType' object is not iterable
+2025-09-05 21:56:33,551 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Thales Leites winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date April 22, 2017
+2025-09-05 21:56:33,599 [INFO] successfully got the event url and weight class None of the fight of Shinsho Anzai vs Alberto Mina winner: loss, method: KO/TKO (Punch), round and time ended: ( 1 | 4:17 ), in event date August 23, 2014
+2025-09-05 21:56:33,642 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/9c9455912d917e4e
+2025-09-05 21:56:33,643 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/87f8699fdcc2c404
+2025-09-05 21:56:33,645 [ERROR] Error processing http://ufcstats.com/fighter-details/9c9455912d917e4e: 'NoneType' object is not iterable
+2025-09-05 21:56:33,645 [ERROR] Error processing http://ufcstats.com/fighter-details/87f8699fdcc2c404: 'NoneType' object is not iterable
+2025-09-05 21:56:33,650 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/db3c4a884d704efe
+2025-09-05 21:56:33,650 [ERROR] Error processing http://ufcstats.com/fighter-details/db3c4a884d704efe: 'NoneType' object is not iterable
+2025-09-05 21:56:34,138 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/90063913321e7670 successfuly
+2025-09-05 21:56:34,149 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/e4ba58725825412d successfuly
+2025-09-05 21:56:34,228 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Nate Marquardt winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date January 28, 2017
+2025-09-05 21:56:34,256 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/9a7ffa80766caa51 successfuly
+2025-09-05 21:56:34,321 [ERROR] Error processing http://ufcstats.com/fighter-details/9a7ffa80766caa51: local variable 'e' referenced before assignment
+2025-09-05 21:56:34,403 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/3738e68d2261e60f successfuly
+2025-09-05 21:56:34,728 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/30ad2050273d016a
+2025-09-05 21:56:34,853 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/1effd880e1f1bb30 successfuly
+2025-09-05 21:56:34,853 [INFO] successfully got the event url and weight class Bantamweight of the fight of Dan Argueta vs Cody Haddon winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date October 12, 2024
+2025-09-05 21:56:34,874 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Alex Nicholson winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date November 05, 2016
+2025-09-05 21:56:34,945 [ERROR] Error processing http://ufcstats.com/fighter-details/30ad2050273d016a: 'NoneType' object is not iterable
+2025-09-05 21:56:35,376 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/bf0e700106d00e55
+2025-09-05 21:56:35,377 [ERROR] Error processing http://ufcstats.com/fighter-details/bf0e700106d00e55: 'NoneType' object is not iterable
+2025-09-05 21:56:35,613 [INFO] successfully got the event url and weight class Bantamweight of the fight of Garrett Armfield vs Serhiy Sidey winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date November 02, 2024
+2025-09-05 21:56:35,636 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Kevin Casey winner: win, method: KO/TKO (Punches), round and time ended: ( 2 | 4:56 ), in event date August 27, 2016
+2025-09-05 21:56:35,716 [INFO] successfully got the event url and weight class Bantamweight of the fight of Dan Argueta vs Jean Matsumoto winner: loss, method: SUB (Guillotine Choke), round and time ended: ( 2 | 4:59 ), in event date April 06, 2024
+2025-09-05 21:56:35,736 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/05fbfe628658c538
+2025-09-05 21:56:35,738 [ERROR] Error processing http://ufcstats.com/fighter-details/05fbfe628658c538: 'NoneType' object is not iterable
+2025-09-05 21:56:35,818 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Martin Buday winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date June 29, 2024
+2025-09-05 21:56:36,341 [INFO] successfully got the event url and weight class Bantamweight of the fight of Garrett Armfield vs Brady Hiestand winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 3 | 1:52 ), in event date June 15, 2024
+2025-09-05 21:56:36,365 [INFO] successfully got the event url and weight class Bantamweight of the fight of Dan Argueta vs Miles Johns winner: nc, method: Overturned, round and time ended: ( 3 | 5:00 ), in event date September 23, 2023
+2025-09-05 21:56:36,380 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/a90c200c3fbb22c4
+2025-09-05 21:56:36,530 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Eric Spicely winner: win, method: SUB (Guillotine Choke), round and time ended: ( 1 | 2:43 ), in event date July 13, 2016
+2025-09-05 21:56:36,540 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Waldo Cortes-Acosta winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date January 13, 2024
+2025-09-05 21:56:36,540 [ERROR] Error processing http://ufcstats.com/fighter-details/a90c200c3fbb22c4: 'NoneType' object is not iterable
+2025-09-05 21:56:37,527 [INFO] successfully got the event url and weight class Bantamweight of the fight of Garrett Armfield vs Brad Katona winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date January 20, 2024
+2025-09-05 21:56:37,535 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/770b9d4813c25902 successfuly
+2025-09-05 21:56:37,608 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Don'Tale Mayes winner: loss, method: KO/TKO (Punch), round and time ended: ( 2 | 3:17 ), in event date June 03, 2023
+2025-09-05 21:56:37,634 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Elias Theodorou winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date June 18, 2016
+2025-09-05 21:56:37,721 [INFO] successfully got the event url and weight class Bantamweight of the fight of Dan Argueta vs Ronnie Lawrence winner: nc, method: Overturned, round and time ended: ( 1 | 2:20 ), in event date June 17, 2023
+2025-09-05 21:56:37,726 [ERROR] Error processing http://ufcstats.com/fighter-details/770b9d4813c25902: local variable 'e' referenced before assignment
+2025-09-05 21:56:38,194 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Marcos Rogerio de Lima winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 1 | 1:50 ), in event date October 29, 2022
+2025-09-05 21:56:38,195 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/c136b2a8852da5bd
+2025-09-05 21:56:38,196 [ERROR] Error processing http://ufcstats.com/fighter-details/c136b2a8852da5bd: 'NoneType' object is not iterable
+2025-09-05 21:56:38,278 [INFO] successfully got the event url and weight class Bantamweight of the fight of Garrett Armfield vs Toshiomi Kazama winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 4:16 ), in event date August 26, 2023
+2025-09-05 21:56:38,315 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Derek Brunson winner: loss, method: KO/TKO (Punches), round and time ended: ( 1 | 2:19 ), in event date August 08, 2015
+2025-09-05 21:56:38,350 [INFO] successfully got the event url and weight class Featherweight of the fight of Dan Argueta vs Nick Aguirre winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date January 14, 2023
+2025-09-05 21:56:38,597 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/de62052b2ede65ba
+2025-09-05 21:56:38,628 [ERROR] Error processing http://ufcstats.com/fighter-details/de62052b2ede65ba: 'NoneType' object is not iterable
+2025-09-05 21:56:38,631 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Jake Collier winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date April 30, 2022
+2025-09-05 21:56:38,867 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Daniel Kelly winner: win, method: KO/TKO (Punch), round and time ended: ( 1 | 0:49 ), in event date May 09, 2015
+2025-09-05 21:56:38,965 [INFO] successfully got the event url and weight class Featherweight of the fight of Garrett Armfield vs David Onama winner: loss, method: SUB (Arm Triangle), round and time ended: ( 2 | 3:13 ), in event date July 09, 2022
+2025-09-05 21:56:38,994 [INFO] successfully got the event url and weight class Featherweight of the fight of Dan Argueta vs Damon Jackson winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date June 04, 2022
+2025-09-05 21:56:39,008 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/61fb8098ccf81c7f
+2025-09-05 21:56:39,009 [ERROR] Error processing http://ufcstats.com/fighter-details/61fb8098ccf81c7f: 'NoneType' object is not iterable
+2025-09-05 21:56:39,190 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Jared Vanderaa winner: win, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date February 12, 2022
+2025-09-05 21:56:39,277 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Cezar Ferreira winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 3:34 ), in event date February 22, 2015
+2025-09-05 21:56:39,375 [WARNING] Warning (Records): could not connect to http://ufcstats.com/fighter-details/49f78022126bf4a4
+2025-09-05 21:56:39,376 [ERROR] Error processing http://ufcstats.com/fighter-details/49f78022126bf4a4: 'NoneType' object is not iterable
+2025-09-05 21:56:39,492 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/91e3388e69060e69 successfuly
+2025-09-05 21:56:39,558 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/2dea80c069847321 successfuly
+2025-09-05 21:56:39,603 [ERROR] Error processing http://ufcstats.com/fighter-details/2dea80c069847321: local variable 'e' referenced before assignment
+2025-09-05 21:56:39,733 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Carlos Felipe winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date October 16, 2021
+2025-09-05 21:56:39,932 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/d33da8a3d82bdb62 successfuly
+2025-09-05 21:56:39,937 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Dylan Andrews winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 2:16 ), in event date November 07, 2014
+2025-09-05 21:56:40,308 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/a373085066dbfb54 successfuly
+2025-09-05 21:56:40,308 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/d26a0988c9dc9886 successfuly
+2025-09-05 21:56:40,546 [INFO] successfully got the event url and weight class Flyweight of the fight of Kai Asakura vs Tim Elliott winner: loss, method: SUB (Guillotine Choke), round and time ended: ( 2 | 4:39 ), in event date August 16, 2025
+2025-09-05 21:56:40,555 [ERROR] Error processing http://ufcstats.com/fighter-details/a373085066dbfb54: local variable 'e' referenced before assignment
+2025-09-05 21:56:40,540 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Chase Sherman winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date April 17, 2021
+2025-09-05 21:56:40,597 [INFO] successfully got the event url and weight class Middleweight of the fight of Sam Alvey vs Tom Watson winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date August 16, 2014
+2025-09-05 21:56:41,211 [INFO] successfully got the event url and weight class Flyweight of the fight of Kai Asakura vs Alexandre Pantoja winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 2:05 ), in event date December 07, 2024
+2025-09-05 21:56:41,240 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/8be9deb7d6b36354 successfuly
+2025-09-05 21:56:41,240 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/2abc414136504554 successfuly
+2025-09-05 21:56:41,263 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Tom Aspinall winner: loss, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 1:09 ), in event date February 20, 2021
+2025-09-05 21:56:41,354 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/c739c2995a275314 successfuly
+2025-09-05 21:56:42,084 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/b1d19449397541dc successfuly
+2025-09-05 21:56:42,178 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/5c10da56d712ac9c successfuly
+2025-09-05 21:56:42,179 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Tanner Boser winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date November 07, 2020
+2025-09-05 21:56:42,208 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/9be6020024133293 successfuly
+2025-09-05 21:56:42,341 [INFO] successfully got the event url and weight class Lightweight of the fight of Yanal Ashmouz vs Quillan Salkilld winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date June 07, 2025
+2025-09-05 21:56:43,157 [INFO] successfully got the event url and weight class Heavyweight of the fight of Cyril Asker vs Tai Tuivasa winner: loss, method: KO/TKO (Elbow), round and time ended: ( 1 | 2:18 ), in event date February 10, 2018
+2025-09-05 21:56:43,222 [INFO] successfully got the event url and weight class Featherweight of the fight of Khusein Askhabov vs Jamall Emmers winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date February 18, 2023
+2025-09-05 21:56:43,307 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Philipe Lins winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date May 13, 2020
+2025-09-05 21:56:43,401 [INFO] successfully got the event url and weight class Flyweight of the fight of Askar Askarov vs Kai Kara-France winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date March 26, 2022
+2025-09-05 21:56:43,559 [INFO] successfully got the event url and weight class Lightweight of the fight of Yanal Ashmouz vs Trevor Peek winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date September 07, 2024
+2025-09-05 21:56:43,865 [INFO] successfully got the event url and weight class Heavyweight of the fight of Cyril Asker vs Hu Yaozong winner: win, method: SUB (Rear Naked Choke), round and time ended: ( 2 | 2:33 ), in event date November 25, 2017
+2025-09-05 21:56:43,984 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/06827d70c53ff0d9 successfuly
+2025-09-05 21:56:44,085 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Jairzinho Rozenstruik winner: loss, method: KO/TKO (Punch), round and time ended: ( 1 | 0:29 ), in event date November 02, 2019
+2025-09-05 21:56:44,303 [INFO] successfully got the event url and weight class Lightweight of the fight of Yanal Ashmouz vs Chris Duncan winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date July 22, 2023
+2025-09-05 21:56:44,593 [INFO] successfully got the event url and weight class Flyweight of the fight of Askar Askarov vs Joseph Benavidez winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date March 06, 2021
+2025-09-05 21:56:44,766 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Ben Rothwell winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date July 20, 2019
+2025-09-05 21:56:44,779 [INFO] successfully got the event url and weight class Heavyweight of the fight of Cyril Asker vs Walt Harris winner: loss, method: KO/TKO (Elbows), round and time ended: ( 1 | 1:44 ), in event date June 17, 2017
+2025-09-05 21:56:44,913 [INFO] successfully got the event url and weight class Middleweight of the fight of Scott Askham vs Brad Scott winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date March 18, 2017
+2025-09-05 21:56:45,142 [INFO] successfully got the event url and weight class Lightweight of the fight of Yanal Ashmouz vs Sam Patterson winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 1:15 ), in event date March 18, 2023
+2025-09-05 21:56:45,277 [INFO] successfully got the event url and weight class Heavyweight of the fight of Cyril Asker vs Dmitrii Smoliakov winner: win, method: KO/TKO (Punches), round and time ended: ( 1 | 2:41 ), in event date January 15, 2017
+2025-09-05 21:56:45,357 [INFO] successfully got the event url and weight class Heavyweight of the fight of Andrei Arlovski vs Augusto Sakai winner: loss, method: S-DEC, round and time ended: ( 3 | 5:00 ), in event date April 27, 2019
+2025-09-05 21:56:45,500 [INFO] successfully got the event url and weight class Flyweight of the fight of Askar Askarov vs Alexandre Pantoja winner: win, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date July 18, 2020
+2025-09-05 21:56:45,548 [INFO] Fetched (Records) http://ufcstats.com/fighter-details/0b31f87be71ebbb1 successfuly
+2025-09-05 21:56:45,692 [INFO] successfully got the event url and weight class Middleweight of the fight of Scott Askham vs Jack Hermansson winner: loss, method: U-DEC, round and time ended: ( 3 | 5:00 ), in event date September 03, 2016
+2025-09-05 21:56:46,133 [INFO] successfully got the event url and weight class Heavyweight of the fight of Cyril Asker vs Jared Cannonier winner: loss, method: KO/TKO (Punch), round and time ended: ( 1 | 2:44 ), in event date April 10, 2016

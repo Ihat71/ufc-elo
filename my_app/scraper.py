@@ -3,14 +3,14 @@ import string
 import requests
 from pathlib import Path
 import sqlite3 as sq
-import time, random
+from datetime import datetime
 import logging
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 
 logging.basicConfig(
-    filename="app.log",
+    filename="scraper.log",
     filemode="w",  # 'w' overwrites, 'a' appends
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
@@ -99,6 +99,7 @@ def get_events():
             elif tr.find('img'):
                 continue
             td_list = tr.find_all('td')
+            event_data['event_url'] = td_list[0].find('a')['href'].strip()
             event_data['event_name'] = td_list[0].find('a').text.strip()
             event_data['event_date'] = td_list[0].find('span').text.strip()
             event_data['event_location'] = td_list[1].text.strip()
@@ -107,20 +108,20 @@ def get_events():
     return all_events
     
         
-def get_fighter_records():
+def get_fighter_records(url):
     fighters_records = []
+    session = requests.Session()
     with sq.connect(db_path) as conn:
         cursor = conn.cursor()
-        urls = cursor.execute("select url from fighters;").fetchall()
-    session = requests.Session()
-    for i in urls:
+        # urls = cursor.execute("select url from fighters;").fetchall()
         try:
-            page = session.get(i[0])
+            page = session.get(url)
             page.raise_for_status()
-            logging.info(f"Fetched (Records) {i[0]} successfuly")
+            logging.info(f"Fetched (Records) {url} successfuly")
         except Exception:
-            logging.warning(f"Warning (Records): could not connect to {i[0]}")
-            continue
+            logging.warning(f"Warning (Records): could not connect to {url}")
+            return None
+        
         soup = BeautifulSoup(page.text, 'html.parser')
         tbody = soup.find('tbody')
         tr_list = tbody.find_all('tr')
@@ -132,34 +133,80 @@ def get_fighter_records():
 
             td_list = tr.find_all('td')
             win_loss = td_list[0].find_all('i')
-    
+
+            i_tag = "--"
             for tag in win_loss:
-                i_tag = "--"
-                if tag.text.strip() in ['win', 'loss', 'nc', 'draw', 'next']:
+                if tag.text.strip().lower() in ['win', 'loss', 'nc', 'draw', 'next']:
                     #I named it i_tag because in the website the information is inside <i>
                     i_tag = tag.text.strip()
                     break
                     
             if i_tag == 'next':
                 continue
-            fighter['url'] = i[0]
+
+            fighter['url'] = url
             fighter['win_loss'] = i_tag
             opponents = td_list[1].find_all('p')
             fighter['fighter_1'] = opponents[0].text.strip()
             fighter['fighter_2'] = opponents[1].text.strip()
             fighter['event'] = td_list[6].find('a').text.strip()
             fighter['event_date'] = (td_list[6].find_all('p'))[1].text.strip()
-            method = td_list[7].find('p')
-            fighter['method'] = method.text.strip()
+            fighter['weight_class'] = None
+            title = td_list[6].find("img", {"src": "http://1e49bc5171d173577ecd-1323f4090557a33db01577564f60846c.r80.cf1.rackcdn.com/belt.png"})
+            if title:
+                is_title_fight = 'yes'
+            else:
+                is_title_fight = 'no'
+            fighter['is_title_fight'] = is_title_fight
+            method = td_list[7].find_all('p')
+            fighter['method'] = f"{method[0].text.strip()} ({method[1].text.strip()})" if method[1].text.strip() != '' else method[0].text.strip()
             round_ended = td_list[8].find('p')
             fighter['round'] = round_ended.text.strip()
             time_ended = td_list[9].find('p')
             fighter['time'] = time_ended.text.strip()
-                
+
+            dt = datetime.strptime(fighter.get('event_date'), "%b. %d, %Y")
+            usable_date = dt.strftime("%B %d, %Y")
+            event_url = cursor.execute('select event_url from events where event_date = ?', (usable_date,)).fetchone()
+            if event_url:
+                try:    
+                    event_page = session.get(event_url[0])
+                    event_page.raise_for_status()
+                    event_soup = BeautifulSoup(event_page.text, 'html.parser')
+                    tbody = event_soup.find('tbody')
+                    tr_list = tbody.find_all('tr')
+                    for tr in tr_list:
+                        td_list = tr.find_all('td')
+                        opponents = [p.text.strip() for p in td_list[1].find_all('p')]
+                        if fighter.get('fighter_1') in opponents and fighter.get('fighter_2') in opponents:
+                            weight_class = td_list[6].find('p').text.strip()
+                            fighter['weight_class'] = weight_class
+                    logging.info(f'successfully got the event url and weight class {fighter.get("weight_class")} of the fight of fighter: {fighter.get("fighter_1")} vs opponent: {fighter.get("fighter_2")} result: {fighter.get("win_loss")}, method: {fighter.get("method")}, round and time ended: ( {fighter.get("round")} | {fighter.get("time")} ), in event date {usable_date}')
+                except Exception as e:
+                    logging.warning(f'exception {e} happened when attempting to fetch url {event_url}')
+            else:
+                logging.warning(f'could not get event url {event_url[0] if event_url else event_url} in date {usable_date}. Exception: {e}')
+            
             fighters_records.append(fighter)
             #time.sleep(random.uniform(1, 3))
-        
-        
+
+    return fighters_records
+
+def get_fighter_records_threaded(max_workers=5):
+    fighters_records = []
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+        urls = [u[0] for u in cursor.execute("SELECT url FROM fighters;").fetchall()]
+
+    # run threads
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(get_fighter_records, url): url for url in urls}
+        for future in as_completed(futures):
+            try:
+                records = future.result()
+                fighters_records.extend(records)
+            except Exception as e:
+                logging.error(f"Error processing {futures[future]}: {e}")
 
     return fighters_records
         

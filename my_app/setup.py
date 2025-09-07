@@ -216,7 +216,7 @@ def fights_table_setup():
                                 fight_time,
                                 is_title_fight
                             FROM records
-                            GROUP BY fighter1, fighter2;
+                            GROUP BY date, fighter1, fighter2;
                 ''').fetchall()
         for fight in query:
             event_id, date, fighter_1, fighter_2, winner, weight_class, method, round_ended, round_time, is_title_fight = fight
@@ -234,7 +234,7 @@ def main():
     db_tables_setup()
     # fighters_table_setup()
     #events_table_setup()
-    records_table_setup()
+    #records_table_setup()
     # advanced_table_setup()
     fights_table_setup()
     

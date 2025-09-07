@@ -185,14 +185,14 @@ def get_fighter_records(url):
                 except Exception as e:
                     logging.warning(f'exception {e} happened when attempting to fetch url {event_url}')
             else:
-                logging.warning(f'could not get event url {event_url[0] if event_url else event_url} in date {usable_date}. Exception: {e}')
+                logging.warning(f'could not get event url {event_url[0] if event_url else event_url} in date {usable_date}')
             
             fighters_records.append(fighter)
             #time.sleep(random.uniform(1, 3))
 
     return fighters_records
 
-def get_fighter_records_threaded(max_workers=5):
+def get_fighter_records_threaded(max_workers=4):
     fighters_records = []
     with sq.connect(db_path) as conn:
         cursor = conn.cursor()
@@ -206,7 +206,7 @@ def get_fighter_records_threaded(max_workers=5):
                 records = future.result()
                 fighters_records.extend(records)
             except Exception as e:
-                logging.error(f"Error processing {futures[future]}: {e}")
+                logging.error(f"Error processing {futures[future]}, error: {e}")
 
     return fighters_records
         

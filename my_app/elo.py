@@ -1,8 +1,7 @@
 import numpy
-import pandas
 import logging
 from pathlib import Path
-from datetime import date, datetime
+from datetime import datetime
 import sqlite3 as sq
 
 

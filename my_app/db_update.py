@@ -5,7 +5,7 @@ from pathlib import Path
 import sqlite3 as sq
 from datetime import datetime
 import logging
-from elo import get_dates, to_table_date, elo_equation
+from elo import get_dates, to_table_date, elo_equation, elo_history_table
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
 events_url = "http://ufcstats.com/statistics/events/completed?page=all"
@@ -226,12 +226,17 @@ def update_records_and_fights():
                 elo_winner = 'A' if id_a == winner else 'B'
                 is_draw = True if winner == 0 else False
                 is_nc = True if winner == None else False
-                new_rA, new_rB = elo_equation(rA, rB, elo_winner, is_draw, is_nc, method, round_ended, is_title_fight)
+                new_rA, new_rB = elo_equation(rA, rB, elo_winner, is_draw, is_nc, method, round_ended, True if is_title_fight == 'yes' else False)
                 cursor.execute('update elo set elo = ? where fighter_id = ?', (new_rA, id_a))
                 cursor.execute('update elo set elo = ? where fighter_id = ?', (new_rB, id_b))
                 conn.commit()
                 logging.info(f'changed elo of fighter {id_a} from {rA} to {new_rA}')
                 logging.info(f'changed elo of fighter {id_b} from {rB} to {new_rB}')
+
+                ended = f"{round_ended} | {time_ended}"
+                cursor.execute('insert into elo_history (fighter_1, fighter_2, winner, weight_class, elo_1, elo_2, new_elo_1, new_elo_2, method, round_time_ended, is_title_fight, date) values (?,?,?,?,?,?,?,?,?,?,?,?)', (id_a, id_b, winner, weight_class, rA, rB, new_rA, new_rB, method, ended, is_title_fight, date))
+                logging.info(f'inserted into elo history table the fight of {id_a} and {id_b}')
+                conn.commit()
 
                 fighters_updated.append(id_a)
                 fighters_updated.append(id_b)

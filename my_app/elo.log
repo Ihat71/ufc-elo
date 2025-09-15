@@ -1,0 +1,2120 @@
+2025-09-14 07:48:10,171 [INFO] successfully inserted into events the event UFC Fight Night: Lopes vs. Silva, url http://ufcstats.com/event-details/5efaaf313b652dd7
+2025-09-14 07:48:10,731 [INFO] Processing fight: Diego Lopes vs Jean Silva
+2025-09-14 07:48:10,803 [INFO] successfully inserted into fights the fight of 2276 vs 3667 winner 2276
+2025-09-14 07:48:10,807 [INFO] inserted into records table the record for fighter 2276
+2025-09-14 07:48:10,819 [INFO] inserted into records table the record for fighter 3667
+2025-09-14 07:48:10,838 [INFO] changed elo of fighter 2276 from 1285 to 1303
+2025-09-14 07:48:10,839 [INFO] changed elo of fighter 3667 from 1299 to 1281
+2025-09-14 07:48:10,842 [INFO] inserted into elo history table the fight of 2276 and 3667
+2025-09-14 07:48:10,855 [INFO] Processing fight: David Martinez vs Rob Font
+2025-09-14 07:48:10,878 [INFO] successfully inserted into fights the fight of 1234 vs 2444 winner 2444
+2025-09-14 07:48:10,881 [INFO] inserted into records table the record for fighter 1234
+2025-09-14 07:48:10,893 [INFO] inserted into records table the record for fighter 2444
+2025-09-14 07:48:10,910 [INFO] changed elo of fighter 1234 from 1315 to 1294
+2025-09-14 07:48:10,910 [INFO] changed elo of fighter 2444 from 1218 to 1239
+2025-09-14 07:48:10,913 [INFO] inserted into elo history table the fight of 1234 and 2444
+2025-09-14 07:48:10,926 [INFO] Processing fight: Rafa Garcia vs Jared Gordon
+2025-09-14 07:48:10,949 [INFO] successfully inserted into fights the fight of 1333 vs 1431 winner 1333
+2025-09-14 07:48:10,952 [INFO] inserted into records table the record for fighter 1333
+2025-09-14 07:48:10,964 [INFO] inserted into records table the record for fighter 1431
+2025-09-14 07:48:10,982 [INFO] changed elo of fighter 1333 from 1242 to 1261
+2025-09-14 07:48:10,983 [INFO] changed elo of fighter 1431 from 1276 to 1257
+2025-09-14 07:48:10,985 [INFO] inserted into elo history table the fight of 1333 and 1431
+2025-09-14 07:48:10,998 [INFO] Processing fight: Kelvin Gastelum vs Dustin Stoltzfus
+2025-09-14 07:48:11,023 [INFO] successfully inserted into fights the fight of 1340 vs 3852 winner 1340
+2025-09-14 07:48:11,026 [INFO] inserted into records table the record for fighter 1340
+2025-09-14 07:48:11,038 [INFO] inserted into records table the record for fighter 3852
+2025-09-14 07:48:11,058 [INFO] changed elo of fighter 1340 from 1282 to 1294
+2025-09-14 07:48:11,058 [INFO] changed elo of fighter 3852 from 1174 to 1162
+2025-09-14 07:48:11,060 [INFO] inserted into elo history table the fight of 1340 and 3852
+2025-09-14 07:48:11,074 [INFO] Processing fight: Alexander Hernandez vs Diego Ferreira
+2025-09-14 07:48:11,097 [INFO] successfully inserted into fights the fight of 1186 vs 1636 winner 1636
+2025-09-14 07:48:11,100 [INFO] inserted into records table the record for fighter 1186
+2025-09-14 07:48:11,112 [INFO] inserted into records table the record for fighter 1636
+2025-09-14 07:48:11,130 [INFO] changed elo of fighter 1186 from 1301 to 1282
+2025-09-14 07:48:11,131 [INFO] changed elo of fighter 1636 from 1269 to 1288
+2025-09-14 07:48:11,132 [INFO] inserted into elo history table the fight of 1186 and 1636
+2025-09-14 07:48:11,150 [INFO] Processing fight: Santiago Luna vs Quang Le
+2025-09-14 07:48:12,793 [INFO] put into fighters and elo table the fighter Santiago Luna
+2025-09-14 07:48:12,815 [INFO] successfully inserted into fights the fight of 2166 vs 4431 winner 4431
+2025-09-14 07:48:12,817 [INFO] inserted into records table the record for fighter 2166
+2025-09-14 07:48:12,831 [INFO] inserted into records table the record for fighter 4431
+2025-09-14 07:48:12,848 [INFO] changed elo of fighter 2166 from 1193 to 1176
+2025-09-14 07:48:12,849 [INFO] changed elo of fighter 4431 from 1200 to 1217
+2025-09-14 07:48:12,850 [INFO] inserted into elo history table the fight of 2166 and 4431
+2025-09-14 07:48:12,863 [INFO] Processing fight: Dusko Todorovic vs Jose Daniel Medina
+2025-09-14 07:48:14,351 [INFO] put into fighters and elo table the fighter Jose Daniel Medina
+2025-09-14 07:48:14,374 [INFO] successfully inserted into fights the fight of 4008 vs 4432 winner 4008
+2025-09-14 07:48:14,376 [INFO] inserted into records table the record for fighter 4008
+2025-09-14 07:48:14,389 [INFO] inserted into records table the record for fighter 4432
+2025-09-14 07:48:14,407 [INFO] changed elo of fighter 4008 from 1154 to 1174
+2025-09-14 07:48:14,408 [INFO] changed elo of fighter 4432 from 1200 to 1180
+2025-09-14 07:48:14,410 [INFO] inserted into elo history table the fight of 4008 and 4432
+2025-09-14 07:48:14,423 [INFO] Processing fight: Joaquim Silva vs Claudio Puelles
+2025-09-14 07:48:14,445 [INFO] successfully inserted into fights the fight of 3177 vs 3678 winner 3678
+2025-09-14 07:48:14,447 [INFO] inserted into records table the record for fighter 3177
+2025-09-14 07:48:14,460 [INFO] inserted into records table the record for fighter 3678
+2025-09-14 07:48:14,478 [INFO] changed elo of fighter 3177 from 1242 to 1226
+2025-09-14 07:48:14,479 [INFO] changed elo of fighter 3678 from 1225 to 1241
+2025-09-14 07:48:14,481 [INFO] inserted into elo history table the fight of 3177 and 3678
+2025-09-14 07:48:14,493 [INFO] Processing fight: Tatiana Suarez vs Amanda Lemos
+2025-09-14 07:48:14,513 [INFO] successfully inserted into fights the fight of 2199 vs 3875 winner 3875
+2025-09-14 07:48:14,515 [INFO] inserted into records table the record for fighter 2199
+2025-09-14 07:48:14,528 [INFO] inserted into records table the record for fighter 3875
+2025-09-14 07:48:14,547 [INFO] changed elo of fighter 2199 from 1298 to 1282
+2025-09-14 07:48:14,548 [INFO] changed elo of fighter 3875 from 1311 to 1327
+2025-09-14 07:48:14,549 [INFO] inserted into elo history table the fight of 2199 and 3875
+2025-09-14 07:48:14,562 [INFO] Processing fight: Jesus Aguilar vs Luis Gurule
+2025-09-14 07:48:14,584 [INFO] successfully inserted into fights the fight of 32 vs 1515 winner 32
+2025-09-14 07:48:14,586 [INFO] inserted into records table the record for fighter 32
+2025-09-14 07:48:14,601 [INFO] inserted into records table the record for fighter 1515
+2025-09-14 07:48:14,620 [INFO] changed elo of fighter 32 from 1220 to 1235
+2025-09-14 07:48:14,620 [INFO] changed elo of fighter 1515 from 1181 to 1166
+2025-09-14 07:48:14,622 [INFO] inserted into elo history table the fight of 32 and 1515
+2025-09-14 07:48:14,635 [INFO] Processing fight: Zachary Reese vs Sedriques Dumas
+2025-09-14 07:48:14,656 [INFO] successfully inserted into fights the fight of 1034 vs 3253 winner None
+2025-09-14 07:48:14,658 [INFO] inserted into records table the record for fighter 1034
+2025-09-14 07:48:14,671 [INFO] inserted into records table the record for fighter 3253
+2025-09-14 07:48:14,675 [INFO] changed elo of fighter 1034 from 1199 to 1199
+2025-09-14 07:48:14,675 [INFO] changed elo of fighter 3253 from 1218 to 1218
+2025-09-14 07:48:14,677 [INFO] inserted into elo history table the fight of 1034 and 3253
+2025-09-14 07:48:14,690 [INFO] Processing fight: Alden Coria vs Alessandro Costa
+2025-09-14 07:48:14,712 [INFO] successfully inserted into fights the fight of 762 vs 780 winner 762
+2025-09-14 07:48:14,716 [INFO] inserted into records table the record for fighter 762
+2025-09-14 07:48:14,728 [INFO] inserted into records table the record for fighter 780
+2025-09-14 07:48:14,746 [INFO] changed elo of fighter 762 from 1200 to 1217
+2025-09-14 07:48:14,748 [INFO] changed elo of fighter 780 from 1209 to 1192
+2025-09-14 07:48:14,749 [INFO] inserted into elo history table the fight of 762 and 780
+2025-09-14 07:48:14,763 [INFO] Processing fight: Montse Rendon vs Alice Pereira
+2025-09-14 07:48:16,569 [INFO] put into fighters and elo table the fighter Montse Rendon
+2025-09-14 07:48:16,592 [INFO] successfully inserted into fights the fight of 3067 vs 4433 winner 4433
+2025-09-14 07:48:16,594 [INFO] inserted into records table the record for fighter 3067
+2025-09-14 07:48:16,607 [INFO] inserted into records table the record for fighter 4433
+2025-09-14 07:48:16,626 [INFO] changed elo of fighter 3067 from 1200 to 1184
+2025-09-14 07:48:16,626 [INFO] changed elo of fighter 4433 from 1200 to 1216
+2025-09-14 07:48:16,628 [INFO] inserted into elo history table the fight of 3067 and 4433
+2025-09-14 07:48:16,641 [INFO] Processing fight: Daniil Donchenko vs Rodrigo Sezinando
+2025-09-14 07:48:16,664 [INFO] successfully inserted into fights the fight of 986 vs 3619 winner 986
+2025-09-14 07:48:16,666 [INFO] inserted into records table the record for fighter 986
+2025-09-14 07:48:16,679 [INFO] inserted into records table the record for fighter 3619
+2025-09-14 07:48:16,698 [INFO] changed elo of fighter 986 from 1200 to 1218
+2025-09-14 07:48:16,698 [INFO] changed elo of fighter 3619 from 1200 to 1182
+2025-09-14 07:48:16,701 [INFO] inserted into elo history table the fight of 986 and 3619
+2025-09-14 07:48:16,715 [INFO] Updating advanced stats for 28 fighters
+2025-09-14 07:48:16,718 [INFO] Processing advanced stats for fighter ID: 1034
+2025-09-14 07:48:16,719 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/4e6738062d469256
+2025-09-14 07:48:17,215 [INFO] Found 20 li elements for fighter 1034
+2025-09-14 07:48:17,216 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,216 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,217 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,217 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:17,218 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:17,218 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:17,218 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:17,219 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:17,219 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:17,220 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:17,220 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:17,221 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:17,221 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:17,222 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:17,222 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:17,222 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:17,223 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:17,223 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,223 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,224 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,224 [INFO] Fighter 1034: Found 8 valid stats
+2025-09-14 07:48:17,284 [INFO] Successfully updated advanced stats for fighter: 1034
+2025-09-14 07:48:17,285 [INFO] Processing advanced stats for fighter ID: 2444
+2025-09-14 07:48:17,285 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/9a97acbfd5a08bfa
+2025-09-14 07:48:17,794 [INFO] Found 20 li elements for fighter 2444
+2025-09-14 07:48:17,795 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,795 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,795 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,795 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:17,796 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:17,796 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:17,798 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:17,798 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:17,799 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:17,799 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:17,799 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:17,800 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:17,800 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:17,801 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:17,801 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:17,801 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:17,802 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:17,802 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,802 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,803 [INFO] tag html: 
+ None
+2025-09-14 07:48:17,803 [INFO] Fighter 2444: Found 8 valid stats
+2025-09-14 07:48:17,805 [INFO] Successfully updated advanced stats for fighter: 2444
+2025-09-14 07:48:17,805 [INFO] Processing advanced stats for fighter ID: 3852
+2025-09-14 07:48:17,805 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/71505842fb6455c3
+2025-09-14 07:48:18,359 [INFO] Found 20 li elements for fighter 3852
+2025-09-14 07:48:18,359 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,360 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,360 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,360 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:18,361 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:18,361 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:18,361 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:18,362 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:18,362 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:18,362 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:18,363 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:18,363 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:18,364 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:18,364 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:18,364 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:18,364 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:18,365 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:18,365 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,365 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,365 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,365 [INFO] Fighter 3852: Found 8 valid stats
+2025-09-14 07:48:18,367 [INFO] Successfully updated advanced stats for fighter: 3852
+2025-09-14 07:48:18,367 [INFO] Processing advanced stats for fighter ID: 780
+2025-09-14 07:48:18,367 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/3fa97913cfd205d3
+2025-09-14 07:48:18,838 [INFO] Found 20 li elements for fighter 780
+2025-09-14 07:48:18,838 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,838 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,839 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,839 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:18,839 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:18,841 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:18,841 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:18,842 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:18,842 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:18,842 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:18,843 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:18,843 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:18,844 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:18,844 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:18,844 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:18,845 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:18,845 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:18,846 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,846 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,846 [INFO] tag html: 
+ None
+2025-09-14 07:48:18,846 [INFO] Fighter 780: Found 8 valid stats
+2025-09-14 07:48:18,848 [INFO] Successfully updated advanced stats for fighter: 780
+2025-09-14 07:48:18,849 [INFO] Processing advanced stats for fighter ID: 1431
+2025-09-14 07:48:18,849 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/7026eca45f65377b
+2025-09-14 07:48:19,602 [INFO] Found 20 li elements for fighter 1431
+2025-09-14 07:48:19,603 [INFO] tag html: 
+ None
+2025-09-14 07:48:19,603 [INFO] tag html: 
+ None
+2025-09-14 07:48:19,603 [INFO] tag html: 
+ None
+2025-09-14 07:48:19,603 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:19,603 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:19,603 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:19,604 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:19,604 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:19,604 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:19,604 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:19,604 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:19,604 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:19,605 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:19,605 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:19,605 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:19,605 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:19,605 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:19,605 [INFO] tag html: 
+ None
+2025-09-14 07:48:19,606 [INFO] tag html: 
+ None
+2025-09-14 07:48:19,606 [INFO] tag html: 
+ None
+2025-09-14 07:48:19,606 [INFO] Fighter 1431: Found 8 valid stats
+2025-09-14 07:48:19,607 [INFO] Successfully updated advanced stats for fighter: 1431
+2025-09-14 07:48:19,607 [INFO] Processing advanced stats for fighter ID: 2199
+2025-09-14 07:48:19,607 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/3df5493bb279226f
+2025-09-14 07:48:20,113 [INFO] Found 20 li elements for fighter 2199
+2025-09-14 07:48:20,113 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,113 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,113 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,113 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:20,114 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:20,114 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:20,114 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:20,114 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:20,114 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:20,116 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:20,116 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:20,116 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:20,116 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:20,116 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:20,117 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:20,117 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:20,117 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:20,117 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,117 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,117 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,117 [INFO] Fighter 2199: Found 8 valid stats
+2025-09-14 07:48:20,119 [INFO] Successfully updated advanced stats for fighter: 2199
+2025-09-14 07:48:20,119 [INFO] Processing advanced stats for fighter ID: 32
+2025-09-14 07:48:20,119 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/c051c2e12d692b8a
+2025-09-14 07:48:20,661 [INFO] Found 20 li elements for fighter 32
+2025-09-14 07:48:20,661 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,661 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,662 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,662 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:20,662 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:20,663 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:20,663 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:20,663 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:20,664 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:20,664 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:20,664 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:20,665 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:20,665 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:20,665 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:20,666 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:20,666 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:20,666 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:20,666 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,667 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,667 [INFO] tag html: 
+ None
+2025-09-14 07:48:20,667 [INFO] Fighter 32: Found 8 valid stats
+2025-09-14 07:48:20,669 [INFO] Successfully updated advanced stats for fighter: 32
+2025-09-14 07:48:20,669 [INFO] Processing advanced stats for fighter ID: 1186
+2025-09-14 07:48:20,669 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/f53d4f21d1b5f2dc
+2025-09-14 07:48:21,119 [INFO] Found 20 li elements for fighter 1186
+2025-09-14 07:48:21,119 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,119 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,119 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,119 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:21,120 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:21,121 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,122 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,122 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,122 [INFO] Fighter 1186: Found 8 valid stats
+2025-09-14 07:48:21,186 [INFO] Successfully updated advanced stats for fighter: 1186
+2025-09-14 07:48:21,186 [INFO] Processing advanced stats for fighter ID: 3875
+2025-09-14 07:48:21,186 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/b08012bbe542592a
+2025-09-14 07:48:21,751 [INFO] Found 20 li elements for fighter 3875
+2025-09-14 07:48:21,752 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,752 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,752 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,753 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:21,753 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:21,755 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:21,755 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:21,755 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:21,756 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:21,756 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:21,757 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:21,757 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:21,757 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:21,758 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:21,758 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:21,758 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:21,759 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:21,759 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,759 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,760 [INFO] tag html: 
+ None
+2025-09-14 07:48:21,760 [INFO] Fighter 3875: Found 8 valid stats
+2025-09-14 07:48:21,762 [INFO] Successfully updated advanced stats for fighter: 3875
+2025-09-14 07:48:21,762 [INFO] Processing advanced stats for fighter ID: 3619
+2025-09-14 07:48:21,762 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/c06d6b18862f9a53
+2025-09-14 07:48:22,288 [INFO] Found 20 li elements for fighter 3619
+2025-09-14 07:48:22,289 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,289 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,289 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,290 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:22,290 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:22,290 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:22,291 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:22,291 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:22,292 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:22,292 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:22,293 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:22,293 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:22,293 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:22,294 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:22,294 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:22,295 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:22,295 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:22,295 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,296 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,296 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,296 [INFO] Fighter 3619: Found 8 valid stats
+2025-09-14 07:48:22,298 [INFO] Successfully updated advanced stats for fighter: 3619
+2025-09-14 07:48:22,299 [INFO] Processing advanced stats for fighter ID: 4008
+2025-09-14 07:48:22,299 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/866fd7b1a6c90e7f
+2025-09-14 07:48:22,846 [INFO] Found 20 li elements for fighter 4008
+2025-09-14 07:48:22,846 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,847 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,847 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,847 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:22,848 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:22,848 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:22,848 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:22,849 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:22,849 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:22,849 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:22,850 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:22,850 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:22,850 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:22,851 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:22,853 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:22,853 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:22,853 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:22,855 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,855 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,855 [INFO] tag html: 
+ None
+2025-09-14 07:48:22,855 [INFO] Fighter 4008: Found 8 valid stats
+2025-09-14 07:48:22,857 [INFO] Successfully updated advanced stats for fighter: 4008
+2025-09-14 07:48:22,857 [INFO] Processing advanced stats for fighter ID: 1333
+2025-09-14 07:48:22,857 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/e132d47bd9efbbe0
+2025-09-14 07:48:23,454 [INFO] Found 20 li elements for fighter 1333
+2025-09-14 07:48:23,454 [INFO] tag html: 
+ None
+2025-09-14 07:48:23,455 [INFO] tag html: 
+ None
+2025-09-14 07:48:23,455 [INFO] tag html: 
+ None
+2025-09-14 07:48:23,455 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:23,455 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:23,456 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:23,456 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:23,456 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:23,456 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:23,457 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:23,457 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:23,457 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:23,458 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:23,458 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:23,458 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:23,458 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:23,459 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:23,459 [INFO] tag html: 
+ None
+2025-09-14 07:48:23,459 [INFO] tag html: 
+ None
+2025-09-14 07:48:23,459 [INFO] tag html: 
+ None
+2025-09-14 07:48:23,459 [INFO] Fighter 1333: Found 8 valid stats
+2025-09-14 07:48:23,461 [INFO] Successfully updated advanced stats for fighter: 1333
+2025-09-14 07:48:23,461 [INFO] Processing advanced stats for fighter ID: 3253
+2025-09-14 07:48:23,461 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/23dec7c47cb418f8
+2025-09-14 07:48:24,063 [INFO] Found 20 li elements for fighter 3253
+2025-09-14 07:48:24,084 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,084 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,085 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,085 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:24,085 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:24,086 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:24,086 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:24,087 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:24,087 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:24,087 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:24,088 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:24,088 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:24,090 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:24,090 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:24,090 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:24,091 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:24,091 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:24,091 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,092 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,092 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,092 [INFO] Fighter 3253: Found 8 valid stats
+2025-09-14 07:48:24,094 [INFO] Successfully updated advanced stats for fighter: 3253
+2025-09-14 07:48:24,094 [INFO] Processing advanced stats for fighter ID: 1340
+2025-09-14 07:48:24,094 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/8c0580d4fff106c1
+2025-09-14 07:48:24,653 [INFO] Found 20 li elements for fighter 1340
+2025-09-14 07:48:24,653 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,653 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:24,654 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:24,655 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:24,656 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,656 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,656 [INFO] tag html: 
+ None
+2025-09-14 07:48:24,656 [INFO] Fighter 1340: Found 8 valid stats
+2025-09-14 07:48:24,657 [INFO] Successfully updated advanced stats for fighter: 1340
+2025-09-14 07:48:24,657 [INFO] Processing advanced stats for fighter ID: 4431
+2025-09-14 07:48:24,657 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/faf317c665546a36
+2025-09-14 07:48:25,155 [INFO] Found 20 li elements for fighter 4431
+2025-09-14 07:48:25,155 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,155 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,156 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,156 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:25,157 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:25,157 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:25,157 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:25,158 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:25,158 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:25,159 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:25,159 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:25,160 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:25,160 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:25,161 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:25,161 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:25,161 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:25,162 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:25,162 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,163 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,163 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,163 [INFO] Fighter 4431: Found 8 valid stats
+2025-09-14 07:48:25,165 [INFO] Successfully inserted advanced stats for fighter: 4431
+2025-09-14 07:48:25,165 [INFO] Processing advanced stats for fighter ID: 4432
+2025-09-14 07:48:25,165 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/baa9be02c3e3e038
+2025-09-14 07:48:25,610 [INFO] Found 20 li elements for fighter 4432
+2025-09-14 07:48:25,610 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,611 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,611 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,611 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:25,612 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:25,612 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:25,613 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:25,613 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:25,613 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:25,614 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:25,614 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:25,615 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:25,615 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:25,615 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:25,616 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:25,616 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:25,618 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:25,618 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,618 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,618 [INFO] tag html: 
+ None
+2025-09-14 07:48:25,618 [INFO] Fighter 4432: Found 8 valid stats
+2025-09-14 07:48:25,620 [INFO] Successfully inserted advanced stats for fighter: 4432
+2025-09-14 07:48:25,620 [INFO] Processing advanced stats for fighter ID: 4433
+2025-09-14 07:48:25,620 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/60193e707634e560
+2025-09-14 07:48:26,191 [INFO] Found 20 li elements for fighter 4433
+2025-09-14 07:48:26,192 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,192 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,192 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,193 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:26,193 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:26,194 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:26,194 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:26,194 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:26,195 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:26,195 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:26,196 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:26,196 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:26,196 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:26,197 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:26,197 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:26,198 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:26,198 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:26,198 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,198 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,199 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,199 [INFO] Fighter 4433: Found 8 valid stats
+2025-09-14 07:48:26,200 [INFO] Successfully inserted advanced stats for fighter: 4433
+2025-09-14 07:48:26,200 [INFO] Processing advanced stats for fighter ID: 1234
+2025-09-14 07:48:26,200 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/05339613bf8e9808
+2025-09-14 07:48:26,778 [INFO] Found 20 li elements for fighter 1234
+2025-09-14 07:48:26,847 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,847 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,848 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,848 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:26,849 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:26,849 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:26,849 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:26,850 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:26,850 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:26,851 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:26,851 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:26,852 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:26,852 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:26,852 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:26,853 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:26,853 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:26,854 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:26,854 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,854 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,855 [INFO] tag html: 
+ None
+2025-09-14 07:48:26,855 [INFO] Fighter 1234: Found 8 valid stats
+2025-09-14 07:48:26,857 [INFO] Successfully updated advanced stats for fighter: 1234
+2025-09-14 07:48:26,857 [INFO] Processing advanced stats for fighter ID: 3667
+2025-09-14 07:48:26,858 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/9211aae062b799d6
+2025-09-14 07:48:27,398 [INFO] Found 20 li elements for fighter 3667
+2025-09-14 07:48:27,398 [INFO] tag html: 
+ None
+2025-09-14 07:48:27,398 [INFO] tag html: 
+ None
+2025-09-14 07:48:27,399 [INFO] tag html: 
+ None
+2025-09-14 07:48:27,399 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:27,399 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:27,400 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:27,400 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:27,400 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:27,400 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:27,401 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:27,401 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:27,402 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:27,402 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:27,402 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:27,403 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:27,403 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:27,403 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:27,403 [INFO] tag html: 
+ None
+2025-09-14 07:48:27,404 [INFO] tag html: 
+ None
+2025-09-14 07:48:27,404 [INFO] tag html: 
+ None
+2025-09-14 07:48:27,404 [INFO] Fighter 3667: Found 8 valid stats
+2025-09-14 07:48:27,406 [INFO] Successfully updated advanced stats for fighter: 3667
+2025-09-14 07:48:27,406 [INFO] Processing advanced stats for fighter ID: 986
+2025-09-14 07:48:27,406 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/70dd69b6a703257e
+2025-09-14 07:48:28,023 [INFO] Found 20 li elements for fighter 986
+2025-09-14 07:48:28,023 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,023 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,024 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,024 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:28,025 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:28,025 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:28,025 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:28,026 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:28,026 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:28,027 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:28,027 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:28,028 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:28,028 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:28,029 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:28,029 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:28,029 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:28,030 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:28,030 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,031 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,031 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,031 [INFO] Fighter 986: Found 8 valid stats
+2025-09-14 07:48:28,033 [INFO] Successfully updated advanced stats for fighter: 986
+2025-09-14 07:48:28,034 [INFO] Processing advanced stats for fighter ID: 3678
+2025-09-14 07:48:28,034 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/ae7fe94f117f98cf
+2025-09-14 07:48:28,512 [INFO] Found 20 li elements for fighter 3678
+2025-09-14 07:48:28,512 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,513 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,513 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,513 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:28,513 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:28,515 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:28,515 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:28,515 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:28,515 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:28,516 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:28,516 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:28,516 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:28,517 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:28,517 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:28,517 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:28,518 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:28,518 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:28,518 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,518 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,519 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,519 [INFO] Fighter 3678: Found 8 valid stats
+2025-09-14 07:48:28,520 [INFO] Successfully updated advanced stats for fighter: 3678
+2025-09-14 07:48:28,520 [INFO] Processing advanced stats for fighter ID: 2276
+2025-09-14 07:48:28,520 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/f166e93d04a8c274
+2025-09-14 07:48:28,995 [INFO] Found 20 li elements for fighter 2276
+2025-09-14 07:48:28,995 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,995 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,995 [INFO] tag html: 
+ None
+2025-09-14 07:48:28,996 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:28,996 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:28,997 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:28,997 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:28,997 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:28,998 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:28,998 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:28,998 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:28,999 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:28,999 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:28,999 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:29,000 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:29,000 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:29,001 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:29,001 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,001 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,001 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,001 [INFO] Fighter 2276: Found 8 valid stats
+2025-09-14 07:48:29,004 [INFO] Successfully updated advanced stats for fighter: 2276
+2025-09-14 07:48:29,004 [INFO] Processing advanced stats for fighter ID: 1636
+2025-09-14 07:48:29,004 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/262a7d06203657e6
+2025-09-14 07:48:29,497 [INFO] Found 20 li elements for fighter 1636
+2025-09-14 07:48:29,531 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,531 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,531 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,532 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:29,532 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:29,532 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:29,532 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:29,533 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:29,533 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:29,533 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:29,533 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:29,534 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:29,534 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:29,534 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:29,534 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:29,535 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:29,535 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:29,535 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,535 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,536 [INFO] tag html: 
+ None
+2025-09-14 07:48:29,536 [INFO] Fighter 1636: Found 8 valid stats
+2025-09-14 07:48:29,538 [INFO] Successfully updated advanced stats for fighter: 1636
+2025-09-14 07:48:29,538 [INFO] Processing advanced stats for fighter ID: 3177
+2025-09-14 07:48:29,538 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/d747eb273a40a920
+2025-09-14 07:48:30,015 [INFO] Found 20 li elements for fighter 3177
+2025-09-14 07:48:30,015 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,015 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,016 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,016 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:30,017 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:30,017 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:30,019 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:30,019 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:30,019 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:30,019 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:30,020 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:30,020 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:30,020 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:30,020 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:30,021 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:30,021 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:30,021 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:30,021 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,021 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,021 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,021 [INFO] Fighter 3177: Found 8 valid stats
+2025-09-14 07:48:30,023 [INFO] Successfully updated advanced stats for fighter: 3177
+2025-09-14 07:48:30,023 [INFO] Processing advanced stats for fighter ID: 1515
+2025-09-14 07:48:30,023 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/29162be25ebef5f0
+2025-09-14 07:48:30,494 [INFO] Found 20 li elements for fighter 1515
+2025-09-14 07:48:30,495 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,495 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,495 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,496 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:30,496 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:30,496 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:30,497 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:30,497 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:30,498 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:30,498 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:30,498 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:30,499 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:30,499 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:30,500 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:30,500 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:30,500 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:30,501 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:30,501 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,501 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,503 [INFO] tag html: 
+ None
+2025-09-14 07:48:30,503 [INFO] Fighter 1515: Found 8 valid stats
+2025-09-14 07:48:30,505 [INFO] Successfully updated advanced stats for fighter: 1515
+2025-09-14 07:48:30,505 [INFO] Processing advanced stats for fighter ID: 2166
+2025-09-14 07:48:30,505 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/32feae6d9a1e5047
+2025-09-14 07:48:31,008 [INFO] Found 20 li elements for fighter 2166
+2025-09-14 07:48:31,008 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,008 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,009 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,009 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:31,009 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:31,010 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:31,010 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:31,010 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:31,011 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:31,011 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:31,011 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:31,012 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:31,012 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:31,013 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:31,013 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:31,013 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:31,015 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:31,015 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,015 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,015 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,016 [INFO] Fighter 2166: Found 8 valid stats
+2025-09-14 07:48:31,017 [INFO] Successfully updated advanced stats for fighter: 2166
+2025-09-14 07:48:31,018 [INFO] Processing advanced stats for fighter ID: 762
+2025-09-14 07:48:31,018 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/5e9ca8dd7d783a75
+2025-09-14 07:48:31,503 [INFO] Found 20 li elements for fighter 762
+2025-09-14 07:48:31,503 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,504 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,504 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,504 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:31,505 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:31,505 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:31,506 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:31,506 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:31,506 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:31,507 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:31,507 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:31,508 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:31,508 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:31,508 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:31,509 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:31,509 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:31,511 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:31,511 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,511 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,511 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,512 [INFO] Fighter 762: Found 8 valid stats
+2025-09-14 07:48:31,514 [INFO] Successfully updated advanced stats for fighter: 762
+2025-09-14 07:48:31,514 [INFO] Processing advanced stats for fighter ID: 3067
+2025-09-14 07:48:31,514 [INFO] Fetching stats from: http://ufcstats.com/fighter-details/81d2c551886bd5a1
+2025-09-14 07:48:31,984 [INFO] Found 20 li elements for fighter 3067
+2025-09-14 07:48:31,984 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,984 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,985 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,985 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Height:
+      </i>
+2025-09-14 07:48:31,986 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Weight:
+      </i>
+2025-09-14 07:48:31,986 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        Reach:
+      </i>
+2025-09-14 07:48:31,987 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        STANCE:
+      </i>
+2025-09-14 07:48:31,987 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+        DOB:
+      </i>
+2025-09-14 07:48:31,987 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SLpM:
+          </i>
+2025-09-14 07:48:31,988 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Acc.:
+          </i>
+2025-09-14 07:48:31,988 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            SApM:
+          </i>
+2025-09-14 07:48:31,989 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Str. Def:
+          </i>
+2025-09-14 07:48:31,989 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_type_width">
+</i>
+2025-09-14 07:48:31,990 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Avg.:
+          </i>
+2025-09-14 07:48:31,990 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Acc.:
+          </i>
+2025-09-14 07:48:31,990 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            TD Def.:
+          </i>
+2025-09-14 07:48:31,991 [INFO] tag html: 
+ <i class="b-list__box-item-title b-list__box-item-title_font_lowercase b-list__box-item-title_type_width">
+            Sub. Avg.:
+          </i>
+2025-09-14 07:48:31,991 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,992 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,992 [INFO] tag html: 
+ None
+2025-09-14 07:48:31,992 [INFO] Fighter 3067: Found 8 valid stats
+2025-09-14 07:48:31,994 [INFO] Successfully updated advanced stats for fighter: 3067
+2025-09-14 07:48:32,069 [INFO] Successfully committed all advanced stats updates

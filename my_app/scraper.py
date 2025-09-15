@@ -18,6 +18,7 @@ logging.basicConfig(
 
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
+
 # stats_url = "http://ufcstats.com/statistics/fighters?char=a&page=all"
 def get_ufc_fighters():
     #list of all fighters
@@ -247,3 +248,96 @@ def get_advanced_stats():
            
 
     return advanced_fighters
+
+def get_tapology_stats(tapology_url, name):
+    session = requests.Session()
+    page = session.get(tapology_url)
+    soup = BeautifulSoup(page.text, 'html.parser')
+    #split it into 3 phases: striking clinch and ground
+    thead = soup.find_all('thead', class_='Table_THEAD')
+    tbody = soup.find_all('tbody', class_='Table_TBODY')
+    striking_col = thead[0]
+    striking = tbody[0]
+    clinching_col = thead[1]
+    clinching = tbody[1]
+    ground_col = thead[2]
+    ground = tbody[2]
+    
+    striking_dict = {}
+    for tr in striking.find_all('tr'):
+        striking_data = {}
+        td_list = tr.find_all('td')
+        for index, col in enumerate([i.text.strip() for i in striking_col.find_all('th')]):
+            if index == 2:
+                continue
+            if len(td_list) > 4 and td_list[4].text.strip() == '-':
+                break
+            striking_data[col] = td_list[index].text.strip()
+        striking_dict[name] = striking_data
+
+    clinching_dict = {}
+    for tr in clinching.find_all('tr'):
+        clinching_data = {}
+        td_list = tr.find_all('td')
+        for index, col in enumerate([i.text.strip() for i in clinching_col.find_all('th')]):
+            if index == 2:
+                continue
+            if len(td_list) > 4 and td_list[4].text.strip() == '-':
+                break
+            clinching_data[col] = td_list[index].text.strip()
+        clinching_dict[name] = clinching_data
+
+    ground_dict = {}
+    for tr in ground.find_all('tr'):
+        ground_data = {}
+        td_list = tr.find_all('td')
+        for index, col in enumerate([i.text.strip() for i in ground_col.find_all('th')]):
+            if index == 2:
+                continue
+            if len(td_list) > 4 and td_list[4].text.strip() == '-':
+                break
+            ground_data[col] = td_list[index].text.strip()
+        ground_dict[name] = ground_data
+    
+    return (striking_dict, clinching_dict, ground_dict)
+        
+
+
+def tapology_stats_threaded(max_workers=5):
+    striking = {}
+    clinching = {}
+    ground_game = {}
+    session = requests.Session()
+    with sq.connect(db_path) as conn:
+        url_1 = 'https://www.espn.com/search/_/q/'
+        cursor = conn.cursor()
+        rows = cursor.execute('select name from fighters;').fetchall()
+        fighter_pairs = []
+        for row in rows:
+            name = row[0].lower()
+            first_name, last_name = row[0].lower().split(' ')
+            search_url = url_1 + f'{first_name}%20{last_name}'
+            page = session.get(search_url)
+            soup = BeautifulSoup(page.text, 'html.parser')
+            sections = soup.find_all('section', class_='Card')
+            for section in sections:
+                if section.find('a'):
+                    fighter_url = section.find('a')['href']
+                    fighter_pairs.append((fighter_url, name))
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(get_tapology_stats, url, name): (url, name) for url, name in fighter_pairs}
+        for future in as_completed(futures):
+            try:
+                strike, clinch, ground = future.result()
+                striking.update(strike)
+                clinching.update(clinch)
+                ground_game.update(ground)
+                ...
+            except Exception as e:
+                logging.error(f"Error processing {futures[future]}, error: {e}")
+    
+    return (striking, clinching, ground_game)
+            
+
+

@@ -30,7 +30,7 @@ def get_dates():
     return sorted(ordered_ufc_event_dates)
 
 def to_table_date(standard_date):
-    #this function turns a standard date used in the data library to my tabe=le's date
+    #this function turns a standard date used in the data library to my table's date
     table_date = standard_date.strftime("%b. %d, %Y")
     return table_date
 

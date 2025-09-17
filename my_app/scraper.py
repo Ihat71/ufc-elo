@@ -6,6 +6,7 @@ import sqlite3 as sq
 from datetime import datetime
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from utilities import *
 
 
 
@@ -249,8 +250,7 @@ def get_advanced_stats():
 
     return advanced_fighters
 
-def get_tapology_stats(tapology_url, name):
-    session = requests.Session()
+def get_tapology_stats(tapology_url, name, session):
     page = session.get(tapology_url)
     soup = BeautifulSoup(page.text, 'html.parser')
     #split it into 3 phases: striking clinch and ground
@@ -264,40 +264,48 @@ def get_tapology_stats(tapology_url, name):
     ground = tbody[2]
     
     striking_dict = {}
+    striking_fights_list = []
     for tr in striking.find_all('tr'):
         striking_data = {}
         td_list = tr.find_all('td')
-        for index, col in enumerate([i.text.strip() for i in striking_col.find_all('th')]):
+        #but remember that %BODY %HEAD and %LEG stays the same in the dict 
+        for index, col in enumerate([parse_espn_stats(i) for i in striking_col.find_all('th')]):
             if index == 2:
                 continue
             if len(td_list) > 4 and td_list[4].text.strip() == '-':
                 break
             striking_data[col] = td_list[index].text.strip()
-        striking_dict[name] = striking_data
+        striking_fights_list.append(striking_data)
+    striking_dict[name] = striking_fights_list
 
     clinching_dict = {}
+    clinching_fights_list = []
     for tr in clinching.find_all('tr'):
         clinching_data = {}
         td_list = tr.find_all('td')
-        for index, col in enumerate([i.text.strip() for i in clinching_col.find_all('th')]):
+        for index, col in enumerate([parse_espn_stats(i) for i in clinching_col.find_all('th')]):
             if index == 2:
                 continue
             if len(td_list) > 4 and td_list[4].text.strip() == '-':
                 break
             clinching_data[col] = td_list[index].text.strip()
-        clinching_dict[name] = clinching_data
+        clinching_fights_list.append(clinching_data)
+    clinching_dict[name] = clinching_fights_list
+
 
     ground_dict = {}
+    ground_fights_list = []
     for tr in ground.find_all('tr'):
         ground_data = {}
         td_list = tr.find_all('td')
-        for index, col in enumerate([i.text.strip() for i in ground_col.find_all('th')]):
+        for index, col in enumerate([parse_espn_stats(i) for i in ground_col.find_all('th')]):
             if index == 2:
                 continue
             if len(td_list) > 4 and td_list[4].text.strip() == '-':
                 break
             ground_data[col] = td_list[index].text.strip()
-        ground_dict[name] = ground_data
+        ground_fights_list.append(ground_data)
+    ground_dict[name] = ground_fights_list
     
     return (striking_dict, clinching_dict, ground_dict)
         
@@ -326,14 +334,13 @@ def tapology_stats_threaded(max_workers=5):
                     fighter_pairs.append((fighter_url, name))
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(get_tapology_stats, url, name): (url, name) for url, name in fighter_pairs}
+        futures = {executor.submit(get_tapology_stats, url, name, session): (url, name) for url, name in fighter_pairs}
         for future in as_completed(futures):
             try:
                 strike, clinch, ground = future.result()
                 striking.update(strike)
                 clinching.update(clinch)
                 ground_game.update(ground)
-                ...
             except Exception as e:
                 logging.error(f"Error processing {futures[future]}, error: {e}")
     

@@ -4,8 +4,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import sqlite3 as sq
 import pandas as pd
-from my_app.scraper import get_ufc_fighters, get_events, get_fighter_records_threaded, get_advanced_stats
+from my_app.scraper import get_ufc_fighters, get_events, get_fighter_records_threaded, get_advanced_stats, tapology_stats_threaded
 import logging
+from utilities import *
 
 logging.basicConfig(
     filename="setup.log",
@@ -94,6 +95,66 @@ def db_tables_setup():
                        foreign key (fighter_b) references fighters(fighter_id),
                        foreign key (winner) references fighters(fighter_id)
                        );""")
+        
+        cursor.execute('''CREATE TABLE if not exists advanced_striking(
+                       fighter_id integer,
+                       date varchar(100),
+                       opponent varchar(100),
+                       result varchar(100),
+                       sdbl_a varchar(100),	
+                       sdhl_a varchar(100),
+                       sdll_a varchar(100),
+                       tsl varchar(100),
+                       tsa varchar(100),
+                       ssl varchar(100),
+                       ssa varchar(100),
+                       tsl_tsa varchar(100),
+                       kd integer,
+                       body_percentage varchar(100),
+                       head_percentage varchar(100),
+                       leg_percentage varchar(100),
+                       foreign key (fighter_id) references fighters(fighter_id)
+                       );''')
+        
+        cursor.execute('''CREATE TABLE if not exists advanced_clinch(
+                       fighter_id integer,
+                       date varchar(100),
+                       opponent varchar(100),
+                       result varchar(100),
+                       scbl integer,	
+                       scba integer,
+                       schl integer,
+                       scha integer,
+                       scll integer,
+                       scla integer,
+                       rv integer,
+                       sr float,
+                       tdl integer,
+                       tda integer,
+                       tds integer,
+                       tk_acc varchar(100),
+                       foreign key (fighter_id) references fighters(fighter_id)
+                       );''')
+        
+        cursor.execute('''CREATE TABLE if not exists advanced_ground(
+                       fighter_id integer,
+                       date varchar(100),
+                       opponent varchar(100),
+                       result varchar(100),
+                       sgbl integer,	
+                       sgba integer,
+                       sghl integer,
+                       sgha integer,
+                       sgll integer,
+                       sgla integer,
+                       ad integer,
+                       adtb integer,
+                       adhg integer,
+                       adtm integer,
+                       adts integer,
+                       sm integer,
+                       foreign key (fighter_id) references fighters(fighter_id)
+                       );''')
                 
         conn.commit()
 def fighters_table_setup():
@@ -228,6 +289,34 @@ def fights_table_setup():
         conn.commit()
 
 
+#sets up the tables for the tapology stats I scraped 
+def advanced_espn_setup():
+    striking_dict, clinching_dict, ground_dict = tapology_stats_threaded()
+    with sq.connect(db_path) as conn:
+        table_map = {
+            'advanced_striking' : striking_dict,
+            'advanced_clinching' : clinching_dict,
+            'advanced_ground' : ground_dict
+        }
+        for table, stat_dict in table_map.items():
+            espn_extraction(table, stat_dict, conn)
+        
+
+def espn_extraction(table, stat_dict, conn):
+    cursor = conn.cursor()    
+    for name, fights in stat_dict.items():
+        fighter_id = get_fighter_id(conn, name)
+        for fight in fights:
+            column_query, values = get_column_query(fight)
+            query = f'insert into {table} {column_query} values {values}'
+            params = (fighter_id, *fight.values())
+            cursor.execute(query, params)
+        
+    conn.commit()
+
+
+
+
 
 
 def main():
@@ -236,7 +325,8 @@ def main():
     #events_table_setup()
     #records_table_setup()
     # advanced_table_setup()
-    fights_table_setup()
+    #fights_table_setup()
+    advanced_espn_setup()
     
 
 

@@ -2,18 +2,14 @@ import os, sys
 from pathlib import Path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from datetime import datetime
 import sqlite3 as sq
 import pandas as pd
-from my_app.scraper import get_ufc_fighters, get_events, get_fighter_records_threaded, get_advanced_stats, tapology_stats_threaded
+from my_app.scraper import get_ufc_fighters, get_events, get_fighter_records_threaded, get_advanced_stats, espn_stats_threaded
 import logging
 from utilities import *
 
-logging.basicConfig(
-    filename="setup.log",
-    filemode="w",  #w overwrites, a appends
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-) 
+logger = logging.getLogger(__name__)
 
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
@@ -98,9 +94,10 @@ def db_tables_setup():
         
         cursor.execute('''CREATE TABLE if not exists advanced_striking(
                        fighter_id integer,
+                       espn_url varchar(100),
                        date varchar(100),
                        opponent varchar(100),
-                       result varchar(100),
+                       res varchar(100),
                        sdbl_a varchar(100),	
                        sdhl_a varchar(100),
                        sdll_a varchar(100),
@@ -118,9 +115,10 @@ def db_tables_setup():
         
         cursor.execute('''CREATE TABLE if not exists advanced_clinch(
                        fighter_id integer,
+                       espn_url varchar(100),
                        date varchar(100),
                        opponent varchar(100),
-                       result varchar(100),
+                       res varchar(100),
                        scbl integer,	
                        scba integer,
                        schl integer,
@@ -138,9 +136,10 @@ def db_tables_setup():
         
         cursor.execute('''CREATE TABLE if not exists advanced_ground(
                        fighter_id integer,
+                       espn_url varchar(100),
                        date varchar(100),
                        opponent varchar(100),
-                       result varchar(100),
+                       res varchar(100),
                        sgbl integer,	
                        sgba integer,
                        sghl integer,
@@ -214,7 +213,7 @@ def records_table_setup():
             id_2 = cursor.execute('SELECT fighter_id FROM fighters WHERE name = ?', (fighter_2_name.strip(),)).fetchone()
 
             if not id_1 or not id_2:
-                logging.warning(f"Could not find id of both fighters: {fighter_1_name}, {fighter_2_name}")
+                logger.warning(f"Could not find id of both fighters: {fighter_1_name}, {fighter_2_name}")
                 continue
 
             event_id_row = cursor.execute('select event_id from events where event_name = ?', (event,)).fetchone()
@@ -223,9 +222,9 @@ def records_table_setup():
             fighter_1_id, fighter_2_id = id_1[0], id_2[0]
             try:
                 cursor.execute('insert into records (url, event_id, date, fighter_1, fighter_2, result, weight_class, method, round_num, fight_time, is_title_fight) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (url, event_id, date, fighter_1_id, fighter_2_id, win_loss, weight_class, method, round_ended, time, is_title_fight))
-                logging.info(f"Successfully inserted into the records table the url: {url}, ids: {fighter_1_id} vs {fighter_2_id}")
+                logger.info(f"Successfully inserted into the records table the url: {url}, ids: {fighter_1_id} vs {fighter_2_id}")
             except Exception:
-                logging.error(f"failed to insert record for url: {url}, {fighter_1_name} vs {fighter_2_name}")
+                logger.error(f"failed to insert record for url: {url}, {fighter_1_name} vs {fighter_2_name}")
             
 
         conn.commit()
@@ -250,9 +249,9 @@ def advanced_table_setup():
                         str_def, td_avg, td_acc, td_def, sub_avg) values (?,?,?,?,?,?,?,?,?,?)""", 
                         (url, fighter_id[0], slpm, str_acc, sapm, 
                         str_def, td_avg, td_acc, td_def, sub_avg))
-                logging.info(f"Successfully inserted into the advanced_stats table the url: f{url}, id: {fighter_id[0]}")
+                logger.info(f"Successfully inserted into the advanced_stats table the url: f{url}, id: {fighter_id[0]}")
             except Exception:
-                logging.error(f"Failed to insert into advanced_stats table the url: f{url}, id: {fighter_id[0]}")
+                logger.error(f"Failed to insert into advanced_stats table the url: f{url}, id: {fighter_id[0]}")
             
             
         conn.commit()
@@ -283,52 +282,79 @@ def fights_table_setup():
             event_id, date, fighter_1, fighter_2, winner, weight_class, method, round_ended, round_time, is_title_fight = fight
             try:
                 cursor.execute('insert into fights (event_id, date, fighter_a, fighter_b, winner, weight_class, method, round_ended, time_ended, is_title_fight) values (?,?,?,?,?,?,?,?,?,?)', (event_id, date, fighter_1, fighter_2, winner, weight_class, method, round_ended, round_time, is_title_fight))
-                logging.info("successfully inserted into fights")
+                logger.info("successfully inserted into fights")
             except Exception:
-                logging.error("failed to insert fight into fights table")
+                logger.error("failed to insert fight into fights table")
         conn.commit()
 
 
 #sets up the tables for the tapology stats I scraped 
 def advanced_espn_setup():
-    striking_dict, clinching_dict, ground_dict = tapology_stats_threaded()
+    fighter_pairs, striking_list, clinching_list, ground_list = espn_stats_threaded(10)
+    table_map = {
+        'advanced_striking' : striking_list,
+        'advanced_clinch' : clinching_list,
+        'advanced_ground' : ground_list
+    }
     with sq.connect(db_path) as conn:
-        table_map = {
-            'advanced_striking' : striking_dict,
-            'advanced_clinching' : clinching_dict,
-            'advanced_ground' : ground_dict
-        }
-        for table, stat_dict in table_map.items():
-            espn_extraction(table, stat_dict, conn)
+        logger.debug('starting the insertion')
+        for table, stat_list in table_map.items():
+            try:
+                espn_extraction_and_inserting(fighter_pairs, table, stat_list, conn)
+                logger.debug(f"finished insering into {table}")
+            except Exception as e:
+                logger.error(f'error {e} occured in advanced espn setup')
+
         
 
-def espn_extraction(table, stat_dict, conn):
-    cursor = conn.cursor()    
-    for name, fights in stat_dict.items():
-        fighter_id = get_fighter_id(conn, name)
-        for fight in fights:
-            column_query, values = get_column_query(fight)
-            query = f'insert into {table} {column_query} values {values}'
-            params = (fighter_id, *fight.values())
-            cursor.execute(query, params)
-        
+def espn_extraction_and_inserting(fighter_pairs, table, stat_list, conn):
+    cursor = conn.cursor()
+    for stat_dict in stat_list:
+        for name, fights in stat_dict.items():
+            fighter_id = get_fighter_id(conn, name)
+            fighter_url = get_fighter_pair_url(fighter_pairs, name)
+            if not fighter_id or not fighter_url:
+                logger.warning(f'could not get the id or url for {name}')
+                continue
+            for fight in fights:
+                fighter_id = get_fighter_id(conn, name)
+                fighter_url = get_fighter_pair_url(fighter_pairs, name)
+                if check_if_fight_in_ufc(fight.get('date'), conn) == False:
+                    logger.info(f"skipped fight at date {fight.get('date')} for fighter {name} and url {fighter_url} since it was not in the ufc")
+                    continue
+                column_query, values = get_column_query(fight)
+                query = f'insert into {table} {column_query} values {values}'
+                params = (fighter_id, fighter_url, *fight.values())
+                cursor.execute(query, params)
+                logger.info(f'successfully insterted into the table {table} the stats {fight} for {name}')
     conn.commit()
 
+def check_if_fight_in_ufc(fight_date, conn):
+    parsed_date = datetime.strptime(fight_date, '%b %d, %Y')
+    fight_date = parsed_date.strftime('%B %d, %Y')
 
+    cursor = conn.cursor()
+    ufc_date = cursor.execute('select * from events where event_date = ?;', (fight_date,)).fetchone()
 
+    if ufc_date:
+        return True
+    else:
+        return False
 
+    ...
 
+def get_column_query(fight_dict):
+    '''makes a custom query so i dont have to keep writing queries im so done with that'''
+    column_query = '(fighter_id,espn_url,'
+    values = '(?,?,'
+    for key in fight_dict:
+        if key.lower() in ['%body', '%leg', '%head']:
+            key = f"{key.lower().replace('%', '')}_percentage"
+        column_query += f"{key},"
+        values += '?,'
+    column_query = replace_last(column_query, ",", ")")
+    values = replace_last(values, ",", ")")
+    return column_query, values
+        
 
-def main():
-    db_tables_setup()
-    # fighters_table_setup()
-    #events_table_setup()
-    #records_table_setup()
-    # advanced_table_setup()
-    #fights_table_setup()
-    advanced_espn_setup()
-    
-
-
-if __name__ == "__main__":
-    main()
+#next step: add logger to the scraper and setup and check for errors then we can finally move on to the data analysis completely (perchance, but at least the hard data scraping is done with)

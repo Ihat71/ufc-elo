@@ -5,12 +5,8 @@ from datetime import datetime
 import sqlite3 as sq
 
 
-logging.basicConfig(
-    filename="elo.log",
-    filemode="w",  # 'w' overwrites, 'a' appends
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-) 
+logger = logging.getLogger(__name__)
+
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
 

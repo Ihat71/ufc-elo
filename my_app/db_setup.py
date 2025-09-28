@@ -290,7 +290,7 @@ def fights_table_setup():
 
 #sets up the tables for the tapology stats I scraped 
 def advanced_espn_setup():
-    fighter_pairs, striking_list, clinching_list, ground_list = espn_stats_threaded(10)
+    fighter_pairs, striking_list, clinching_list, ground_list = espn_stats_threaded(5)
     table_map = {
         'advanced_striking' : striking_list,
         'advanced_clinch' : clinching_list,
@@ -305,7 +305,6 @@ def advanced_espn_setup():
             except Exception as e:
                 logger.error(f'error {e} occured in advanced espn setup')
 
-        
 
 def espn_extraction_and_inserting(fighter_pairs, table, stat_list, conn):
     cursor = conn.cursor()
@@ -317,16 +316,28 @@ def espn_extraction_and_inserting(fighter_pairs, table, stat_list, conn):
                 logger.warning(f'could not get the id or url for {name}')
                 continue
             for fight in fights:
+                # print("fights: ", fights, "stat_dict: ", stat_dict)
                 fighter_id = get_fighter_id(conn, name)
                 fighter_url = get_fighter_pair_url(fighter_pairs, name)
+                # print('step 1')
+                #problem starts here:
                 if check_if_fight_in_ufc(fight.get('date'), conn) == False:
                     logger.info(f"skipped fight at date {fight.get('date')} for fighter {name} and url {fighter_url} since it was not in the ufc")
                     continue
+                # print('step 2')
                 column_query, values = get_column_query(fight)
                 query = f'insert into {table} {column_query} values {values}'
+                #last minute check
+                for key in fight:
+                    #im adding .strip just in case
+                    if fight[f'{key}'] and fight[f'{key}'].strip() == '-':
+                        fight[f'key'] = None
+                # print('step 3')
                 params = (fighter_id, fighter_url, *fight.values())
                 cursor.execute(query, params)
                 logger.info(f'successfully insterted into the table {table} the stats {fight} for {name}')
+
+    logging.info(f'FINISHED for {table}')
     conn.commit()
 
 def check_if_fight_in_ufc(fight_date, conn):
@@ -334,8 +345,8 @@ def check_if_fight_in_ufc(fight_date, conn):
     fight_date = parsed_date.strftime('%B %d, %Y')
 
     cursor = conn.cursor()
-    ufc_date = cursor.execute('select * from events where event_date = ?;', (fight_date,)).fetchone()
-
+    ufc_date = cursor.execute('select event_id from events where event_date = ?;', (fight_date,)).fetchone()
+    # print(f'Ufc data status: {ufc_date}, fight date: {fight_date}')
     if ufc_date:
         return True
     else:
@@ -355,6 +366,9 @@ def get_column_query(fight_dict):
     column_query = replace_last(column_query, ",", ")")
     values = replace_last(values, ",", ")")
     return column_query, values
+
+def expand_fighters_table():
+    ...
         
 
 #next step: add logger to the scraper and setup and check for errors then we can finally move on to the data analysis completely (perchance, but at least the hard data scraping is done with)

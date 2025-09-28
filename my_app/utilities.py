@@ -1,3 +1,4 @@
+import random
 
 def get_fighter_id(conn, name):
     '''this function is for the db_setup to modularize the getting of fighter ids'''
@@ -19,7 +20,11 @@ def replace_last(text, old, new, count=1):
     return new.join(parts)
 
 def get_fighter_pair_url(fighter_pairs, fighter_name):
+    '''this returms the url from the fighter_pairs variable I made'''
     for url, name in fighter_pairs:
         if name == fighter_name:
             return url
         
+def get_random_ip(ip_list):
+    '''retruns a random IP from a list of valid IPs'''
+    return random.choice(ip_list)

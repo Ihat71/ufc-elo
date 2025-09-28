@@ -15,6 +15,21 @@ logger = logging.getLogger(__name__)
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
 
+ip_list = [
+    "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+    "2001:0db8:0000:0000:abcd:1234:5678:9abc",
+    "2001:0db8:abcd:0012:0000:0000:0000:0001",
+    "2001:0db8:dead:beef:0000:0000:cafe:babe",
+    "2001:0db8:1111:2222:3333:4444:5555:6666",
+    "2001:0db8:aaaa:bbbb:cccc:dddd:eeee:ffff",
+    "2001:0db8:abcd:0000:1234:5678:90ab:cdef",
+    "2001:0db8:abcd:1234:ffff:0000:1111:2222",
+    "2001:0db8:abcd:4321:0000:abcd:ef01:2345",
+    "2001:0db8:aaaa:0000:bbbb:0000:cccc:0000",
+    "2001:0db8:abcd:5678:1234:abcd:5678:9abc",
+    "2001:0db8:ffff:eeee:dddd:cccc:bbbb:aaaa"
+]
+
 # stats_url = "http://ufcstats.com/statistics/fighters?char=a&page=all"
 def get_ufc_fighters():
     #list of all fighters
@@ -246,19 +261,32 @@ def get_advanced_stats():
     return advanced_fighters
 
 def get_espn_stats(espn_url, name):
+    time.sleep(random.uniform(0.2, 0.6))
+    #x forwarded only wors for very lazy websites so this was useless but we move
+    ipv6_random = get_random_ip(ip_list)
     headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/128.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": "https://www.espn.com/",
+    "X-Forwarded-For" : ipv6_random,
     }      
+    striking_dict, clinching_dict, ground_dict = {}, {}, {}
+    status_code = None
+
+
+
+
     with requests.Session() as session:
         try:
             page = session.get(espn_url.strip(), headers=headers)
+            status_code = page.status_code
+            page.raise_for_status()
             soup = BeautifulSoup(page.text, 'html.parser')
         except Exception as e:
             logger.info(f'exception {e} happened when trying to access {espn_url}')
+            return ({}, {}, {}, status_code)
         #split it into 3 phases: striking clinch and ground
 
         thead = soup.find_all('thead', class_='Table__THEAD')
@@ -273,10 +301,9 @@ def get_espn_stats(espn_url, name):
             ground_col = thead[2]
             ground = tbody[2]
         except Exception as e:
-            logger.info('espn stat getter: no data available')
-            return None
+            logger.info(f'espn stat getter: no data available, exception: {e}')
+            return ({}, {}, {}, status_code)
 
-        striking_dict = {}
         striking_fights_list = []
         try:
             for tr in striking.find_all('tr'):
@@ -296,7 +323,6 @@ def get_espn_stats(espn_url, name):
         except Exception as e:
             logger.error(f'couldnt get the striking data dictionary for {name}, error: {e}')
 
-        clinching_dict = {}
         clinching_fights_list = []
         try:
             for tr in clinching.find_all('tr'):
@@ -315,7 +341,6 @@ def get_espn_stats(espn_url, name):
         except Exception as e:
             logger.error(f'couldnt get the clinching data for {name}, error: {e}')
 
-        ground_dict = {}
         ground_fights_list = []
         try:
 
@@ -334,9 +359,28 @@ def get_espn_stats(espn_url, name):
             logger.debug(f'successfully got the ground data for {name}')
         except Exception as e:
             logger.error(f'couldnt get the ground data for {name}, error: {e}')
-    return (striking_dict, clinching_dict, ground_dict)
+
+    return (striking_dict, clinching_dict, ground_dict, status_code)
         
-def get_espn_ids(headers, name):
+def get_espn_ids(seen_ids, id_and_name):
+    fighter_id, name = id_and_name
+    headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/128.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://www.espn.com/",
+    }  
+    time.sleep(random.uniform(0.2, 0.6))
+
+
+    if fighter_id and (fighter_id,) in seen_ids:
+        return ('seen', 'seen')
+    
+    #fun better way:
+    # if fighter_id and fighter_id in [*id for id in seen_ids]
+
+
     url = f"https://site.api.espn.com/apis/search/v2?query={name.replace(' ', '%20')}"
     # if index == 100:
     #     break
@@ -361,13 +405,13 @@ def get_espn_ids(headers, name):
 
 
 def espn_stats_threaded(max_workers=5):
-    headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/128.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://www.espn.com/",
-    }  
+    # headers = {
+    # "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    #               "AppleWebKit/537.36 (KHTML, like Gecko) "
+    #               "Chrome/128.0.0.0 Safari/537.36",
+    # "Accept-Language": "en-US,en;q=0.9",
+    # "Referer": "https://www.espn.com/",
+    # }  
     striking = []
     clinching = []
     ground_game = []
@@ -375,7 +419,8 @@ def espn_stats_threaded(max_workers=5):
     with sq.connect(db_path) as conn:
         # url_1 = 'https://www.espn.com/search/_/q/'
         cursor = conn.cursor()
-        rows = cursor.execute('select name from fighters;').fetchall()
+        rows = cursor.execute('select fighter_id, name from fighters;').fetchall()
+        seen_ids = cursor.execute('select distinct fighter_id from advanced_striking;').fetchall()
         fighter_pairs = []
 
 
@@ -423,45 +468,60 @@ def espn_stats_threaded(max_workers=5):
         #     except Exception as e:
         #         logger.error(f'error {e} happened when trying to get the url of {name}')
     
-    sub_rows = rows[:201]
 
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {executor.submit(get_espn_ids, headers, row[0]) : row for row in sub_rows}
+    # sub_rows = rows[:600]
+    #this gets the url and name of fighters to parse their stats
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = {executor.submit(get_espn_ids, seen_ids, row) : row for row in rows}
         for future in as_completed(futures):
             try:
-                if future.result() != (None, None):
-                    fighter_pairs.append(future.result())
+                result = future.result()
+
+                if result != (None, None) and result != ('seen', 'seen'): 
+                    fighter_pairs.append(result)
                     # print(strike, clinch, ground)
                     logger.info(f'no errors in getting the url for {futures[future]}')
-                    time.sleep(random.uniform(0.2, 0.6))
+                    # time.sleep(random.uniform(0.2, 0.6))
+                elif result == ('seen', 'seen'):
+                    PURPLE = "\033[35m"
+                    RESET = "\033[0m"
+                    logger.info(f'{PURPLE}Already seen the fighter {futures[future]} before, will be skipping{RESET}')
                 else:
-                    logging.warning(f'Unfortunately got None for {futures[future]}')
+                    logger.warning(f'Unfortunately got None for {futures[future]}')
             
             except Exception as e:
                 logger.error(f"Error getting the url for {futures[future]}, error: {e}")
                 print("result: ", future.result())
 
-            
 
-
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(get_espn_stats, url, name) : (url, name) for url, name in fighter_pairs}
-        for future in as_completed(futures):
-            try:
-                if future.result():
-                    strike, clinch, ground = future.result()
-                    striking.append(strike)
-                    clinching.append(clinch)
-                    ground_game.append(ground)
-                    # print(strike, clinch, ground)
-                    logger.info(f'no errors in processing {futures[future]}')
-                else:
-                    logger.info(f'Thread: no available info for {futures[future]}')
-            except Exception as e:
-                logger.error(f"Error processing {futures[future]}, error: {e}")
+    #making a predefined batch size to avoid getting rate limitted        
+    batch_size = 150    #we need to look human so that we do not get rate limited
+    for i in range(0, len(fighter_pairs), batch_size):
+        batch = fighter_pairs[i:i+batch_size]
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(get_espn_stats, url, name): (url, name) for url, name in batch}
+            for future in as_completed(futures):
+                url, name = futures[future]
+                try:
+                    strike, clinch, ground, status = future.result()
+                    if status != 200:
+                        logger.warning(f"Website error for {name} ({url}), status {status}")
+                        continue
+                    if strike or clinch or ground:
+                        striking.append(strike)
+                        clinching.append(clinch)
+                        ground_game.append(ground)
+                        logger.info(f"Processed {name} ({url}) successfully")
+                        # print(strike, clinch, ground)
+                    else:
+                        logger.info(f"No fight data found for {name} ({url})")
+                except Exception as e:
+                    logger.error(f"Error processing {url, name}: {e}")
+        logger.info("Batch complete, sleeping 5 minutes to avoid rate limit...")
+        time.sleep(300)
     
     logger.info(f"final dict sizes -> striking: {len(striking)}, clinching: {len(clinching)}, ground: {len(ground_game)}")
     return fighter_pairs, striking, clinching, ground_game
             
 
-
+#need to make a backfilling for what was missed. espn is so extra with their rate limiting. Currently missing 2553

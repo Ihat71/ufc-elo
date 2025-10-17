@@ -331,7 +331,7 @@ def espn_extraction_and_inserting(fighter_pairs, table, stat_list, conn):
                 for key in fight:
                     #im adding .strip just in case
                     if fight[f'{key}'] and fight[f'{key}'].strip() == '-':
-                        fight[f'key'] = None
+                        fight[f'{key}'] = None
                 # print('step 3')
                 params = (fighter_id, fighter_url, *fight.values())
                 cursor.execute(query, params)

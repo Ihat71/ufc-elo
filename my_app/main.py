@@ -1,5 +1,6 @@
 import logging
 from db_setup import *
+from db_update import *
 
 logging.basicConfig(
     filemode="w",  #w overwrites, a appends
@@ -10,8 +11,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-
-def main():
+def setup():
     db_tables_setup()
     # fighters_table_setup()
     #events_table_setup()
@@ -19,6 +19,14 @@ def main():
     # advanced_table_setup()
     #fights_table_setup()
     advanced_espn_setup()
+
+def update():
+    # update_events()
+    update_records_and_fights()
+    update_advanced_stats()
+
+def main():
+    update()
     
 
 

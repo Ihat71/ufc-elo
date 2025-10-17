@@ -6,6 +6,8 @@ import sqlite3 as sq
 from datetime import datetime
 import logging
 from elo import get_dates, to_table_date, elo_equation, elo_history_table
+from scraper import get_espn_stats
+from db_setup import get_column_query
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
 events_url = "http://ufcstats.com/statistics/events/completed?page=all"
@@ -145,11 +147,11 @@ def update_records_and_fights():
                 if not cursor.execute('select * from fighters where name = ?', (fighter_a,)).fetchone():
                     get_fighter(fighter_a)
                     put_elo(fighter_a)
-                    logger.info(f'put into fighters and elo table the fighter {fighter_a}')
+                    logger.info(f'put into fighters and elo table the new fighter {fighter_a}')
                 if not cursor.execute('select * from fighters where name = ?', (fighter_b,)).fetchone():
                     get_fighter(fighter_b)
                     put_elo(fighter_b)
-                    logger.info(f'put into fighters and elo table the fighter {fighter_b}')
+                    logger.info(f'put into fighters and elo table the new fighter {fighter_b}')
 
                 row = cursor.execute('select fighter_id from fighters where name = ?', (fighter_a,)).fetchone()
                 id_a = row[0] if row else None
@@ -157,8 +159,11 @@ def update_records_and_fights():
                 row = cursor.execute('select fighter_id from fighters where name = ?', (fighter_b,)).fetchone()
                 id_b = row[0] if row else None
 
+                swapped = False
                 if id_b < id_a:
                     id_a, id_b = id_b, id_a
+                    swapped = True
+                    # fighter_a, fighter_b = fighter_b, fighter_a
 
                 #note to self: recheck id swap logic
 
@@ -214,7 +219,7 @@ def update_records_and_fights():
                 cursor.execute('insert into records (url, event_id, date, fighter_1, fighter_2, result, weight_class, method, round_num, fight_time, is_title_fight) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (url_b, event_id, date, id_b, id_a, win_loss_b, weight_class, method, round_ended, time_ended, is_title_fight))
                 conn.commit()
                 logger.info(f'inserted into records table the record for fighter {id_b}')
-
+                #tag
                 #getting the new elos:
                 rA = cursor.execute('select elo from elo where fighter_id = ?', (id_a,)).fetchone()[0]
                 rB = cursor.execute('select elo from elo where fighter_id = ?', (id_b,)).fetchone()[0]
@@ -236,6 +241,21 @@ def update_records_and_fights():
                 fighters_updated.append(id_a)
                 fighters_updated.append(id_b)
 
+                #this is where the espn stats updater starts:
+                espn_url_a = cursor.execute('select espn_url from advanced_striking where fighter_id = ?;', (id_a,)).fetchone()
+                espn_url_a = espn_url_a[0] if espn_url_a else None
+                espn_url_b = cursor.execute('select espn_url from advanced_striking where fighter_id = ?;', (id_b,)).fetchone()
+                espn_url_b = espn_url_b[0] if espn_url_b else None
+
+                logger.debug('updating advanced stats now...')
+                if swapped == False:
+                    espn_update(espn_url_a, id_a, fighter_a, date, conn)
+                    espn_update(espn_url_b, id_b, fighter_b, date, conn)
+                else:
+                    espn_update(espn_url_a, id_a, fighter_b, date, conn)
+                    espn_update(espn_url_b, id_b, fighter_a, date, conn)
+
+
 
 
                 #note to self: also update the draws and no contests, also add some logger
@@ -245,8 +265,36 @@ def update_records_and_fights():
             # except Exception as e:
             #     logger.error(f"exception {e} happened when trying to access the urls for records and fights for url {url} in date {date}")
 
-# def update_elo_and_history():
-#     ...
+def espn_update(url, id, name, date, conn):
+    date = date.replace('.', '')
+    cursor = conn.cursor()
+    # date = datetime.strptime(date, '%b %d, %Y')
+    # date = datetime.strftime(date, '%b %d, %Y')
+    striking, clinch, ground, status = get_espn_stats(url, name)
+
+    stats_dict = {'advanced_striking':striking, 'advanced_clinch':clinch, 'advanced_ground':ground}
+    found = False
+    for table, stats in stats_dict.items():
+        for fights in stats.values():
+            for fight in fights:
+                if fight.get('date') == date:
+                    logger.info('fight found')
+                    column_query, values = get_column_query(fight)
+                    query = f'insert into {table} {column_query} values {values}'
+                    #last minute check
+                    for key in fight:
+                        #im adding .strip just in case
+                        if fight[f'{key}'] and fight[f'{key}'].strip() == '-':
+                            fight[f'{key}'] = None
+                    # print('step 3')
+                    params = (id, url, *fight.values())
+                    cursor.execute(query, params)
+                    logger.info(f'successfully insterted into the table {table} the stats {fight} for {name}')
+                    found = True
+                    break
+    if found == False:
+        logger.info('fight not found')
+
 
 #yes I plugged in my previous update advanced stats function to cloud sonnet and copied its reviewd version, however
 #I ONLY did this to learn the correct handling and logger practices later down the line from this code
@@ -289,8 +337,9 @@ def update_advanced_stats():
                 stats_found = 0
                 for li in li_list:
                     tag = li.find('i')
-                    logger.info(f"tag html: \n {tag}")
+                    logger.info("found a tag")
                     if not tag:
+                        logger.info('did not find a tag')
                         continue
                         
                     stat_name = tag.text.strip().replace('.', '').replace(' ', '_').replace(':', '').lower()
@@ -371,10 +420,12 @@ def update_advanced_stats():
             logger.error(f"Error committing advanced stats: {e}")
             conn.rollback()
 
-def main():
-    #two things to fix: fetching fighters in update records and also the winner detection
-    update_records_and_fights()
-    update_advanced_stats()
+                
 
-if __name__ == "__main__":
-    main()
+# def main():
+#     #two things to fix: fetching fighters in update records and also the winner detection
+#     update_records_and_fights()
+#     update_advanced_stats()
+
+# if __name__ == "__main__":
+#     main()

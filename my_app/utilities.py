@@ -1,4 +1,6 @@
 import random
+from flask import redirect, render_template, session
+from functools import wraps
 
 def get_fighter_id(conn, name):
     '''this function is for the db_setup to modularize the getting of fighter ids'''
@@ -28,3 +30,18 @@ def get_fighter_pair_url(fighter_pairs, fighter_name):
 def get_random_ip(ip_list):
     '''retruns a random IP from a list of valid IPs'''
     return random.choice(ip_list)
+
+def login_required(f):
+    """
+    Decorate routes to require login.
+
+    https://flask.palletsprojects.com/en/latest/patterns/viewdecorators/
+    """
+
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+
+    return decorated_function

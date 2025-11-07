@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import string
 import requests
 from pathlib import Path
 import sqlite3 as sq
@@ -8,6 +7,10 @@ import logging
 from elo import get_dates, to_table_date, elo_equation, elo_history_table
 from scraper import get_espn_stats
 from db_setup import get_column_query
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
 events_url = "http://ufcstats.com/statistics/events/completed?page=all"
@@ -420,7 +423,103 @@ def update_advanced_stats():
             logger.error(f"Error committing advanced stats: {e}")
             conn.rollback()
 
-                
+def update_fighters(espn_url, fighter_name):
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                  'AppleWebKit/537.36 (KHTML, like Gecko) '
+                  'Chrome/116.0.0.0 Safari/537.36'
+    } 
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                         'AppleWebKit/537.36 (KHTML, like Gecko) '
+                         'Chrome/116.0.0.0 Safari/537.36')
+    driver = webdriver.Chrome(options=options)
+    try:
+        driver.get(espn_url)
+
+        html = driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+        logger.info(f'Successfully connected to the page for {fighter_name}')
+            
+        fighter_pic, country, birthdate, team = (None, None, None, None)
+
+        # Extract info from <li> tags
+        for li in soup.find_all('li'):
+            text = li.text.lower()
+            if 'birthdate' in text:
+                birthdate = li.text.lower().replace('birthdate', '').strip()
+            elif 'team' in text:
+                team = li.text.lower().replace('team', '').strip()
+
+        imgs = soup.find_all('img')
+        for img in imgs:
+            src = img.get('src')
+            title = img.get('title')
+            if title and not country:  # flag
+                country = title
+            if 'headshot' in src or 'headshots' in src:  # ESPN uses 'headshots' in image URLs
+                fighter_pic = src
+    except Exception as e:
+        logger.error(f'Error occurred in getting the webpage: {e}')
+        return None
+    
+
+    finally:
+        driver.quit()
+
+    return (fighter_pic, country, birthdate, team)
+
+
+def update_fighters_threaded():
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+
+        # Check existing columns in SQLite
+        cursor.execute("PRAGMA table_info(fighters);")
+        existing_cols = [c[1] for c in cursor.fetchall()]
+        for col_name, col_type in [('picture', 'TEXT'), ('team', 'VARCHAR(100)'),
+                                   ('birthday', 'VARCHAR(100)'), ('country', 'VARCHAR(100)')]:
+            if col_name not in existing_cols:
+                cursor.execute(f"ALTER TABLE fighters ADD COLUMN {col_name} {col_type}")
+
+        # Fetch unique fighters
+        fighter_list = cursor.execute(
+            '''SELECT DISTINCT a.espn_url, f.name FROM fighters f 
+            JOIN advanced_striking a ON f.fighter_id = a.fighter_id;'''
+        ).fetchall()
+
+    # Threaded processing
+    results_list = []
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = {executor.submit(update_fighters, url, name): (url, name) for url, name in fighter_list}
+        for future in as_completed(futures):
+            try:
+                results = future.result()
+                if results:
+                    # Include fighter name for WHERE clause
+                    fighter_pic, country, birthdate, team = results
+                    if country and country.strip() == 'Powered by OneTrust Opens in a new Tab':
+                        country = None
+
+                    results_list.append((fighter_pic, country, birthdate, team, futures[future][1]))
+                    logger.info(f'Successfully fetched data for {futures[future][1]}')
+                    logger.info(f'results for {futures[future][1]}: {results}')
+            except Exception as e:
+                logger.error(f"Error processing {futures[future]}, error: {e}")
+
+    # Commit all updates at once
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+        for fighter_data in results_list:
+            cursor.execute(
+                'UPDATE fighters SET picture=?, country=?, birthday=?, team=? WHERE name=?',
+                fighter_data
+            )
+        conn.commit()
+
 
 # def main():
 #     #two things to fix: fetching fighters in update records and also the winner detection

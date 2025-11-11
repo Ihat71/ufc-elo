@@ -15,6 +15,9 @@
         <link href="/static/favicon.ico" rel="icon">
 
         <link href="/static/styles.css" rel="stylesheet">
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='dist/output.css') }}">
+
 
         <title>ufcHat: {% block title %}{% endblock %}</title>
 
@@ -23,7 +26,7 @@
     <body>
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span><img src="static/straw_hat.jpg" height="50px" width="50px">UFChat</span></a>
+                <a class="navbar-brand" href="/"><span><img src="static/images/straw_hat.jpg" height="50px" width="50px">UFC-Hat</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -33,10 +36,15 @@
                             <li class="nav-item"><a class="nav-link" href="/roster">Roster</a></li>
                             <li class="nav-item"><a class="nav-link" href="/fights">Fights</a></li>
                             <li class="nav-item"><a class="nav-link" href="/match-ups">Match ups</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/predictions">Predictions</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/rankings">Rankings</a></li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                         </ul>
+                        <form action="/search/" method="get">
+                            <input type="search" name="query" placeholder="Search">
+                        </form>
                     {% else %}
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
@@ -60,22 +68,12 @@
         </main>
 
         <footer class="mb-5">
-            <form action="https://validator.w3.org/check" class="text-center" enctype="multipart/form-data" method="post" target="_blank">
-                <input name="doctype" type="hidden" value="HTML5">
-                <input name="fragment" type="hidden">
-                <input alt="Validate" src="/static/I_heart_validator.png" type="image"> <!-- https://validator.w3.org/ -->
-            </form>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Adapted from https://stackoverflow.com/a/10162353
-                    const html = '<!DOCTYPE ' +
-                    document.doctype.name +
-                    (document.doctype.publicId ? ' PUBLIC "' + document.doctype.publicId + '"' : '') +
-                    (!document.doctype.publicId && document.doctype.systemId ? ' SYSTEM' : '') +
-                    (document.doctype.systemId ? ' "' + document.doctype.systemId + '"' : '') +
-                    '>\n' + document.documentElement.outerHTML;
-                    document.querySelector('form[action="https://validator.w3.org/check"] > input[name="fragment"]').value = html;
-                });
-            </script>
+            <div>
+                <nav>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </nav>
+            </div>
         </footer>
     </body>

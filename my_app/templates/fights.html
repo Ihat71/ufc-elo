@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Fights
+{% endblock %}
+
+{% block main %}
+    <div>
+        <nav>
+            <a href="/fights/completed">Completed</a>
+            <a href="/fights/upcoming">Upcoming</a>
+        </nav>
+        <div>
+            <h1>{{status}} events</h1>
+            <ul>
+                {% if status == "completed" %}
+                    <p>Only showing the last 30</p>
+                    {% for event in events %}
+                    <li>
+                        <a href="/fights/{{status}}">
+                        <h3>{{event['event_name']}}</h3>
+                        <h3>{{event['event_date']}}</h3>
+                        <h3>{{event['event_location']}}</h3>
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    {% for upcoming in upcoming_events %}
+                    <li>
+                        <a href="/fights/{{status}}">
+                        <h3>{{upcoming['event_name']}}</h3>
+                        <h3>{{upcoming['event_date']}}</h3>
+                        <h3>{{upcoming['event_location']}}</h3>
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

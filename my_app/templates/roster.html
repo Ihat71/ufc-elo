@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+<div>
+    <h1>Fighter Roster</h1>
+    <div>
+        <form action="/roster" method="post">
+            <div>
+                <h3>Fighter categories</h3>
+                <div>
+                    <label for="weight_class">Categories</label>
+                    <select name="weight_class" id="weight_class">
+                        <option value="All" selected>All</option>
+                        <option value="Flyweight">Flyweight</option>
+                        <option value="Bantamweight">Bantamweight</option>
+                        <option value="Featherweight">Featherweight</option>
+                        <option value="Lightweight">Lightweight</option>
+                        <option value="Welterweight">Welterweight</option>
+                        <option value="Middleweight">Middleweight</option>
+                        <option value="LightHeavyweight">Light Heavyweight</option>
+                        <option value="Heavyweight">Heavyweight</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="country">Country</label>
+                    <select name="country" id="country">
+                        <option value="" selected></option>
+                    {% for country in countries %}
+                        <option value="{{ country }}">{{ country }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="team">Team</label>
+                    <select name="team" id="team">
+                        <option value="" selected></option>
+                    {% for team in teams %}
+                        <option value="{{team}}">{{ team }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <button type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+        <div>
+            {% for fighter in fighters %}
+            <a href="/fighter/{{fighter[0]}}">{{fighter[1]}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

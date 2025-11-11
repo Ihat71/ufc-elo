@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Rankings
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>Methodology</h1>
+        <div>
+            <p> The k factor of my ELO equation is 32 however it can go up to 36 if the fighter got a knockout or a sub, also depending on how early the win was. A first round KO shows the difference in levels between two fightes: they are very far apart</p>
+            <p> However I only take UFC fights into account</p>
+            <p> ELO rankings in sports like UFC are not accurate due to the low volume of matches however they show interesting insights</p>
+        </div>
+    </div>
+    <div>
+        <h2>Fighter Rankings</h2>
+        <div>
+            <div>
+                <form action="/rankings" method="POST">
+                    <button type="submit" name="action" value="p4p">
+                        Pound-for-pound
+                    </button>
+                    <button type="submit" name="action" value="Flyweight">
+                        Flyweight
+                    </button>
+                    <button type="submit" name="action" value="Bantamweight">
+                        Bantamweight
+                    </button>
+                    <button type="submit" name="action" value="Featherweight">
+                        Featherweight
+                    </button>
+                    <button type="submit" name="action" value="Lightweight">
+                        Lightweight
+                    </button>
+                    <button type="submit" name="action" value="Welterweight">
+                        Welterweight
+                    </button>
+                    <button type="submit" name="action" value="Middleweight">
+                        Middleweight
+                    </button>
+                    <button type="submit" name="action" value="LightHeavyweight">
+                        LightHeavyWeight
+                    </button>
+                    <button type="submit" name="action" value="Heavyweight">
+                        Heavyweight
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <h2>{{chosen_class}}</h2>
+            {% for fighter in fighters %}
+            <a href="/fighter/{{fighter['fighter_id']}}">
+                <div><img src="{{fighter['pic']}}"></div>
+                <div>{{fighter['name']}}</div>
+                <div>{{fighter['elo']}}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

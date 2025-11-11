@@ -450,7 +450,7 @@ def update_fighters(espn_url, fighter_name):
         for li in soup.find_all('li'):
             text = li.text.lower()
             if 'birthdate' in text:
-                birthdate = li.text.lower().replace('birthdate', '').strip()
+                birthdate = li.text.lower().replace('birthdate', '').strip().split(' (')[0]
             elif 'team' in text:
                 team = li.text.lower().replace('team', '').strip()
 

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>There were {{ matched_number }} matches</h1>
+        <div>
+            {% for fighter in fighters_list %}
+            <div>
+                <a href="/fighter/{{ fighter['fighter_id'] }}">{{ fighter["name"] }}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

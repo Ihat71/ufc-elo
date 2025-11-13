@@ -6,6 +6,7 @@ from my_app.utilities import login_required, apology
 import sqlite3 as sq
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
+from my_app.utilities import get_upcoming_events_list, get_upcoming_event_info, get_completed_event_info
 
 #this is going to be the file for my website
 
@@ -122,21 +123,36 @@ def roster():
     return render_template('roster.html', countries=countries, teams=teams, fighters=fighters)
 
 
-@app.route('/fights/<status>', methods=['GET', 'POST'])
-def fights(status, id):
+@app.route('/fights/<sub>/', methods=['GET', 'POST'])
+def fights(sub):
     conn, db = get_db()
     rows = []
-    if request.method == 'POST':
-        event_query = 'select * from events'
-        if status == 'upcoming':
-            ...
-        elif status == 'completed':
-            rows = db.execute(event_query).fetchall()
-            rows = rows.sort(key=lambda x: datetime.strptime(x['event_date'], "%B %d, %Y"), reverse=True)
-            #im officially stuck here for now...
+    upcoming_events = []
+    fights = []
+    event_query = 'select * from events;'
+    if sub == 'upcoming':
+        upcoming = get_upcoming_events_list()
+        if upcoming:
+            for i in range(len(upcoming.keys())):
+                upcoming_events.append(upcoming[i+1])
+                print(upcoming_events)
+        session['fights_upcoming'] = upcoming_events
+    elif sub == 'completed':
+        rows = db.execute(event_query).fetchall()
+        rows = sorted(rows, key=lambda x: datetime.strptime(x['event_date'], "%B %d, %Y"), reverse=True)
+    else:
+        if sub.isnumeric() or type(sub) == int:
+            cursor = db.execute('select * from events where event_id = ?', (sub,)).fetchall()
+            fights = get_completed_event_info(url=cursor[0]['event_url'])
+            print('fights: ', fights)
+        else:
+            for event in session['fights_upcoming']:
+                if event['event_id'] == sub:
+                    fights = get_upcoming_event_info(url=event['event_url'])
 
 
-    return render_template('fights.html', events=rows[0:31], upcoming_events=None, status=status)
+
+    return render_template('fights.html', events=rows, upcoming_events=upcoming_events, sub=sub, fights=fights)
 
 @app.route('/match-ups')
 def match_ups():

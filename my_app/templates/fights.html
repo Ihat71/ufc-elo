@@ -7,33 +7,57 @@
 {% block main %}
     <div>
         <nav>
-            <a href="/fights/completed">Completed</a>
-            <a href="/fights/upcoming">Upcoming</a>
+            <a href="/fights/completed/">Completed</a>
+            <a href="/fights/upcoming/">Upcoming</a>
         </nav>
         <div>
-            <h1>{{status}} events</h1>
+            {% if sub in ["completed", "upcoming"] %}
+            <h1>{{sub}} events</h1>
+            {% else %}
+            <h1></h1>
+            {% endif %}
             <ul>
-                {% if status == "completed" %}
-                    <p>Only showing the last 30</p>
+                {% if sub == "completed" %}
+                <p>Only showing the last 30</p>
                     {% for event in events %}
                     <li>
-                        <a href="/fights/{{status}}">
+                        <a href="/fights/{{event['event_id']}}/">
                         <h3>{{event['event_name']}}</h3>
-                        <h3>{{event['event_date']}}</h3>
-                        <h3>{{event['event_location']}}</h3>
+                        <p>{{event['event_date']}} -- {{event['event_location']}}</p>
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% elif sub == "upcoming" %}
+                    {% for upcoming in upcoming_events %}
+                    <li>
+                        <a href="/fights/{{upcoming['event_id']}}/">
+                        <h3>{{upcoming['event_name']}}</h3>
+                        <p>{{upcoming['event_date']}} -- {{upcoming['event_location']}}</p>
                         </a>
                     </li>
                     {% endfor %}
                 {% else %}
-                    {% for upcoming in upcoming_events %}
-                    <li>
-                        <a href="/fights/{{status}}">
-                        <h3>{{upcoming['event_name']}}</h3>
-                        <h3>{{upcoming['event_date']}}</h3>
-                        <h3>{{upcoming['event_location']}}</h3>
-                        </a>
-                    </li>
-                    {% endfor %}
+                    <table>
+                        <thead>
+                            {% for num, fight in fights.items() %}
+                                {% for col in fight %}
+                                    {% if num == 1 %}
+                                        <th>{{col}}</th>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </thead>
+                        <tbody>
+                            {% for num, fight in fights.items() %}
+                            <tr>
+                                {% for data in fight.values() %}
+                                    <td>{{data}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
                 {% endif %}
             </ul>
         </div>

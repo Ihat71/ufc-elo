@@ -1,10 +1,80 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Search
+    fighter
 {% endblock %}
 
 {% block main %}
-    hello
+    <div>
+        <div>
+            {% if fighter['picture'] %}
+            <img src="{{ fighter['picture'] }}" alr="Fighter Headshot">
+            {% else %}
+            <p>No picture found</p>
+            {% endif %}
+        </div>
+        <div>
+            <div>
+                <h1>{{fighter['name']}}</h1>
+            </div>
+            <div>
+                <table style="margin: 0 auto;">
+                    <thead>
+                        <th>name</th>
+                        <th>height</th>
+                        <th>weight</th>
+                        <th>reach</th>
+                        <th>stance</th>
+                        <th>team</th>
+                        <th>age</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{fighter['name']}}</td>
+                            <td>{{fighter['height']}}</td>
+                            <td>{{fighter['weight']}}</td>
+                            <td>{{fighter['reach']}}</td>
+                            <td>{{fighter['stance']}}</td>
+                            <td>{{fighter['team']}}</td>
+                            <td>{{fighter['birthday']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <form action="" method = "POST">
+            <button name="action" value="career">Career</button>
+            <button name="action" value="ranking">Ranking</button>
+            <button name="action" value="striking">Striking</button>
+            <button name="action" value="grappling">Grappling</button>
+            <button name="action" value="overall">Overall</button>
+            </form>
+        </div>
+        <div>
+            {% if selection == "career" %}
+            {% elif selection == "ranking" %}
+            <div>
+                <div>
+                    <h3>Current elo: {{elo_hash['elo']}}</h3>
+                    <p>{{elo_hash['latest_fight']}}</p>
+                </div>
+                <div>
+                    <h3>Peak elo: {{elo_hash['peak_elo']}}</h3>
+                    <p>{{elo_hash['latest_fight']}}</p>
+                </div>
+            </div>
+            <div>
+            {{ plot|safe }}
+            </div>
+            {% elif selection == "striking" %}
+            {% elif selection == "grappling" %}
+            {% elif selection == "overall" %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

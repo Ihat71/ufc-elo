@@ -46,8 +46,11 @@ def elo_history_plot(fighter_id):
 
     fig = px.line(df, x="date", y="new_elo", markers=True, title="Elo History", hover_data=['new_elo', 'date', 'opponent', 'opponent_new_elo'])
     fig.update_traces(line_color="black", marker_color="red")
-    fig.show()
-    ...
+    fig.update_xaxes(fixedrange=True)
+    fig.update_yaxes(fixedrange=True)
+    fig.update_layout(
+        dragmode=False
+    )
+    return fig
 
-elo_history_plot(3815)
 

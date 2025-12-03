@@ -10,6 +10,9 @@ from db_setup import get_column_query
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
@@ -423,7 +426,7 @@ def update_advanced_stats():
             logger.error(f"Error committing advanced stats: {e}")
             conn.rollback()
 
-def update_fighters(espn_url, fighter_name):
+def update_fighters(espn_url, fighter_name, fighter_id):
     headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                   'AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -439,10 +442,11 @@ def update_fighters(espn_url, fighter_name):
     driver = webdriver.Chrome(options=options)
     try:
         driver.get(espn_url)
+        WebDriverWait(driver, 5).until(lambda d: d.find_elements(By.TAG_NAME, "li"))
 
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
-        logger.info(f'Successfully connected to the page for {fighter_name}')
+        logger.info(f'Successfully connected to the page for {fighter_name, fighter_id}')
             
         fighter_pic, country, birthdate, team = (None, None, None, None)
 
@@ -464,7 +468,7 @@ def update_fighters(espn_url, fighter_name):
                 fighter_pic = src
     except Exception as e:
         logger.error(f'Error occurred in getting the webpage: {e}')
-        return None
+        return (None, None, None, None)
     
 
     finally:
@@ -473,10 +477,11 @@ def update_fighters(espn_url, fighter_name):
     return (fighter_pic, country, birthdate, team)
 
 
-def update_fighters_threaded():
+def update_fighters_threaded(type):
+    '''type 1 does a general update while type 2 does an update only to the fighters that werent covered the first time'''
     with sq.connect(db_path) as conn:
         cursor = conn.cursor()
-
+        cursor.execute("PRAGMA journal_mode=WAL;")
         # Check existing columns in SQLite
         cursor.execute("PRAGMA table_info(fighters);")
         existing_cols = [c[1] for c in cursor.fetchall()]
@@ -486,15 +491,39 @@ def update_fighters_threaded():
                 cursor.execute(f"ALTER TABLE fighters ADD COLUMN {col_name} {col_type}")
 
         # Fetch unique fighters
-        fighter_list = cursor.execute(
-            '''SELECT DISTINCT a.espn_url, f.name FROM fighters f 
-            JOIN advanced_striking a ON f.fighter_id = a.fighter_id;'''
-        ).fetchall()
+        if type == 1:
+            fighter_list = cursor.execute(
+                '''SELECT DISTINCT a.espn_url, f.name, f.fighter_id FROM fighters f 
+                JOIN advanced_striking a ON f.fighter_id = a.fighter_id;'''
+            ).fetchall()
+        elif type == 2:
+            fighter_list = cursor.execute(
+                '''
+                SELECT DISTINCT a.espn_url, f.name, f.fighter_id FROM fighters f 
+                JOIN advanced_striking a ON f.fighter_id = a.fighter_id where (f.picture is null 
+                or f.team is null 
+                or f.country is null 
+                or f.birthday is null
+                );
+                '''
+            ).fetchall()
+
+            non_covered = cursor.execute(
+                '''SELECT count(a.espn_url) FROM fighters f 
+                JOIN advanced_striking a ON f.fighter_id = a.fighter_id where f.picture is null or 
+                f.team is null or 
+                f.country is null or 
+                f.birthday is null;'''
+            ).fetchone()
+
+            logger.info(f'Count of non covered fighters: {non_covered[0] if non_covered else None}')
+            # fighter_list = cursor.execute('select distinct a.espn_url, f.name from fighters f join advanced_striking a on f.fighter_id = a.fighter_id where f.fighter_id = 100;').fetchall()
+            # print(fighter_list)
 
     # Threaded processing
     results_list = []
     with ThreadPoolExecutor(max_workers=5) as executor:
-        futures = {executor.submit(update_fighters, url, name): (url, name) for url, name in fighter_list}
+        futures = {executor.submit(update_fighters, url, name, fighter_id): (url, name, fighter_id) for url, name, fighter_id in fighter_list}
         for future in as_completed(futures):
             try:
                 results = future.result()
@@ -504,7 +533,7 @@ def update_fighters_threaded():
                     if country and country.strip() == 'Powered by OneTrust Opens in a new Tab':
                         country = None
 
-                    results_list.append((fighter_pic, country, birthdate, team, futures[future][1]))
+                    results_list.append((fighter_pic, country, birthdate, team, futures[future][2]))
                     logger.info(f'Successfully fetched data for {futures[future][1]}')
                     logger.info(f'results for {futures[future][1]}: {results}')
             except Exception as e:
@@ -515,7 +544,7 @@ def update_fighters_threaded():
         cursor = conn.cursor()
         for fighter_data in results_list:
             cursor.execute(
-                'UPDATE fighters SET picture=?, country=?, birthday=?, team=? WHERE name=?',
+                'UPDATE fighters SET picture=?, country=?, birthday=?, team=? WHERE fighter_id=?',
                 fighter_data
             )
         conn.commit()

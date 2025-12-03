@@ -5,8 +5,10 @@ from pathlib import Path
 from my_app.utilities import login_required, apology
 import sqlite3 as sq
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime
+from datetime import datetime, date
 from my_app.utilities import get_upcoming_events_list, get_upcoming_event_info, get_completed_event_info
+from my_app.plots import elo_history_plot
+from my_app.analysis import elo_analysis, career_analysis
 
 #this is going to be the file for my website
 
@@ -96,18 +98,20 @@ def roster():
                 filters.append(f"weight IN ({placeholders})")
                 answers.extend([weight_hash[weight]])
             elif weight == "All":
-                placeholders = ', '.join(['?'] * 8)
-                filters.append(f'weight in ({placeholders})')
-                answers.extend([weight for weight_class, weight in weight_hash.items()])
+                #error here broski
+                # placeholders = ', '.join(['?'] * 8)
+                # filters.append(f'weight in ({placeholders})')
+                # answers.extend([weight for weight_class, weight in weight_hash.items()])
+                pass
             elif weight == "Heavyweight":
                 placeholders = '?'
                 filters.append(f"cast(replace(weight, ' lbs.', '') as integer) > {placeholders}")
                 answers.extend([207])
 
-        if country:
+        if country and country != 'None':
             filters.append("country = ?")
             answers.append(country)
-        if team:
+        if team and team != 'None':
             filters.append("team = ?")
             answers.append(team)
 
@@ -227,26 +231,30 @@ def register():
 @app.route('/search/', methods=['GET', 'POST'])
 def search():
     conn, db = get_db()
+    fighters_list = []
     fighter_search = request.args.get('query')
     fighter_search_first_name = fighter_search + "%"
     fighter_search_last_name = "%" + fighter_search
     match_1 = db.execute('select * from fighters where name like ?', (fighter_search_first_name.lower().title().strip(),)).fetchall()
     match_2 = db.execute('select * from fighters where name like ?', (fighter_search_last_name.lower().title().strip(),)).fetchall()
 
-    if match_1 and not match_2:
-        fighters_list = match_1
-    elif match_2 and not match_1:
-        fighters_list = match_2
-    elif match_2 and match_1:
-        if len(match_1)>len(match_2):
+    if len(fighter_search) != 1:
+        if match_1 and not match_2:
             fighters_list = match_1
-        elif len(match_2)>=len(match_2):
+        elif match_2 and not match_1:
             fighters_list = match_2
+        elif match_2 and match_1:
+            if len(match_1)>len(match_2):
+                fighters_list = match_1
+            elif len(match_2)>=len(match_2):
+                fighters_list = match_2
     else:
-        fighters_list = None
+        # this is to make sure that if the search is only 1 letter long the searches are first name (starts from the first letter only) searches
+        if match_1:
+            fighters_list = match_1
 
     matches = len(fighters_list)
-    print(fighters_list)
+
     return render_template('search.html', matched_number = matches, fighters_list=fighters_list)
 
 @app.route('/rankings', methods=['GET', 'POST'])
@@ -277,9 +285,23 @@ def rankings():
 
     return render_template('rankings.html', fighters=fighters, chosen_class=action)
 
-@app.route('/fighter/<fighter_id>')
-def fighter(fighter_id):
-    return render_template('fighter.html')
+@app.route('/fighter/<id>/', methods=['GET', 'POST'])
+def fighter(id):
+    selection = 'career'
+    conn, db = get_db()
+    fighter = db.execute('select * from fighters where fighter_id = ?', (id,)).fetchall()
+    fighter = dict(fighter[0])
+    fighter['birthday'] = date.today().year - datetime.strptime(fighter['birthday'], '%m/%d/%Y').year
+
+    plot = elo_history_plot(id).to_html(full_html=False)
+
+    elo_hash = elo_analysis(id)
+    career_hash = career_analysis(db=db, id=id)
+
+    if request.method == 'POST':
+        selection = request.form.get('action')
+
+    return render_template('fighter.html', fighter=fighter, elo_hash=elo_hash, selection=selection, plot=plot, career=career_hash)
 
 @app.route('/logout')
 def logout():

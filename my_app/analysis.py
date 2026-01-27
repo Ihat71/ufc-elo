@@ -17,7 +17,10 @@ LEAGUE_AVGS = {
     'sdb_acc':0.64,
     'sdl_acc':0.8,
     'ko_pm':0.012,
-    'kd_pm':0.011
+    'kd_pm':0.011,
+    'scb_acc':0.70,
+    'scl_acc':0.42,
+    'sch_acc':0.48
 }
 
 PRIOR_ATTEMPTS = 50
@@ -328,82 +331,200 @@ def fighter_striking_analysis(fighter_id, conn=None):
     return df
 
 
+def fighter_clinch_analysis(fighter_id, conn=None):
+    conn.row_factory = sq.Row
+    db = conn.cursor()
+    # query_2 = 'select * from advanced_striking'
+    rows = db.execute('select * from records where fighter_1 = ?', (fighter_id,)).fetchall()
+    num_of_fights = len(rows)
+    num_of_mins = get_fighter_minutes(rows)
+    # print(num_of_mins)
 
-def fighter_clinch_analysis(db):
-    ...
+    df = pd.read_sql_query(
+    'select * from advanced_clinch where fighter_id = ?',
+    conn,
+    params=(fighter_id,)
+    )
+    
+    df = df.drop_duplicates()
+    df = df.replace({'-': None})
+    df = df.map(lambda x: x.replace("\n", "") if isinstance(x, str) else x)
+    # sc stands for significant clinch strikes. h: head, b:body, l:leg
+    df = df.dropna(subset=['scbl', 'scba', 'schl', 'scha', 'scll', 'scla'])   
+
+    
+    df = non_ufc_fight_remover(fighter_id, df, db)
+
+
+
+    df[['scbl', 'scba', 'schl', 'scha', 'scll', 'scla']] = (
+        df[['scbl', 'scba', 'schl', 'scha', 'scll', 'scla']].astype(int)
+    )
+
+    df = df.drop(columns=['rv', 'sr', 'tdl', 'tda', 'tds', 'tk_acc', 'date', 'opponent', 'espn_url', 'res'])
+
+    if df.empty:
+        return pd.DataFrame()
+
+
+    df = (df.groupby(['fighter_id']).agg({
+        'scbl':'sum',
+        'scba':'sum',
+        'schl':'sum',
+        'scha':'sum',
+        'scll':'sum',
+        'scla':'sum'
+    }))
+
+    
+    # df['ts_acc'] = df['tsl'] / df['tsa'] #total strikes
+    # df['ss_acc'] = df['ssl'] / df['ssa'] #significant strikes
+    # df['sdh_acc'] = df['sdhl'] / df['sdha'] #significant distance head strikes
+    # df['sdb_acc'] = df['sdbl'] / df['sdba'] #significant distance body strikes
+    # df['sdl_acc'] = df['sdll'] / df['sdla'] #significant distance leg strikes
+
+    def bayes_rate(successes, attempts, league_avg, prior_attempts):
+        return (successes + league_avg * prior_attempts) / (attempts + prior_attempts)
+
+    # df['ts_acc']  = bayes_rate(df['tsl'],  df['tsa'],  LEAGUE_AVGS['ts_acc'], PRIOR_ATTEMPTS)
+    # df['ss_acc']  = bayes_rate(df['ssl'],  df['ssa'],  LEAGUE_AVGS['ss_acc'], PRIOR_ATTEMPTS)
+    # df['sdh_acc'] = bayes_rate(df['sdhl'], df['sdha'], LEAGUE_AVGS['sdh_acc'], PRIOR_ATTEMPTS)
+    # df['sdb_acc'] = bayes_rate(df['sdbl'], df['sdba'], LEAGUE_AVGS['sdb_acc'], PRIOR_ATTEMPTS)
+    # df['sdl_acc'] = bayes_rate(df['sdll'], df['sdla'], LEAGUE_AVGS['sdl_acc'], PRIOR_ATTEMPTS)
+
+    prior_attempts = 15
+
+    df['scb_acc'] = df['scbl'] / df['scba'].replace(0, pd.NA)
+    df['scl_acc'] = df['scll'] / df['scla'].replace(0, pd.NA)
+    df['sch_acc'] = df['schl'] / df['scha'].replace(0, pd.NA)
+
+    df['scb_acc'] = bayes_rate(df['scbl'], df['scba'], LEAGUE_AVGS['scb_acc'], prior_attempts)
+    df['scl_acc'] = bayes_rate(df['scll'], df['scla'], LEAGUE_AVGS['scl_acc'], 5)
+    df['sch_acc'] = bayes_rate(df['schl'], df['scha'], LEAGUE_AVGS['sch_acc'], prior_attempts)
+
+    df = df.fillna(0)
+
+    df['total_attempted'] = df['scba'] + df['scha'] + df['scla']
+    df['total_landed'] = df['scbl'] + df['schl'] + df['scll']
+
+    df['clinch_strikes_pm'] = df['total_landed'] / num_of_mins if num_of_mins != 0 else 0
+    df['effective_accuracy'] = 0.45 * df['scb_acc'] + 0.10 * df['scl_acc'] + 0.45 * df['sch_acc'] 
+    
+    df = df.round({
+        'effective_accuracy':4
+    })
+
+    print(fighter_id, '\n', df.to_string())
+    return df
 
 def fighter_grappling_analysis(db):
     ...
 
-def total_fighting_analysis():
+def total_fighting_analysis(art_style):
     with sq.connect(db_path) as conn:
         conn.row_factory = sq.Row
         db = conn.cursor()
-        fighters = db.execute('select DISTINCT fighter_id from advanced_striking').fetchall()
+        if art_style == 'striking':
+            fighters = db.execute('select DISTINCT fighter_id from advanced_striking').fetchall()
 
-        fighters_striking = []
-        for fighter in fighters:
-            strike_df = fighter_striking_analysis(fighter['fighter_id'], conn=conn)
-            fighters_striking.append(strike_df)      
+            fighters_striking = []
+            for fighter in fighters:
+                strike_df = fighter_striking_analysis(fighter['fighter_id'], conn=conn)
+                fighters_striking.append(strike_df)      
+            
+            fighters_df = pd.concat(fighters_striking).reset_index()
+
+            # league_avgs = {
+            #     'ts_acc': fighters_df['tsl'].sum() / fighters_df['tsa'].sum(),
+            #     'ss_acc': fighters_df['ssl'].sum() / fighters_df['ssa'].sum(),
+            #     'sdh_acc': fighters_df['sdhl'].sum() / fighters_df['sdha'].sum(),
+            #     'sdb_acc': fighters_df['sdbl'].sum() / fighters_df['sdba'].sum(),
+            #     'sdl_acc': fighters_df['sdll'].sum() / fighters_df['sdla'].sum(),
+            # }
+
+            # print(league_avgs)
+
+
+            features_to_scale = [
+                'ts_acc', 'ss_acc', 'sdh_acc', 'sdb_acc', 'sdl_acc',
+                'total_ssl_acc', 'total_ssa_percentage', 'kd_pm', 'tsl_pm',
+                'true_ko_power', 'avg_ko_opp_durability', 'avg_ko_opp_elo',
+                'SLpM', 'SApM', 'str_def',
+                'body_percentage', 'head_percentage', 'leg_percentage', 'effective_volume', 'leg_kicks', 'sig_acc'
+            ]
+
+            for col in features_to_scale:
+                series = fighters_df[col]
+
+                #z score
+                median = series.median()
+                q1 = series.quantile(0.25)
+                q3 = series.quantile(0.75)
+                iqr = q3 - q1
+
+                if iqr == 0:
+                    fighters_df[col + '_scaled'] = 50
+                    continue
+
+                z = (series - median) / iqr
+
+                # --- Clip extreme z-scores (prevents outliers from dominating) ---
+                z_clipped = z.clip(lower=z.quantile(0.04), upper=z.quantile(0.96))
+
+                # --- Map to 1–100 ---
+                scaled = ((z_clipped - z_clipped.min()) / (z_clipped.max() - z_clipped.min())) * 99 + 1
+
+                fighters_df[col + '_scaled'] = scaled.round(2)
+                    
+            fighters_df['SApM_scaled'] = 100 - fighters_df['SApM_scaled']
+
+            fighters_df['Boxing'] = 0.35 * fighters_df['true_ko_power_scaled'] + 0.15 * fighters_df['effective_volume_scaled'] + 0.25 * fighters_df['str_def_scaled'] + 0.25 * fighters_df['SApM_scaled']
+            fighters_df['KickBoxing'] = 0.25 * fighters_df['true_ko_power_scaled'] + 0.15 * fighters_df['effective_volume_scaled'] + 0.20 * fighters_df['str_def_scaled'] + 0.10 * fighters_df['SApM_scaled'] + 0.30 * fighters_df['leg_kicks_scaled']
+
+        elif art_style == 'clinching':
+            fighters = db.execute('select DISTINCT fighter_id from advanced_clinch').fetchall()
+
+            fighters_clinching = []
+            for fighter in fighters:
+                clinch_df = fighter_clinch_analysis(fighter['fighter_id'], conn=conn)
+                fighters_clinching.append(clinch_df)      
+            
+            fighters_df = pd.concat(fighters_clinching).reset_index()
+            features_to_scale = [
+                'scbl', 'schl', 'scll', 'scb_acc', 'sch_acc', 'scl_acc', 'clinch_strikes_pm', "effective_accuracy"
+            ]
+
+            for col in features_to_scale:
+                series = fighters_df[col]
+
+                #z score
+                median = series.median()
+                q1 = series.quantile(0.25)
+                q3 = series.quantile(0.75)
+                iqr = q3 - q1
+
+                if iqr == 0:
+                    fighters_df[col + '_scaled'] = 50
+                    continue
+
+                z = (series - median) / iqr
+
+                # --- Clip extreme z-scores (prevents outliers from dominating) ---
+                z_clipped = z.clip(lower=z.quantile(0.04), upper=z.quantile(0.96))
+
+                # --- Map to 1–100 ---
+                scaled = ((z_clipped - z_clipped.min()) / (z_clipped.max() - z_clipped.min())) * 99 + 1
+
+                fighters_df[col + '_scaled'] = scaled.round(2)
+
         
-        striking_fighters_df = pd.concat(fighters_striking).reset_index()
+        # fighters_df.head()
+        # fighters_df.info()
+        # fighters_df.shape
+        # fighters_df.describe(include='all')
 
-        # league_avgs = {
-        #     'ts_acc': striking_fighters_df['tsl'].sum() / striking_fighters_df['tsa'].sum(),
-        #     'ss_acc': striking_fighters_df['ssl'].sum() / striking_fighters_df['ssa'].sum(),
-        #     'sdh_acc': striking_fighters_df['sdhl'].sum() / striking_fighters_df['sdha'].sum(),
-        #     'sdb_acc': striking_fighters_df['sdbl'].sum() / striking_fighters_df['sdba'].sum(),
-        #     'sdl_acc': striking_fighters_df['sdll'].sum() / striking_fighters_df['sdla'].sum(),
-        # }
-
-        # print(league_avgs)
-
-
-        features_to_scale = [
-            'ts_acc', 'ss_acc', 'sdh_acc', 'sdb_acc', 'sdl_acc',
-            'total_ssl_acc', 'total_ssa_percentage', 'kd_pm', 'tsl_pm',
-            'true_ko_power', 'avg_ko_opp_durability', 'avg_ko_opp_elo',
-            'SLpM', 'SApM', 'str_def',
-            'body_percentage', 'head_percentage', 'leg_percentage', 'effective_volume', 'leg_kicks', 'sig_acc'
-        ]
-
-        for col in features_to_scale:
-            series = striking_fighters_df[col]
-
-            #z score
-            median = series.median()
-            q1 = series.quantile(0.25)
-            q3 = series.quantile(0.75)
-            iqr = q3 - q1
-
-            if iqr == 0:
-                striking_fighters_df[col + '_scaled'] = 50
-                continue
-
-            z = (series - median) / iqr
-
-            # --- Clip extreme z-scores (prevents outliers from dominating) ---
-            z_clipped = z.clip(lower=z.quantile(0.04), upper=z.quantile(0.96))
-
-            # --- Map to 1–100 ---
-            scaled = ((z_clipped - z_clipped.min()) / (z_clipped.max() - z_clipped.min())) * 99 + 1
-
-            striking_fighters_df[col + '_scaled'] = scaled.round(2)
-                
-        striking_fighters_df['SApM_scaled'] = 100 - striking_fighters_df['SApM_scaled']
-
-        striking_fighters_df['Boxing'] = 0.35 * striking_fighters_df['true_ko_power_scaled'] + 0.15 * striking_fighters_df['effective_volume_scaled'] + 0.25 * striking_fighters_df['str_def_scaled'] + 0.25 * striking_fighters_df['SApM_scaled']
-        striking_fighters_df['KickBoxing'] = 0.25 * striking_fighters_df['true_ko_power_scaled'] + 0.15 * striking_fighters_df['effective_volume_scaled'] + 0.20 * striking_fighters_df['str_def_scaled'] + 0.10 * striking_fighters_df['SApM_scaled'] + 0.30 * striking_fighters_df['leg_kicks_scaled']
-
-
-        
-        # striking_fighters_df.head()
-        # striking_fighters_df.info()
-        # striking_fighters_df.shape
-        # striking_fighters_df.describe(include='all')
-
-        striking_fighters_df.to_sql(
-            name="aggregate_striking",
+        fighters_df.to_sql(
+            name=f"aggregate_{art_style}",
             con=conn,
             if_exists="replace",
             index=False
@@ -507,7 +628,7 @@ def get_hash_data(db, art_type, fighter_id):
 
 
 
-# total_fighting_analysis()
+# total_fighting_analysis('clinching')
 # with sq.connect(db_path) as conn:
 #     fighter_striking_analysis(2373, conn)
 

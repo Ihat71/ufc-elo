@@ -72,6 +72,21 @@ def striking_analysis_plot(fighter_id, db):
 
     return fig
 
+def clinching_analysis_plot(fighter_id, db):
+    
+  stats = db.execute('select clinch_strikes_pm_scaled as clinch_volume, effective_accuracy_scaled as clinch_accuracy, schl as head_hunter, \
+            scbl as body_hunter from aggregate_clinching where fighter_id = ?', (fighter_id,)).fetchone()
+  
+  df = pd.DataFrame(dict(
+    r=[stats['clinch_volume'], stats['clinch_accuracy'], stats['head_hunter'], stats['body_hunter']],
+    theta=['Clinch Strike Volume', 'Clinch Strike Accuracy', 'Head Hunting', 'Body Hunting']
+      )
+    )
+    
+
+  fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+
+  return fig
 
 
 

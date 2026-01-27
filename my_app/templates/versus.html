@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Versus
+{% endblock %}
+
+{% block main %}
+    <h1>{{fighter_1['name']}} VS {{fighter_2['name']}}</h1>
+    <table align="center">
+        <thead>
+            <th>{{fighter_1['name']}}</th>
+            <th>{{fighter_2['name']}}</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ fighter_1['result'] }}</td>
+                <td>{{ fighter_2['result'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

@@ -53,4 +53,26 @@ def elo_history_plot(fighter_id):
     )
     return fig
 
+def striking_analysis_plot(fighter_id, db):
+
+    stats = db.execute('select true_ko_power_scaled as KO_power, str_def_scaled as defence, effective_volume_scaled as volume, sig_acc_scaled as sig_acc, SApM_scaled as sapm, ' \
+    'leg_kicks_scaled as leg_kicks from aggregate_striking where fighter_id = ? ', (fighter_id,)).fetchone()
+
+    df = pd.DataFrame(dict(
+    r=[stats['KO_power'], stats['volume'], stats['defence'], stats['sig_acc'], stats['leg_kicks'], stats['sapm']],
+    theta=['KO power','Volume','Defense', 'Significant Accuracy', 'Leg Kicks', 'Damage Asborbtion']
+      )
+    )
+    
+
+    fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+    # fig.update_traces(fill='toself')
+    # fig.show()
+
+
+    return fig
+
+
+
+
 

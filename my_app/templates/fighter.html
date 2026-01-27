@@ -50,28 +50,133 @@
             <button name="action" value="ranking">Ranking</button>
             <button name="action" value="striking">Striking</button>
             <button name="action" value="grappling">Grappling</button>
+            <button name="action" value="clinch">Clinch</button>
             <button name="action" value="overall">Overall</button>
+            <button name="action" value="record">Fights</button>
             </form>
         </div>
         <div>
             {% if selection == "career" %}
+            <div>
+                <div>
+                    <h3>UFC Fights</h3>
+                    <ul>
+                        <li>UFC fights: {{data_hash['ufc_fights']}}</li>
+                        <li>Win streak: {{data_hash['win_streak']}}</li>
+                        <li>Record: {{data_hash['wins']}}-{{data_hash['draws']}}-{{data_hash['losses']}}</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Record Partitions</h3>
+                    <ul>
+                        <li>Finishes: {{data_hash['finishes']}}</li>
+                        <li>Finish Rate: {{data_hash['finish_rate']}}</li>
+                        <li>Win Rate: {{data_hash['win_rate']}}</li>
+                        <li>KOs: {{data_hash['ko_tko']}}</li>
+                        <li>Subs: {{data_hash['subs']}}</li>
+                        <li>Decisions: {{data_hash['decisions']}}</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Misc</h3>
+                    <ul>
+                        <li>Debut: {{data_hash['debut']}}</li>
+                        <li>Title Fights: {{data_hash['title_fights']}}</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Recent</h3>
+                    <ul>
+                        <li>Last Fight: <a href="/versus/{{last_fight['fight_id']}}/"></a></li>
+                        {% for fight in last_5 %}
+                            {% if fight['result'] == "win" %}
+                            <li><a href="/versus/{{fight['fight_id']}}/" title="{{fight['fighter_1']}} vs {{fight['fighter_2']}}">&#9989;</a></li>
+                            {% else %}
+                            <li><a href="/versus/{{fight['fight_id']}}/" title="{{fight['fighter_1']}} vs {{fight['fighter_2']}}">&#10060;</a></li>
+                            {% endif%}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h3>Time</h3>
+                    <ul>
+                        <li>Time fought: {{data_hash['cage_time']}}</li>
+                        <li>Average Fight Time: {{data_hash['average_fight_time']}}</li>
+                    </ul>
+                </div>
+            </div>
             {% elif selection == "ranking" %}
             <div>
                 <div>
-                    <h3>Current elo: {{elo_hash['elo']}}</h3>
-                    <p>{{elo_hash['latest_fight']}}</p>
+                    <h3>Current elo: {{elo_data_hash['elo']}}</h3>
+                    <p>{{elo_data_hash['latest_fight']}}</p>
                 </div>
                 <div>
-                    <h3>Peak elo: {{elo_hash['peak_elo']}}</h3>
-                    <p>{{elo_hash['latest_fight']}}</p>
+                    <h3>Peak elo: {{elo_data_hash['peak_elo']}}</h3>
+                    <p>{{elo_data_hash['latest_fight']}}</p>
                 </div>
             </div>
             <div>
             {{ plot|safe }}
             </div>
+            <div>
             {% elif selection == "striking" %}
+                    <div>
+                        <div> <h2>Boxing: {{data_hash['Boxing'] | round(1)}}</h2> <h2>KickBoxing: {{data_hash['KickBoxing'] | round(1)}}</h2></div>
+                        {{ plot|safe }}
+                    </div>
+                    <div>
+                        <h2> Relevent Strike Data </h2>
+                        <div>
+                            <h3>Volume: Total Significant Strikes Landed per Minute </h3>
+                            <ul>
+                                <li> {{data_hash['tsl_pm']}}/min </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Absorbtion: Total Strikes Absorbed per Minute</h3>
+                            <ul>
+                                <li> {{data_hash['SApM']}}/min </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Power: Knockdowns and KOs per Minute</h3>
+                            <ul>
+                                <li> KO: {{data_hash['ko_pm'] | round(3)}}/min </li>
+                                <li> KD: {{data_hash['kd_pm'] | round(3)}}/min </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Leg Kicks: Leg kicks Landed and Accuracy</h3>
+                            <ul>
+                                <li>Leg Kicks Landed: {{data_hash['sdll']}} significant kicks </li>
+                                <li>Leg Kicks Accuracy: {{data_hash['sdl_acc'] * 100}}% </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Accuracy: Significant Strike Accuracy</h3>
+                            <ul>
+                                <li> {{data_hash['ss_acc'] * 100 | round()}}% </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Accuracy: Head Hunting Accruacy</h3>
+                            <ul>
+                                <li> {{data_hash['sdh_acc'] * 100}}% </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Defence: Calculated Striking Defence</h3>
+                            <ul>
+                                <li> {{(data_hash['str_def']*100) | round(1)}}% </li>
+                            </ul>
+                        </div>
+                    </div>
             {% elif selection == "grappling" %}
+            {% elif selection == "clinch" %}
             {% elif selection == "overall" %}
+            </div>
+            {% elif selection == "record" %}
             {% else %}
             {% endif %}
         </div>

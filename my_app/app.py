@@ -7,8 +7,9 @@ import sqlite3 as sq
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
 from my_app.utilities import get_upcoming_events_list, get_upcoming_event_info, get_completed_event_info
-from my_app.plots import elo_history_plot
-from my_app.analysis import elo_analysis, career_analysis
+from my_app.plots import *
+# from my_app.analysis import elo_analysis, career_analysis, fight_analysis
+from my_app.analysis import *
 
 #this is going to be the file for my website
 
@@ -291,17 +292,31 @@ def fighter(id):
     conn, db = get_db()
     fighter = db.execute('select * from fighters where fighter_id = ?', (id,)).fetchall()
     fighter = dict(fighter[0])
-    fighter['birthday'] = date.today().year - datetime.strptime(fighter['birthday'], '%m/%d/%Y').year
+    fighter['birthday'] = date.today().year - datetime.strptime(fighter['birthday'], '%m/%d/%Y').year if fighter['birthday'] != None else None
 
     plot = elo_history_plot(id).to_html(full_html=False)
 
     elo_hash = elo_analysis(id)
     career_hash = career_analysis(db=db, id=id)
-
+    data_hash = career_hash
+    print(data_hash)
+    last_5 = data_hash['last_5']
     if request.method == 'POST':
         selection = request.form.get('action')
+        if selection == "striking":
+            plot = striking_analysis_plot(id, db).to_html(full_html=False)
+            data_hash = get_hash_data(db, 'striking', id)
+    return render_template('fighter.html', fighter=fighter, elo_data_hash=elo_hash, selection=selection, plot=plot, data_hash=data_hash, last_5=last_5, last_fight=career_hash['last_fight'])
 
-    return render_template('fighter.html', fighter=fighter, elo_hash=elo_hash, selection=selection, plot=plot, career=career_hash)
+@app.route('/versus/<fight_id>/', methods=['GET', 'POST'])
+def versus(fight_id):
+    conn, db = get_db()
+    fight = db.execute('select * from records where fight_id = ?', (fight_id,)).fetchone()
+
+    fighter_1, fighter_2 = fight_analysis(db, fight)
+
+    return render_template('versus.html', fighter_1=fighter_1, fighter_2=fighter_2)
+
 
 @app.route('/logout')
 def logout():

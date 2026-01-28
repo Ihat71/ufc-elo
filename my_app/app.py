@@ -309,6 +309,9 @@ def fighter(id):
         elif selection == "clinch":
             plot = clinching_analysis_plot(id, db).to_html(full_html=False)
             data_hash = get_hash_data(db, 'clinching', id)
+        elif selection == "grappling":
+            plot = grappling_analysis_plot(id, db).to_html(full_html=False)
+            data_hash = get_hash_data(db, 'grappling', id)
     return render_template('fighter.html', fighter=fighter, elo_data_hash=elo_hash, selection=selection, plot=plot, data_hash=data_hash, last_5=last_5, last_fight=career_hash['last_fight'])
 
 @app.route('/versus/<fight_id>/', methods=['GET', 'POST'])

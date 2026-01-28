@@ -1,9 +1,11 @@
 import sqlite3 as sq
 import pandas as pd
-import seaborn as sns
+# import seaborn as sns
 import plotly.express as px
 import matplotlib.pyplot as plt
 from pathlib import Path
+from PIL import Image
+import numpy as np
 
 db_path = Path(__file__).parent.parent / 'data' / 'testing.db'
 
@@ -68,8 +70,12 @@ def striking_analysis_plot(fighter_id, db):
     fig = px.line_polar(df, r='r', theta='theta', line_close=True)
     # fig.update_traces(fill='toself')
     # fig.show()
-
-
+    fig.update_layout(
+          polar=dict(
+              radialaxis=dict(range=[0, 100], tick0=0, dtick=20)
+          )
+      )
+    
     return fig
 
 def clinching_analysis_plot(fighter_id, db):
@@ -85,8 +91,75 @@ def clinching_analysis_plot(fighter_id, db):
     
 
   fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+  fig.update_layout(
+          polar=dict(
+              radialaxis=dict(range=[0, 100], tick0=0, dtick=20)
+          )
+      )
 
   return fig
+
+def grappling_analysis_plot(fighter_id, db):
+    
+  stats = db.execute('''select bjj_defence_scaled as bjj_def, effective_takedowns_scaled as takedowns, td_def_scaled as td_def, 
+                    effective_control_scaled as control,  effective_gnp_scaled as gnp, 
+                    effective_sub_threat_scaled as sub_threat from aggregate_grappling where fighter_id = ?''', (fighter_id,)).fetchone()
+  
+  df = pd.DataFrame(dict(
+    r=[stats['takedowns'], stats['td_def'], stats['control'], stats['gnp'], stats['sub_threat'], stats['bjj_def']],
+    theta=['Takedowns', 'Takedown Defence', 'Ground Control', 'Ground and Pound', 'Sub Threat', 'Sub Defence']
+      )
+    )
+    
+
+  fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+  fig.update_layout(
+          polar=dict(
+              radialaxis=dict(range=[0, 100], tick0=0, dtick=20)
+          )
+      )
+
+  return fig
+
+# def body_heat_map(db, fighter_id):
+#   stats = db.execute('select sdbl, sdll, sdhl, tsl from aggregate_striking where fighter_id = ?', (fighter_id,)).fetchone()
+
+# # Example strike data
+#   head = stats['sdhl']
+#   body = stats['sdbl']
+#   leg = stats['sdll']
+
+#   values = [head, body, leg]
+#   labels = ["Head", "Body", "Leg"]
+
+#   # Normalize for color intensity
+#   max_val = max(values)
+#   colors = [v/max_val for v in values]
+
+#   fig, ax = plt.subplots()
+
+#   # Draw simple body
+#   head_circle = plt.Circle((0, 3), 0.3, color=plt.cm.hot(colors[0]))
+#   body_rect = plt.Rectangle((-0.3, 1.5), 0.6, 1.2, color=plt.cm.hot(colors[1]))
+#   leg_rect = plt.Rectangle((-0.3, 0), 0.6, 1.5, color=plt.cm.hot(colors[2]))
+
+#   ax.add_patch(head_circle)
+#   ax.add_patch(body_rect)
+#   ax.add_patch(leg_rect)
+
+#   ax.set_xlim(-1, 1)
+#   ax.set_ylim(0, 4)
+#   ax.set_aspect("equal")
+#   plt.title("Strike Distribution Heatmap")
+#   plt.axis("off")
+#   plt.show()
+
+
+# conn = sq.connect(db_path)
+# conn.row_factory = sq.Row
+# db = conn.cursor()
+# body_heat_map(db, 2373)
+
 
 
 

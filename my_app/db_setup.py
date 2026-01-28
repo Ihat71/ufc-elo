@@ -367,8 +367,8 @@ def get_column_query(fight_dict):
     values = replace_last(values, ",", ")")
     return column_query, values
 
-def expand_fighters_table():
-    ...
+
+
         
 
 #next step: add logger to the scraper and setup and check for errors then we can finally move on to the data analysis completely (perchance, but at least the hard data scraping is done with)

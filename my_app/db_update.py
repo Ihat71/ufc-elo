@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import random, time
 
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
@@ -522,7 +523,7 @@ def update_fighters_threaded(type):
 
     # Threaded processing
     results_list = []
-    with ThreadPoolExecutor(max_workers=5) as executor:
+    with ThreadPoolExecutor(max_workers=1) as executor:
         futures = {executor.submit(update_fighters, url, name, fighter_id): (url, name, fighter_id) for url, name, fighter_id in fighter_list}
         for future in as_completed(futures):
             try:
@@ -545,6 +546,100 @@ def update_fighters_threaded(type):
         for fighter_data in results_list:
             cursor.execute(
                 'UPDATE fighters SET picture=?, country=?, birthday=?, team=? WHERE fighter_id=?',
+                fighter_data
+            )
+        conn.commit()
+
+
+def get_ground_control(url, name, fighter_id):
+    headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/118.0.5993.117 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Connection": "keep-alive",
+    "Referer": "https://www.google.com/"
+    }
+
+    control_time = 0
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+        tables = soup.find_all('table')
+
+        real_table = None
+        for table in tables:
+            if 'w/l' in table.find('thead').find('th').text.strip().lower():
+                real_table = table
+        
+        tbody = real_table.find('tbody')
+        if not tbody:
+            return None
+        tr_list = tbody.find_all('tr')
+        th_list = soup.find('thead').find_all('th')
+
+
+        for tr in tr_list:
+            new_url = tr.get('data-link')
+            if not new_url:
+                continue
+
+            response = requests.get(new_url, headers=headers)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, 'html.parser')
+            tbody = soup.find('tbody')
+            if not tbody:
+                continue
+            td_list = tbody.find('tr').find_all('td')
+
+            index = 0 if name.lower() in td_list[0].find('p').text.strip().lower() else 1
+            ctrl = (td_list[9].find_all('p'))[index].text.strip()
+
+            if ctrl and ':' in ctrl:
+                minute, seconds = ctrl.split(':')
+                ctrl_minutes = int(minute) + float(seconds)/60
+                control_time += ctrl_minutes
+            else:
+                # either skip or log warning
+                logger.warning(f"Unexpected ctrl format: '{ctrl}' for fighter {name}")
+            # time.sleep(random.uniform(0.5, 1))
+
+
+    except requests.exceptions.RequestException as e:
+        logger.info(f"Error fetching the page: {e}")
+        return None
+    
+    return control_time
+        
+def all_fighters_gctrl():
+    '''function to get total ground control for every fighter and put it in advanced_stats'''
+    with sq.connect(db_path) as conn:
+        cursor = conn.cursor()
+        fighter_list = cursor.execute('select distinct f.url, f.name, f.fighter_id from records r join fighters f on r.fighter_1 = f.fighter_id')
+
+        results_list = []
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            futures = {executor.submit(get_ground_control, url, name, fighter_id): (url, name, fighter_id) for url, name, fighter_id in fighter_list}
+            for future in as_completed(futures):
+                try:
+                    results = future.result()
+                    if results:
+                        # Include fighter name for WHERE clause
+                        ground_control = results
+
+                        results_list.append((ground_control, futures[future][2]))
+                        logger.info(f'Successfully fetched data for {futures[future][1]}')
+                        logger.info(f'results for {futures[future][1]}: {results}')
+                except Exception as e:
+                    logger.error(f"Error processing {futures[future]}, error: {e}")
+        
+
+        for fighter_data in results_list:
+            cursor.execute(
+                'UPDATE advanced_stats SET control_time=? WHERE fighter_id=?',
                 fighter_data
             )
         conn.commit()

@@ -156,7 +156,7 @@
                         <div>
                             <h3>Accuracy: Significant Strike Accuracy</h3>
                             <ul>
-                                <li> {{data_hash['ss_acc'] * 100 | round()}}% </li>
+                                <li> {{data_hash['ss_acc'] * 100 | round(0)}}% </li>
                             </ul>
                         </div>
                         <div>
@@ -166,16 +166,33 @@
                             </ul>
                         </div>
                         <div>
-                            <h3>Defence: Calculated Striking Defence</h3>
+                            <h3>Defence: Distance Striking Defence Percentage</h3>
                             <ul>
                                 <li> {{(data_hash['str_def']*100) | round(1)}}% </li>
                             </ul>
                         </div>
                     </div>
             {% elif selection == "grappling" %}
+            <div>
+                <div><h2>Wrestling: {{data_hash['Wrestling']}}</h2> <h2>BJJ: {{data_hash['BJJ']}}</h2> <h2>GNP: {{data_hash['GNP']}}</h2></div>
+                {{plot | safe}}
+            </div>
+            <div>
+                <h2></h2>
+            </div>
             {% elif selection == "clinch" %}
             <div>
+                <div><h2> Muay Clinch: {{data_hash['Muay']}}</h2></div>
                 {{plot | safe}}
+            </div>
+            <div>
+                <p>Disclaimer: head and body hunter just describe how many times the fighters went for the head and body in clinch. It doesn't mean much else. </p>
+            </div>
+            <div>
+                <h3>Clinch Strikes per Minue: {{data_hash['clinch_strikes_pm'] | round()}} / min </h3>
+            </div>
+            <div>
+                <h3>Effective Clinch Strike Accuracy: {{data_hash['effective_accuracy'] * 100 | round()}}% </h3>
             </div>
             {% elif selection == "overall" %}
             </div>

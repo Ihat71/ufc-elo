@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from PIL import Image
 import numpy as np
+import plotly.graph_objects as go
 
 db_path = Path(__file__).parent.parent / 'data' / 'testing.db'
 
@@ -121,46 +122,91 @@ def grappling_analysis_plot(fighter_id, db):
 
   return fig
 
-# def body_heat_map(db, fighter_id):
-#   stats = db.execute('select sdbl, sdll, sdhl, tsl from aggregate_striking where fighter_id = ?', (fighter_id,)).fetchone()
+def strike_heatmap(fighter_id, db, normalize=True):
 
-# # Example strike data
-#   head = stats['sdhl']
-#   body = stats['sdbl']
-#   leg = stats['sdll']
+    stats = db.execute(
+        f"""
+        SELECT sdhl, sdbl, sdll, sdh_acc, sdb_acc, sdl_acc
+        FROM aggregate_striking
+        WHERE fighter_id = {fighter_id}
+        """
+    ).fetchone()
 
-#   values = [head, body, leg]
-#   labels = ["Head", "Body", "Leg"]
+    if stats is None:
+        return None
 
-#   # Normalize for color intensity
-#   max_val = max(values)
-#   colors = [v/max_val for v in values]
+    head = stats['sdhl'] or 0
+    body = stats['sdbl'] or 0
+    legs = stats['sdll'] or 0
 
-#   fig, ax = plt.subplots()
+    if normalize:
+        total = head + body + legs
+        if total > 0:
+            head /= total
+            body /= total
+            legs /= total
 
-#   # Draw simple body
-#   head_circle = plt.Circle((0, 3), 0.3, color=plt.cm.hot(colors[0]))
-#   body_rect = plt.Rectangle((-0.3, 1.5), 0.6, 1.2, color=plt.cm.hot(colors[1]))
-#   leg_rect = plt.Rectangle((-0.3, 0), 0.6, 1.5, color=plt.cm.hot(colors[2]))
+    heat_data = np.array([
+        [legs, legs, legs],
+        [body, body, body],
+        [head, head, head]
+    ])
 
-#   ax.add_patch(head_circle)
-#   ax.add_patch(body_rect)
-#   ax.add_patch(leg_rect)
+    y_labels = [
+        f"Legs ({stats['sdll']} total, {stats['sdl_acc']*100:.1f}% acc)",
+        f"Body ({stats['sdbl']} total, {stats['sdb_acc']*100:.1f}% acc)",
+        f"Head ({stats['sdhl']} total, {stats['sdh_acc']*100:.1f}% acc)"
+    ]
 
-#   ax.set_xlim(-1, 1)
-#   ax.set_ylim(0, 4)
-#   ax.set_aspect("equal")
-#   plt.title("Strike Distribution Heatmap")
-#   plt.axis("off")
-#   plt.show()
+
+    fig = go.Figure(data=go.Heatmap(
+        z=heat_data,
+        y=y_labels,
+        x=["", "", ""],
+        colorscale="Reds",
+        showscale=True,
+        colorbar=dict(title="Strike Intensity")
+    ))
+
+    fig.update_layout(
+        title=f"Strike Targeting Heatmap (Fighter {fighter_id})",
+        xaxis_showgrid=False,
+        yaxis_showgrid=False,
+        xaxis_visible=False,
+        template="plotly_white",
+        height=400,
+        width=400
+    )
+
+    return fig
+
+def career_plot(fighter_id, db):
+    
+  stats = db.execute('''select g.wrestling, g.bjj, g.striking, g.gnp, c.career_score, g.global_rating_scaled, g.global_rating from aggregate_global g join aggregate_career c on g.fighter_id = c.fighter_id where g.fighter_id = ?''', (fighter_id,)).fetchone()
+  
+  df = pd.DataFrame(dict(
+    r=[round(stats['wrestling']), round(stats['bjj']), round(stats['striking']), round(stats['gnp']), round(stats['career_score'])],
+    theta=['Wrestling', 'BJJ', 'Striking', 'GNP', 'Career']
+      )
+    )
+    
+
+  fig = px.line_polar(df, r='r', theta='theta', line_close=True)
+  fig.update_layout(
+          polar=dict(
+              radialaxis=dict(range=[0, 100], tick0=0, dtick=20)
+          )
+      )
+  
+  return fig
 
 
 # conn = sq.connect(db_path)
 # conn.row_factory = sq.Row
 # db = conn.cursor()
-# body_heat_map(db, 2373)
+# # strike_heatmap(2373, db)
 
-
+# career_plot(2373, db)
 
 
 

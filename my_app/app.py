@@ -286,33 +286,53 @@ def rankings():
 
     return render_template('rankings.html', fighters=fighters, chosen_class=action)
 
-@app.route('/fighter/<id>/', methods=['GET', 'POST'])
+@app.route('/fighter/<id>', methods=['GET', 'POST'])
 def fighter(id):
     selection = 'career'
+    quantity = 1
     conn, db = get_db()
     fighter = db.execute('select * from fighters where fighter_id = ?', (id,)).fetchall()
     fighter = dict(fighter[0])
     fighter['birthday'] = date.today().year - datetime.strptime(fighter['birthday'], '%m/%d/%Y').year if fighter['birthday'] != None else None
 
     plot = elo_history_plot(id).to_html(full_html=False)
+    #random initial assignment for heat map
+    heat_map = strike_heatmap(2373, db)
+    weaknesses = {}
+    strengths = {}
 
     elo_hash = elo_analysis(id)
-    career_hash = career_analysis(db=db, id=id)
+    career_hash = career_analysis(db=db, id=id, cached=True)
     data_hash = career_hash
     print(data_hash)
     last_5 = data_hash['last_5']
     if request.method == 'POST':
+        quantity = int(request.form.get("num", 5))
         selection = request.form.get('action')
-        if selection == "striking":
-            plot = striking_analysis_plot(id, db).to_html(full_html=False)
-            data_hash = get_hash_data(db, 'striking', id)
-        elif selection == "clinch":
-            plot = clinching_analysis_plot(id, db).to_html(full_html=False)
-            data_hash = get_hash_data(db, 'clinching', id)
-        elif selection == "grappling":
-            plot = grappling_analysis_plot(id, db).to_html(full_html=False)
-            data_hash = get_hash_data(db, 'grappling', id)
-    return render_template('fighter.html', fighter=fighter, elo_data_hash=elo_hash, selection=selection, plot=plot, data_hash=data_hash, last_5=last_5, last_fight=career_hash['last_fight'])
+        try:
+            if selection == "striking":
+                plot = striking_analysis_plot(id, db).to_html(full_html=False)
+                heat_map = strike_heatmap(id, db).to_html(full_html=False)
+                data_hash = get_hash_data(db, 'striking', id)
+            elif selection == "clinch":
+                plot = clinching_analysis_plot(id, db).to_html(full_html=False)
+                data_hash = get_hash_data(db, 'clinching', id)
+            elif selection == "grappling":
+                plot = grappling_analysis_plot(id, db).to_html(full_html=False)
+                data_hash = get_hash_data(db, 'grappling', id)
+            elif selection == "overall":
+                plot = career_plot(id, db).to_html(full_html=False)
+                data_hash = get_hash_data(db, 'global', id)
+                weaknesses = get_scaled_attributes(best=False, db=db, fighter_id=id, quantity=quantity)
+                strengths = get_scaled_attributes(best=True, db=db, fighter_id=id, quantity=quantity)
+            else:  
+                weaknesses = get_scaled_attributes(best=False, db=db, fighter_id=id, quantity=5)
+                strengths = get_scaled_attributes(best=True, db=db, fighter_id=id, quantity=5)
+        except Exception as e:
+            return apology('Could not find this fighter! He probably does not have registered fight stats in espn')
+
+    return render_template('fighter.html', id=id, fighter=fighter, elo_data_hash=elo_hash, selection=selection, plot=plot, data_hash=data_hash, last_5=last_5, last_fight=career_hash['last_fight'], heat_map=heat_map, weaknesses=weaknesses, 
+                           strengths=strengths, quantity=quantity)
 
 @app.route('/versus/<fight_id>/', methods=['GET', 'POST'])
 def versus(fight_id):

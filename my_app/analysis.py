@@ -5,6 +5,7 @@ import sqlite3 as sq
 from datetime import datetime
 import numpy as np
 import pandas as pd
+import math
 # from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 logger = logging.getLogger(__name__)
@@ -21,18 +22,107 @@ LEAGUE_AVGS = {
     'scb_acc':0.70,
     'scl_acc':0.42,
     'sch_acc':0.48,
-    'control_time':14
+    'control_time':14,
+    'tda':20,
+    'sgba':3,
+    'sgha':49,
+    'num_of_mins':100,
+    'gnp_pm':0.25,
+    'sub_attempts_pm':0.022,
+    'subs_pm':0.007,
+    'subs_conceded_pm':0.01,
+    'sub_attempts_faced_pm':0.02,
+    'sgh_acc':0.58,
+    'sgb_acc':0.48,
+    'tk_acc':0.25,
+    'td_pm':0.055,
+    'opp_avg_elo': 1222,
+    'control_pm':0.14
 }
 
 PRIOR_ATTEMPTS = 50
 PRIOR_MINS = 20
 
-def career_analysis(db, id):
+def bayesian_shrinkage(
+    values,
+    minutes,
+    prior_mean,
+    prior_minutes=120
+):
+    """
+    values: raw metric (per-minute or composite)
+    minutes: fight minutes
+    prior_mean: league-wide mean of the metric
+    prior_minutes: how many minutes before we fully trust the fighter
+    """
+    return (
+        values * minutes + prior_mean * prior_minutes
+    ) / (minutes + prior_minutes)
+
+
+def career_analysis(db, id, cached=False):
     '''analyses career data from the fighter tab in my_app'''
-    fighter = db.execute('select * from fighters where fighter_id = ?;', (id,)).fetchall()
-    fighter = dict(fighter[0])
+
+    divisions={
+        'strawweight':0,
+        'featherweight':0,
+        'bantamweight':0,
+        'flyweight':0,
+        'lightweight':0,
+        'welterweight':0,
+        'middleweight':0,
+        'lightheavyweight':0,
+        'heavyweight':0,
+        'openweight':0,
+        'catchweight':0,
+        'superheavyweight':0
+    }
+    
     records = db.execute('select * from records where fighter_1 = ?', (id,)).fetchall()
     sorted_records = sorted(records, key=lambda x: datetime.strptime(x['date'], '%b. %d, %Y'), reverse=True)
+
+    if not records:
+        return None
+
+    career = db.execute('select * from aggregate_career where fighter_id = ?', (id,)).fetchone()
+    if career and (cached == True):
+        last_5 = sorted_records[0:5] if len(sorted_records) >= 5 else sorted_records
+        for i in sorted_records:
+            i = dict(i)
+            if i['weight_class']:
+                divisions[i['weight_class'].lower().replace(' ', '').replace('women\'s', '')] += 1
+
+        career_hash = {
+            'fighter_id':id,
+            'ufc_fights':career['ufc_fights'],
+            'highest_win_streak':career['highest_win_streak'],
+            'wins':career['wins'],
+            'losses':career['losses'],
+            'draws':career['draws'],
+            'last_5':last_5,
+            'finishes':career['finishes'],
+            'debut':career['debut'],
+            'last_fight':career['last_fight'],
+            'cage_time':career['cage_time'],
+            'win_rate': career['win_rate'],
+            'finish_rate': career['finish_rate'],
+            'average_fight_time': career['average_fight_time'],
+            'title_fights': career['title_fights'],
+            'subs': career['subs'],
+            'ko_tko': career['ko_tko'],
+            'decisions': career['decisions'],
+            'num_of_mins': career['num_of_mins'],
+            'divisions':divisions,
+        }
+
+        return career_hash
+
+
+
+    fighter = db.execute('select * from fighters where fighter_id = ?;', (id,)).fetchall()
+    fighter = dict(fighter[0])
+    num_of_mins = get_fighter_minutes(records)
+    
 
     last_5 = sorted_records[0:5] if len(sorted_records) >= 5 else sorted_records
     win_streak = 0
@@ -45,14 +135,20 @@ def career_analysis(db, id):
     subs = 0
     ko_tko = 0
 
-    winner = True
+    win_streaks = []
+    current_streak = 0
+
+
     for i in sorted_records:
         i = dict(i)
-        if i['result'] == 'win' and winner:
-            win_streak += 1
-        elif i['result'] != 'win':
-            winner = False
-        if i['method']:
+        if i['result'] == 'win':
+            current_streak += 1
+        else:
+            if current_streak > 0:
+                win_streaks.append(current_streak)
+            current_streak = 0
+
+        if i['method'] and i['result'] == 'win':
             if i['method'].strip() not in ['U-DEC', 'M-DEC', 'S-DEC', 'CNC', "Overturned"]:
                 finishes += 1
             else:
@@ -63,15 +159,30 @@ def career_analysis(db, id):
                 ko_tko += 1
         if i['is_title_fight'] == 'yes':
             title_fights += 1
-        rounds += int(i['round_num'])
+        if i['weight_class']:
+            divisions[i['weight_class'].lower().replace(' ', '').replace('women\'s', '')] += 1
         minute, second = map(int, i['fight_time'].split(':'))
-        last_round_time_seconds += int(minute) * 60 + int(second)
         round_end_times.append(f'{rounds * 5 + minute}:{second}')
+
+    if current_streak > 0:
+        win_streaks.append(current_streak)
+
+    win_streak = sorted(win_streaks, reverse=True)[0] if win_streaks else 0
     
-    total_seconds = (rounds * 5 * 60) * 60 + last_round_time_seconds
-    h = (total_seconds // 3600) 
-    m = (total_seconds % 3600) // 60 
-    s = total_seconds % 60 
+    h = int(num_of_mins // 60)
+    remaining_minutes = num_of_mins - (h * 60)
+
+    m = int(remaining_minutes)
+    s = int(round((remaining_minutes - m) * 60))
+
+    if s == 60:
+        m += 1
+        s = 0
+
+    if m == 60:
+        h += 1
+        m = 0
+
 
     row = sorted_records[-1]
     debut = dict(row)['date']
@@ -79,17 +190,32 @@ def career_analysis(db, id):
     row = sorted_records[0]
     last_fight = dict(row)['date']
 
-    seconds = []
-    for i in round_end_times:
-        m, s = i.split(':')
-        seconds.append(int(m) * 60 + int(s))
-    average_s = sum(seconds) / len(seconds)
-    avg_m = average_s // 60
-    avg_s = average_s % 60 
+    avg_fight_minutes = num_of_mins / len(records) if len(records) != 0 else 0
+
+    avg_m = 0
+    avg_s = 0
+
+    if avg_fight_minutes:
+        avg_m = int(avg_fight_minutes)
+        avg_s = int(round((avg_fight_minutes - avg_m) * (60)))
+
+    if avg_s == 60:
+        avg_m += 1
+        avg_s = 0
+
+    total_fights = (
+        int(fighter['wins']) +
+        int(fighter['losses']) +
+        int(fighter['draws'])
+    )
+
+    win_rate = round(int(fighter['wins']) / total_fights, 2) if total_fights else 0
+    finish_rate = round(finishes/len(sorted_records), 2) if sorted_records else 0
 
     career_hash = {
+        'fighter_id':id,
         'ufc_fights':len(sorted_records),
-        'win_streak':win_streak,
+        'highest_win_streak':win_streak,
         'wins':fighter['wins'],
         'losses':fighter['losses'],
         'draws':fighter['draws'],
@@ -98,16 +224,261 @@ def career_analysis(db, id):
         'debut':debut,
         'last_fight':last_fight,
         'cage_time':f'{h}:{m}:{s}',
-        'win_rate': round(int(fighter['wins'])/(int(fighter['wins']) + int(fighter['losses']) + int(fighter['draws'])), 2),
-        'finish_rate': round(finishes/len(sorted_records), 2),
+        'win_rate': win_rate,
+        'finish_rate': finish_rate,
         'average_fight_time':f"{avg_m}:{avg_s}",
         'title_fights':title_fights,
         'subs':subs,
         'ko_tko':ko_tko,
         'decisions':decisions,
+        'num_of_mins':num_of_mins,
+        'divisions':divisions
     }
 
     return career_hash
+
+def global_rating(conn=None, id=None, career_hash=None):
+    '''returns -1 if not found'''
+    conn.row_factory = sq.Row
+    db = conn.cursor()
+    # I want to give some grace to specialists but still give crazy boost to well rounded fighters
+    wrestling_grace = 0.5 # there should be a grace for wrestling if the specialist has good power and good tk defense and even good bjj game
+    bjj_grace = 0.5 #there should be a grace for bjj if the specialist has good wrestling control, bjj defence and good striking
+    striking_grace = 0.5 # there should be a grace for a bad striker if he has tk threat, striking defence and clinch
+    gnp_grace = 0.5 # there should be a grace for gnp if the fighter has good sub game and clinch game
+    fighter = db.execute('''
+    select g.Wrestling, g.BJJ, g.GNP, g.bjj_defence_scaled, g.td_def_scaled, g.opp_avg_elo_scaled, g.opp_avg_elo, g.effective_sub_threat_scaled, g.effective_control_scaled, g.tk_acc_scaled,
+        s.KickBoxing, s.Boxing, s.str_def_scaled, s.SApM_scaled, s.true_ko_power_scaled as power,
+        c.Muay 
+        from aggregate_grappling g
+        join aggregate_striking s on g.fighter_id = s.fighter_id
+        join aggregate_clinching c on g.fighter_id = c.fighter_id
+        where g.fighter_id = ?
+    ''', (id,)).fetchone()
+
+    if fighter == None:
+        return -1
+    
+    wrestling_score = fighter['Wrestling']
+    bjj_score = fighter['BJJ']
+    gnp_score = fighter['GNP']
+
+    striking_score = 0.75 * max(fighter['Boxing'], fighter['KickBoxing']) + 0.15 * min(fighter['Boxing'], fighter['KickBoxing']) + 0.1 * fighter['Muay']
+    
+    if wrestling_score < 45:
+        wrestling_grace += (0.55 * fighter['td_def_scaled'] + 0.25 * fighter['power'] + 0.2 * fighter["effective_sub_threat_scaled"]) / 200
+
+    if bjj_score < 45:
+        bjj_grace += (0.55 * fighter['bjj_defence_scaled'] + 0.225 * fighter['effective_control_scaled'] + 0.225 * fighter['power']) / 200
+    
+    if gnp_score < 45:
+        gnp_grace += (0.6 * fighter['effective_sub_threat_scaled'] + 0.4 * fighter['Muay']) / 200    
+    if striking_score < 45:
+        striking_grace += (0.5 * fighter['str_def_scaled'] + 0.3 * fighter['tk_acc_scaled'] + 0.2 * fighter['Muay']) / 200
+
+    BASE_EXP = 1.0          # normal punishment
+    MIN_EXP  = 0.35         # maximum forgiveness
+
+    wrestling_grace = min(wrestling_grace, 1.0)
+    bjj_grace = min(bjj_grace, 1.0)
+    striking_grace = min(striking_grace, 1.0)
+    gnp_grace = min(gnp_grace, 1.0)
+
+    wrestling_k = max(0.35, 1.0 - wrestling_grace)
+    bjj_k       = max(0.35, 1.0 - bjj_grace)
+    striking_k = max(0.35, 1.0 - striking_grace)
+    gnp_k       = max(0.35, 1.0 - gnp_grace)
+
+    PIVOT = 60  # elite threshold
+
+    def adjusted_score(score, k):
+        if score >= PIVOT:
+            return score
+        return (score / PIVOT) ** k * PIVOT
+
+
+    wrestling_adj = adjusted_score(wrestling_score, wrestling_k)
+    bjj_adj       = adjusted_score(bjj_score, bjj_k)
+    striking_adj  = adjusted_score(striking_score, striking_k)
+    gnp_adj       = adjusted_score(gnp_score, gnp_k)
+
+
+    weights = {
+        "wrestling": 1.0,
+        "bjj": 1.0,
+        "striking": 1.0,
+        "gnp": 0.25 
+    }
+
+    numerator = (
+        wrestling_adj ** weights["wrestling"] *
+        bjj_adj       ** weights["bjj"] *
+        striking_adj  ** weights["striking"] *
+        gnp_adj       ** weights["gnp"]
+    )
+
+    global_rating = numerator ** (1 / sum(weights.values()))
+
+    global_rating *= (1 + 0.25 * fighter['opp_avg_elo_scaled'])
+
+    gl_hash = {
+        'fighter_id':[id],
+        'wrestling':[wrestling_score],
+        'bjj':[bjj_score],
+        'striking':[striking_score],
+        'boxing':[fighter['Boxing']],
+        'kickboxing':[fighter['KickBoxing']],
+        'gnp':[gnp_score],
+        'wrestling_adj':[wrestling_adj],
+        'bjj_adj':[bjj_adj],
+        'gnp_acj':[gnp_adj],
+        'striking_adj':[striking_adj],
+        'global_rating':[global_rating]
+    }
+
+    df = pd.DataFrame(gl_hash)
+
+    return df
+
+def career_ranking_analysis(conn, fighter_id):
+    conn.row_factory = sq.Row
+    db = conn.cursor()
+
+    #based on divisional skill level
+    division_boost={
+        'strawweight':1.2,
+        'flyweight':1.3,
+        'bantamweight':1.4,
+        'featherweight':1.4,
+        'lightweight':1.5,
+        'welterweight':1.4,
+        'middleweight':1.3,
+        'lightheavyweight':1.2,
+        'heavyweight':1.1,
+        'openweight':1,
+        'catchweight':1,
+        'superheavyweight':1
+    }
+
+    elo_rows = db.execute('select * from elo_history where fighter_1 = ? or fighter_2 = ?', (fighter_id, fighter_id)).fetchall()
+    if not elo_rows:
+        return -1
+    career = career_analysis(db=db, id=fighter_id)
+
+    loss_elo = []
+    win_elo = []
+    opp = ''
+    for row in elo_rows:
+        if row['fighter_1'] == fighter_id:
+            opp = 'elo_2'
+        else:
+            opp = 'elo_1' 
+
+        if row['winner'] == fighter_id:
+            win_elo.append(row[opp])
+        elif row['winner'] != fighter_id:
+            loss_elo.append(row[opp])
+    
+
+    avg_win_elo = sum(win_elo) / len(win_elo) if len(win_elo) > 0 else 0
+    avg_loss_elo = sum(loss_elo) / len(loss_elo) if len(loss_elo) > 0 else 0
+    fighter_elo = elo_analysis(fighter_id)
+    
+    win_rate = career['win_rate']
+    finish_rate = career['finish_rate']
+    ko_tko = career['ko_tko']
+    subs = career['subs']
+    title_fights = career['title_fights']
+    last_5 = career['last_5']
+    highest_win_streak = career['highest_win_streak']
+    num_of_fights = len(elo_rows)
+    top_division = max(career['divisions'], key=career['divisions'].get)
+
+    df = pd.read_sql_query('select * from elo', conn)
+
+    min_elo = df['elo'].min()
+    max_elo = df['elo'].max()
+
+    peak_elo = max(fighter_elo['peak_elo'], fighter_elo['elo'])
+    df['peak_elo'] = peak_elo
+
+    min_maxed_peak_elo = (peak_elo - min_elo) / (max_elo - min_elo)
+    min_maxed_win_elo = (avg_win_elo - min_elo) / (max_elo - min_elo) if avg_win_elo > 0 else 0
+    min_maxed_loss_elo = (avg_loss_elo - min_elo) / (max_elo - min_elo) if avg_loss_elo > 0 else 0
+
+    def safe_div(a, b, default=0):
+        return a / b if b != 0 else default
+
+    def clamp(x, low=0, high=1):
+        return max(low, min(high, x))
+
+
+    win_score = (
+        (1 + win_rate) *
+        (1 + finish_rate) *
+        (1 + math.log1p(highest_win_streak))
+    )
+
+    title_score = math.log1p(title_fights) ** 0.75
+
+    title_score = title_score * division_boost[top_division] if top_division else title_score
+
+
+    fall_off_rate = clamp((fighter_elo['peak_elo'] - fighter_elo['elo']) / fighter_elo['peak_elo'])
+
+    elo_score = (
+        0.5 * min_maxed_peak_elo +
+        0.4 * min_maxed_win_elo -
+        0.1 * min_maxed_loss_elo
+    )
+
+    elo_score = clamp(elo_score)
+
+    # fall_off_penalty = 1 - (0.3 * fall_off_rate)
+    # career_score = (
+    #     0.5 * elo_score +
+    #     0.3 * win_score +
+    #     0.2 * title_score
+    # )
+
+    # career_score *= fall_off_penalty
+    # career_score = math.log1p(career_score) * 100
+
+    fall_off_penalty = 1 - (0.3 * fall_off_rate)
+
+
+    for key, value in career.items():
+        career[key] = [value]
+
+    df_1 = pd.DataFrame(career)
+    df_1 = df_1.drop('last_5', axis=1)
+    df_1 = df_1.drop('divisions', axis=1)
+
+    df_2 = pd.DataFrame(
+        {
+            'fighter_id':[fighter_id],
+            'peak_elo':[peak_elo],
+            'elo':[fighter_elo['elo']],
+            'min_maxed_peak_elo':[min_maxed_peak_elo],
+            'min_maxed_win_elo':[min_maxed_win_elo],
+            'min_maxed_loss_elo':[min_maxed_loss_elo],
+            'elo_score':[elo_score],
+            'fall_off_rate':[fall_off_rate],
+            'fall_off_penalty':fall_off_penalty,
+            'title_score':[title_score],
+            'win_score':[win_score],
+        }
+    )
+
+
+    fighter_df = pd.merge(df_1, df_2, on='fighter_id')
+    # print(fighter_df)
+    # print(fighter_df['highest_win_streak'])
+
+    # print(fighter_df)
+    # print(highest_win_streak, min_maxed_loss_elo, finish_rate, win_rate)
+
+    return fighter_df
 
 
 
@@ -120,28 +491,40 @@ def elo_analysis(id):
         elo = row['elo']
         peak_elo = elo
         elo_history = db.execute('select * from elo_history where fighter_1 = ? or fighter_2 = ?', (id, id)).fetchall()
+        peak_elos = db.execute('''
+                                select date,
+                                case 
+                                    when fighter_1 = ? then new_elo_1
+                                    when fighter_2 = ? then new_elo_2
+                                end as elo
+                                from elo_history 
+                                where fighter_1 = ? or fighter_2 = ?'''
+                                , (id, id, id, id)).fetchall()
+        
+        peak_elo = max([row['elo'] for row in peak_elos])
+        for row in peak_elos:
+            if row['elo'] == peak_elo:
+                peak_fight = row['date']
+                
+
         columns = [desc[0] for desc in db.execute('select * from elo_history').description]
-
-        #the df turns the columns into numbers so i have to manually put in columns lol
-        df = pd.DataFrame(elo_history, columns=columns)
-        #to be safe
-        df.columns = [c.strip() for c in df.columns] 
-
-        for row in df.itertuples(index=False):
-            if getattr(row, 'fighter_1') == id:
-                if row.elo_1 > peak_elo:
-                    peak_elo = row.elo_1
-            elif getattr(row, 'fighter_2') == id:
-                if row.elo_2 > peak_elo:
-                    peak_elo = row.elo_2
 
 
         latest_date = elo_history[-1]['date'] if elo_history else None
+        # peak_fight = 0
+        # for fight in elo_history:
+        #     if float(fight['elo_1']) == peak_elo and fight['fighter_1'] == id:
+        #         peak_fight = fight['date']
+        #         break
+        #     elif float(fight['elo_2']) == peak_elo and fight['fighter_2'] == id:
+        #         peak_fight = fight['date']
+        #         break
 
         elo_hash = {
             'elo':elo,
             'peak_elo':peak_elo,
-            'latest_fight':latest_date
+            'latest_fight':latest_date,
+            'peak_fight':peak_fight
         }
 
     return elo_hash
@@ -475,9 +858,10 @@ def fighter_grappling_analysis(name, fighter_id, conn=None):
         from advanced_ground g 
         join advanced_clinch c on g.fighter_id = c.fighter_id and g.date = c.date
         join advanced_stats s on g.fighter_id = s.fighter_id
-        where g.fighter_id = {fighter_id}
+        where g.fighter_id = ?
         ''',
-        conn
+        conn,
+        params=(fighter_id,)
     )
 
     # Step 2: Remove non-UFC fights
@@ -510,7 +894,12 @@ def fighter_grappling_analysis(name, fighter_id, conn=None):
         df[['tdl', 'tda', 'tds', 'rv', 'sgbl', 'control_time', 'sgba', 'sghl', 'sgha', 'sgll', 'sgla', 'sm', 'ad', 'adhg', 'adtb', 'adtm', 'adts']].astype(float)
     )
 
+    def bayesian_pm(count, minutes, league_pm, prior_minutes):
+        return (count + league_pm * prior_minutes) / (minutes + prior_minutes)
 
+    def bayes_rate(successes, attempts, league_avg, prior_attempts):
+        return (successes + league_avg * prior_attempts) / (attempts + prior_attempts)
+    
 
     if df.empty:
         return pd.DataFrame()
@@ -533,27 +922,66 @@ def fighter_grappling_analysis(name, fighter_id, conn=None):
     df = df_fight
 
 
-    df['td_pm'] = df['tdl'] / num_of_mins if num_of_mins != 0 else 0
+    df['td_pm'] = bayesian_pm(
+        df['tdl'],
+        num_of_mins,
+        LEAGUE_AVGS['td_pm'],
+        prior_minutes=120
+    )
+
 
     # ------------- Ground and Pound ----------------
-    df['sgh_acc'] = df['sghl'] / df['sgha'].replace(0, np.nan)
-    df['sgb_acc'] = df['sgbl'] / df['sgba'].replace(0, np.nan)
-    df['sgl_acc'] = df['sgll'] / df['sgla'].replace(0, np.nan)
+    
+    df['sgh_acc'] = bayes_rate(df['sghl'], df['sgha'], LEAGUE_AVGS['sgh_acc'], 20)
+    df['sgb_acc'] = bayes_rate(df['sgbl'], df['sgba'], LEAGUE_AVGS['sgb_acc'], 2)
+    df['tk_acc'] = bayes_rate(df['tdl'], df['tda'], LEAGUE_AVGS['tk_acc'], 10)
 
-    df['effective_gnp'] = ( 0.45 * df['sgh_acc'] + 0.45 * df['sgb_acc'] + 0.10 * df['sgl_acc'] ) * (1 + (df['tds'] / df['tda']) * 0.1)
-    df['effective_gnp'] = df['effective_gnp'] * df['tdl'] / num_of_mins
+    df['num_of_mins'] = num_of_mins
+    # df['sgh_acc'] = df['sghl'] / df['sgha'].replace(0, np.nan)
+    # df['sgb_acc'] = df['sgbl'] / df['sgba'].replace(0, np.nan)
+    # df['sgl_acc'] = df['sgll'] / df['sgla'].replace(0, np.nan)
+
+    # GNP per minute
+    df['gnp_pm'] = bayesian_pm(
+        df['sghl'] + df['sgbl'],
+        num_of_mins,
+        LEAGUE_AVGS['gnp_pm'],
+        prior_minutes=120
+    )
+    # Compute weighted accuracy
+    weighted_acc = 0.85 * df['sgh_acc'] + 0.15 * df['sgb_acc'] 
+    df['gnp_pressure'] = np.log1p(df['gnp_pm'] / LEAGUE_AVGS['gnp_pm'])
+    # Multiply by strike volume and a base
+    df['effective_gnp'] = ((weighted_acc * (df['sghl'] + df['sgbl'])) ** 0.6) * (df['gnp_pressure'] ** 1.3)
+
+    epsilon = 1e-3
+    df['effective_gnp'] = (df['effective_gnp'] + epsilon)
+
+    df['td_pressure'] = np.log1p(df['td_pm'] / LEAGUE_AVGS['td_pm'])
 
     # this one might be useless
     df['bjj_advances'] = (0.15*df['adhg'] + 0.35*df['adtb'] + 0.35*df['adtm'] + 0.15*df['adts']) / num_of_mins
 
     df['effective_takedowns'] = (
-        (df['tdl'] / num_of_mins) *            # actual successful takedowns per minute
-        (0.7 + 0.3 * df['tk_acc'])             # efficiency bonus, but not dominant
+        df['td_pressure'] ** 0.6 *         
+        df['tk_acc'] ** 1.3          
     )
 
+
     # ------ Effective Subs ------
-    df['sub_attempts_pm'] = df['sm'] / num_of_mins if num_of_mins != 0 else 0
-    df['subs_pm'] = sub_count / num_of_mins
+    df['sub_attempts_pm'] = bayesian_pm(
+        df['sm'],
+        num_of_mins,
+        LEAGUE_AVGS['sub_attempts_pm'],
+        prior_minutes=120
+    )
+
+    df['subs_pm'] = bayesian_pm(
+        sub_count,
+        num_of_mins,
+        LEAGUE_AVGS['subs_pm'],
+        prior_minutes=120
+    )
 
     df['sub_success_rate'] = df['subs_pm'] / df['sub_attempts_pm'].replace(0, np.nan)
     df['sub_success_rate'] = df['sub_success_rate'].fillna(0)
@@ -561,18 +989,38 @@ def fighter_grappling_analysis(name, fighter_id, conn=None):
     df['opp_avg_elo'] = opp_avg_elo
 
 
-    df['effective_sub_threat'] = df['sub_attempts_pm'] * (df['sub_success_rate'] ** 1.5) * ((df['opp_avg_elo'] + 1200) / 1200) ** 1.25
+    df['effective_sub_threat'] = (df['sub_attempts_pm'] ** 0.75) * (df['sub_success_rate'] ** 1.3) * ((df['opp_avg_elo'] + 1200) / 1200) ** 1.25
 
-    df['control_time_per_round'] = df['control_time'] / num_of_rounds if num_of_rounds != 0 else 0
+    df['control_pm'] = bayesian_pm(
+        df['control_time'],
+        num_of_mins,
+        LEAGUE_AVGS['control_time'] / LEAGUE_AVGS['num_of_mins'],
+        prior_minutes=120
+    )
 
 
-    df['effective_control'] = (df['control_time_per_round'] ** 1.5) * (((df['opp_avg_elo'] + 1200 )/ 1200)) ** 0.75
+
+    df['effective_control'] = (
+        np.log1p(df['control_pm'] / LEAGUE_AVGS['control_pm']) *
+        ((df['opp_avg_elo'] + 1200) / 1200) ** 0.75
+    )
 
     # ---------- BJJ defence ---------------
     #eps = 0.1
 
-    df['subs_conceded_pm'] = (subs_conceded) / num_of_mins
-    df['sub_attempts_faced_pm'] = (sub_attempts_faced) / num_of_mins
+    df['subs_conceded_pm'] = bayesian_pm(
+        subs_conceded,
+        num_of_mins,
+        LEAGUE_AVGS['subs_conceded_pm'],
+        prior_minutes=120
+    )
+
+    df['sub_attempts_faced_pm'] = bayesian_pm(
+        sub_attempts_faced,
+        num_of_mins,
+        LEAGUE_AVGS['sub_attempts_faced_pm'],
+        prior_minutes=120
+    )
 
     sub_term = np.exp(-1.5 * df['subs_conceded_pm'])
     attempt_term = np.exp(-0.7 * df['sub_attempts_faced_pm'])
@@ -615,10 +1063,10 @@ def total_fighting_analysis(art_style):
 
 
             features_to_scale = [
-                'ts_acc', 'ss_acc', 'sdh_acc', 'sdb_acc', 'sdl_acc',
+                'ts_acc', 'ss_acc', 'sdh_acc', 'sdb_acc', 'sdl_acc', 'tsl', 'sdhl', 'sdbl', 'sdll',
                 'total_ssl_acc', 'total_ssa_percentage', 'kd_pm', 'tsl_pm',
                 'true_ko_power', 'avg_ko_opp_durability', 'avg_ko_opp_elo',
-                'SLpM', 'SApM', 'str_def',
+                'SLpM', 'SApM', 'str_def', 'ko_pm',
                 'body_percentage', 'head_percentage', 'leg_percentage', 'effective_volume', 'leg_kicks', 'sig_acc'
             ]
 
@@ -648,24 +1096,87 @@ def total_fighting_analysis(art_style):
             fighters_df["Muay"] = 0.2 * fighters_df['clinch_strikes_pm_scaled'] + 0.8 * fighters_df['effective_accuracy_scaled']
 
         elif art_style == 'grappling':
-            fighters_clinching = []
+            fighters_grappling = []
             for fighter in fighters:
                 grappling_df = fighter_grappling_analysis(fighter['name'], fighter['fighter_id'], conn=conn)
-                fighters_clinching.append(grappling_df)      
+                fighters_grappling.append(grappling_df)      
             
-            fighters_df = pd.concat(fighters_clinching).reset_index()
+            fighters_df = pd.concat(fighters_grappling).reset_index()
 
             features_to_scale = [
                 'tdl', 'tk_acc', 'sm', 'td_def', 'sub_avg', 'control_time', 'effective_takedowns',
-                'td_pm', 'effective_gnp', 'bjj_advances', 'effective_sub_threat', 'control_time_per_round',
-                'effective_control', 'opp_avg_elo', 'subs_pm', 'sub_attempts_pm', 'bjj_defence'
+                'td_pm', 'effective_gnp', 'bjj_advances', 'effective_sub_threat', 'control_pm', 'td_pressure',
+                'effective_control', 'opp_avg_elo', 'subs_pm', 'sub_attempts_pm', 'bjj_defence', 'gnp_pm'
             ]
 
-            fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.04, up=0.96)
+            fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.01, up=0.99)
 
             fighters_df["Wrestling"] = 0.34 * fighters_df['effective_takedowns_scaled'] + 0.33 * fighters_df['effective_control_scaled'] + 0.33 * fighters_df['td_def_scaled']
             fighters_df["BJJ"] = 0.7 * fighters_df['effective_sub_threat_scaled'] + 0.3 * fighters_df['bjj_defence_scaled']
             fighters_df['GNP'] = fighters_df['effective_gnp_scaled']
+        
+        elif art_style == "global":
+            global_fighters = []
+            for fighter in fighters:
+                global_df = global_rating(id=fighter['fighter_id'], conn=conn)
+                if isinstance(global_df, int):
+                    continue
+                global_fighters.append(global_df)      
+            
+            fighters_df = pd.concat(global_fighters).reset_index()
+
+            features_to_scale = [
+                'wrestling_adj',
+                'bjj_adj',
+                'gnp_acj',
+                'striking_adj',
+                'global_rating'
+            ]
+
+            fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.005, up=0.995)
+
+            # elite_stats = max(fighters_df['wrestling'], fighters_df['bjj'], fighters_df['striking'])
+
+            # specialist_floor = elite_stats * 0.7
+            # fighters_df['global_rating_scaled'] = max(fighters_df['global_rating_scaled'], specialist_floor)
+
+        elif art_style == "career":
+            fighter_career = []
+            for fighter in fighters:
+                career_df = career_ranking_analysis(conn, fighter['fighter_id'])
+                if isinstance(career_df, int):
+                    continue
+                fighter_career.append(career_df)      
+            
+            fighters_df = pd.concat(fighter_career, ignore_index=True)
+
+            features_to_scale = [
+                'peak_elo',
+                'elo',
+                'highest_win_streak',
+                'min_maxed_peak_elo',
+                'min_maxed_win_elo',
+                'min_maxed_loss_elo',
+                'elo_score',
+                'fall_off_rate',
+                'title_score',
+                'win_score',
+                'finish_rate'
+            ]
+
+            fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.0005, up=0.9995)
+
+            fighters_df['career_score'] = 0.65 * fighters_df['elo_score_scaled'] + 0.35 * fighters_df['win_score_scaled']
+
+            fighters_df['career_score'] *= fighters_df['fall_off_penalty']
+
+            mask = fighters_df['title_score'] > 0.8
+
+            fighters_df.loc[mask, 'career_score'] *= ( 1 + (fighters_df.loc[mask, 'title_score'] - 0.8) / ((3 - 0.8) * 3))
+
+            fighters_df['career_score'] = fighters_df['career_score'].clip(upper=100)
+
+
 
         
         # fighters_df.head()
@@ -682,10 +1193,6 @@ def total_fighting_analysis(art_style):
 
         # print(striking_fighters_dict)
 
-# def update_aggregate_tables():
-#     ...
-# def create_aggregate_tables():
-#     ...
 
 '''Here starts the analysis utitlity functions'''
 
@@ -769,13 +1276,17 @@ def safe_split(col):
 
 def get_hash_data(db, art_type, fighter_id):
     """ get the data of a specific fighter in a specific art type when given the db (sq.Row), art type (striking, clinching, grappling) and fighter id. Returns -1 if fail"""
-    if art_type not in ['striking', 'clinching', 'grappling']:
+    if art_type not in ['striking', 'clinching', 'grappling', 'global']:
         return -1
-    row = db.execute(f"select * from aggregate_{art_type.lower()} where fighter_id = ?", (fighter_id,)).fetchone()
+    if art_type != 'global':
+        row = db.execute(f"select * from aggregate_{art_type.lower()} where fighter_id = ?", (fighter_id,)).fetchone()
+    else:
+        row = db.execute(f"select * from aggregate_global g join aggregate_career c on g.fighter_id = c.fighter_id where g.fighter_id = ?", (fighter_id,)).fetchone()
     if row:
         return row
     else:
         return -1
+
 
 def get_z_score(features_to_scale=None, df=None, low=None, up=None):
     ''' features_to_scale: put the columns you want to change, fighters_df: the pandas df, low: the lower end of the z_score you want to clip, up: upper end of the clip'''
@@ -805,8 +1316,36 @@ def get_z_score(features_to_scale=None, df=None, low=None, up=None):
 
     return df
 
+def get_scaled_attributes(best=True, db=None, fighter_id = 2373, quantity=0):
+    '''best (t or f), db, fighter_id'''
+    row = db.execute('''select * from aggregate_grappling g 
+                        join aggregate_striking s on g.fighter_id = s.fighter_id 
+                        join aggregate_clinching c on g.fighter_id = c.fighter_id 
+                        where g.fighter_id = ?''', (fighter_id,)).fetchone()
+    if not row:
+        return {}
+    
+    stats = dict(row)
 
-# total_fighting_analysis('clinching')
+    scaled = {
+        k: v for k, v in stats.items()
+        if k.endswith('_scaled')
+    }
+
+    sorted_dict = dict(
+        sorted(scaled.items(), key=lambda item: item[1], reverse=best)[:quantity]
+    )
+
+    return sorted_dict
+
+
+
+
+# total_fighting_analysis('grappling')
 # with sq.connect(db_path) as conn:
-#     fighter_striking_analysis(2373, conn)
+#     # fighter_striking_analysis(2373, conn)
+#     # global_rating(conn=conn, id=1881)
+#     career_ranking_analysis(conn, 2373)
+
+# total_fighting_analysis('career')
 

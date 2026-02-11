@@ -5,62 +5,214 @@
 {% endblock %}
 
 {% block main %}
+
+<style>
+/* General dark mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+nav {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #1976d2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+nav a:hover {
+    background-color: #7b1fa2;
+    color: white;
+}
+
+/* Dark mode nav links */
+body.dark-mode nav a {
+    color: #bb86fc;
+}
+
+body.dark-mode nav a:hover {
+    background-color: #03a9f4;
+    color: #121212;
+}
+
+/* Event/fight lists */
+.event-list, .upcoming-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.event-card, .upcoming-card {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 12px;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+}
+
+.event-card:hover, .upcoming-card:hover {
+    border-color: #1976d2; /* blue hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .event-card, body.dark-mode .upcoming-card {
+    background-color: #1e1e1e;
+    border-color: #bb86fc;
+}
+
+body.dark-mode .event-card:hover, body.dark-mode .upcoming-card:hover {
+    border-color: #03a9f4;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* Event titles and details */
+.event-card h3, .upcoming-card h3 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+}
+
+.event-card p, .upcoming-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+}
+
+body.dark-mode .event-card p, body.dark-mode .upcoming-card p {
+    color: #e0e0e0;
+}
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: center;
+}
+
+body.dark-mode table th, body.dark-mode table td {
+    border-color: #bb86fc;
+}
+
+body.dark-mode table {
+    background-color: #1e1e1e;
+}
+
+/* Dark mode toggle button */
+#darkModeToggle {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #1976d2;
+    color: white;
+    float: right;
+    margin: 10px;
+}
+</style>
+
+<!-- Dark mode toggle -->
+<button id="darkModeToggle">Dark Mode</button>
+
+<div>
+    <nav>
+        <a href="/fights/completed/">Completed</a>
+        <a href="/fights/upcoming/">Upcoming</a>
+    </nav>
+
     <div>
-        <nav>
-            <a href="/fights/completed/">Completed</a>
-            <a href="/fights/upcoming/">Upcoming</a>
-        </nav>
-        <div>
-            {% if sub in ["completed", "upcoming"] %}
-            <h1>{{sub}} events</h1>
-            {% else %}
-            <h1></h1>
-            {% endif %}
-            <ul>
-                {% if sub == "completed" %}
-                <p>Only showing the last 30</p>
-                    {% for event in events %}
-                    <li>
-                        <a href="/fights/{{event['event_id']}}/">
+        {% if sub in ["completed", "upcoming"] %}
+            <h1 style="text-align:center">{{sub}} events</h1>
+        {% endif %}
+
+        {% if sub == "completed" %}
+            <p style="text-align:center">Only showing the last 30</p>
+            <ul class="event-list">
+                {% for event in events %}
+                <li class="event-card">
+                    <a href="/fights/{{event['event_id']}}/">
                         <h3>{{event['event_name']}}</h3>
                         <p>{{event['event_date']}} -- {{event['event_location']}}</p>
-                        </a>
-                    </li>
-                    {% endfor %}
-                {% elif sub == "upcoming" %}
-                    {% for upcoming in upcoming_events %}
-                    <li>
-                        <a href="/fights/{{upcoming['event_id']}}/">
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% elif sub == "upcoming" %}
+            <ul class="upcoming-list">
+                {% for upcoming in upcoming_events %}
+                <li class="upcoming-card">
+                    <a href="/fights/{{upcoming['event_id']}}/">
                         <h3>{{upcoming['event_name']}}</h3>
                         <p>{{upcoming['event_date']}} -- {{upcoming['event_location']}}</p>
-                        </a>
-                    </li>
-                    {% endfor %}
-                {% else %}
-                    <table>
-                        <thead>
-                            {% for num, fight in fights.items() %}
-                                {% for col in fight %}
-                                    {% if num == 1 %}
-                                        <th>{{col}}</th>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
-                        </thead>
-                        <tbody>
-                            {% for num, fight in fights.items() %}
-                            <tr>
-                                {% for data in fight.values() %}
-                                    <td>{{data}}</td>
-                                {% endfor %}
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
             </ul>
-        </div>
+        {% else %}
+            <table>
+                <thead>
+                    {% for num, fight in fights.items() %}
+                        {% for col in fight %}
+                            {% if num == 1 %}
+                                <th>{{col}}</th>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </thead>
+                <tbody>
+                    {% for num, fight in fights.items() %}
+                    <tr>
+                        {% for data in fight.values() %}
+                            <td>{{data}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
+</div>
+
+<script>
+// Dark mode toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+
+function enableDarkMode(enable) {
+    if(enable) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+    } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+    }
+}
+
+// Load preference on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if(darkMode === 'true') enableDarkMode(true);
+});
+
+darkModeToggle.addEventListener('click', () => {
+    const isDark = document.body.classList.contains('dark-mode');
+    enableDarkMode(!isDark);
+});
+</script>
 
 {% endblock %}

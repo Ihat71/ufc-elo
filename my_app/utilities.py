@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import logging
 import uuid
+from my_app.plots import * 
 
 logger = logging.getLogger(__name__)
 
@@ -224,3 +225,130 @@ def get_completed_event_info(url):
 def get_web_route():
     random_id = str(uuid.uuid4())
     return random_id
+
+def get_all_fighters(db):
+    fighters = db.execute('select * from fighters').fetchall()
+
+    return fighters
+
+def get_two_fighters(name1, name2, db):
+    name1 = name1.lower()
+    name2 = name2.lower()
+
+    rows = db.execute('select * from fighters f where lower(f.name) = ? or lower(f.name) = ?', (name1, name2)).fetchall()
+
+    if len(rows) < 2:
+        return None
+    
+    temp_1, temp_2 = rows
+
+    fighters = [temp_1, temp_2]
+    fighter_dicts = []
+
+    for f in fighters:
+        fighter_dicts.append({
+            "id": f["fighter_id"],
+            "name":f['name'],
+            "nationality": f["country"] or "--",
+            "weight": f["weight"] or "--",
+            "team": f["team"] or "--",
+            "birthday": f["birthday"] or "--",
+            'picture': f['picture'] or '--'
+        })
+
+    fighter_1, fighter_2 = fighter_dicts
+
+    if fighter_1 and fighter_2:
+        return fighter_1, fighter_2
+    
+def get_fighter_data(id, db):
+
+    row = db.execute('''select * from fighters f 
+                     join aggregate_career c on f.fighter_id = c.fighter_id 
+                     join aggregate_global g on f.fighter_id = g.fighter_id 
+                     where f.fighter_id = ?''', (id,)).fetchone()
+
+    if not row:
+        return None
+    
+    temp = row
+    fighter = {}
+
+    feet, inches = temp['height'].replace('\'', '').replace('\"', '').split()
+    fighter['elo'] = temp['elo']
+    fighter['Peak Elo'] = temp['elo']
+    fighter['Height (cm)'] = round(int(feet) * 30.48 + int(inches) * 2.54) if feet and inches else '--'
+
+    reach_str = temp['reach'].replace('\"', '').strip()
+    try:
+        reach_cm = float(reach_str) * 2.54 if reach_str else None
+    except ValueError:
+        reach_cm = None
+
+    fighter['Reach (cm)'] = round(reach_cm) if reach_cm is not None else '--'
+    fighter['Wins'] = temp['wins']
+    fighter['Losses'] = temp['losses']
+    fighter['KO/TKO'] = temp['ko_tko']
+    fighter['Subs'] = temp['subs']
+    fighter['Decisions'] = temp['decisions']
+    fighter['Title Fights'] = temp['title_fights']
+    fighter['Number of Minutes in Octagon'] = temp['num_of_mins']
+    fighter['Highest Win Streak'] = temp['highest_win_streak']
+
+    return fighter
+
+def plot_mergers(fighter1, fighter2, db):
+    strike_fig, fig2 = striking_analysis_plot(fighter1, db), striking_analysis_plot(fighter2, db)
+    for trace in fig2.data:
+        trace.update(line=dict(color="purple"))
+        strike_fig.add_trace(trace)
+
+    
+    grappling_fig, fig2 = grappling_analysis_plot(fighter1, db), grappling_analysis_plot(fighter2, db)
+    for trace in fig2.data:
+        trace.update(line=dict(color="purple"))
+        grappling_fig.add_trace(trace)
+    
+    career_fig, fig2 = career_plot(fighter1, db), career_plot(fighter2, db)
+    for trace in fig2.data:
+        trace.update(line=dict(color="purple"))
+        career_fig.add_trace(trace)
+
+    return strike_fig.to_html(full_html=False), grappling_fig.to_html(full_html=False), career_fig.to_html(full_html=False)
+
+    
+def compare_career_stats(fighter1, fighter2, db):
+    ...
+
+def get_global_score(db, fighter_id):
+    score = db.execute('select global_rating, global_rating_scaled from aggregate_global where fighter_id = ?', (fighter_id,)).fetchone()
+
+    return score
+
+def career_data_cleaner(career_data):
+    for fighter_name, fighter_stats in career_data.items():
+
+        # Make a list of original keys so we can safely modify dict
+        original_keys = list(fighter_stats.keys())
+
+        for old_key in original_keys:
+            value = fighter_stats.pop(old_key)
+
+            label = old_key
+
+            label = label.replace('sm', 'submissions')
+            label = label.replace("ss", "significant strike")
+            label = label.replace("tsl", "total strikes landed")
+            label = label.replace("_pm", " / minute")
+            label = label.replace("_scaled", "")
+            label = label.replace("_", " ")
+            label = label.replace("opp", "opponent")
+
+            label = label.title()
+
+            fighter_stats[label] = value
+
+    return career_data
+
+
+

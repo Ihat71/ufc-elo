@@ -5,59 +5,200 @@
 {% endblock %}
 
 {% block main %}
-    <div>
-        <h1>Methodology</h1>
-        <div>
-            <p> The k factor of my ELO equation is 32 however it can go up to 36 if the fighter got a knockout or a sub, also depending on how early the win was. A first round KO shows the difference in levels between two fightes: they are very far apart</p>
-            <p> However I only take UFC fights into account</p>
-            <p> ELO rankings in sports like UFC are not accurate due to the low volume of matches however they show interesting insights</p>
-        </div>
-    </div>
-    <div>
-        <h2>Fighter Rankings</h2>
-        <div>
-            <div>
-                <form action="/rankings" method="POST">
-                    <button type="submit" name="action" value="p4p">
-                        Pound-for-pound
-                    </button>
-                    <button type="submit" name="action" value="Flyweight">
-                        Flyweight
-                    </button>
-                    <button type="submit" name="action" value="Bantamweight">
-                        Bantamweight
-                    </button>
-                    <button type="submit" name="action" value="Featherweight">
-                        Featherweight
-                    </button>
-                    <button type="submit" name="action" value="Lightweight">
-                        Lightweight
-                    </button>
-                    <button type="submit" name="action" value="Welterweight">
-                        Welterweight
-                    </button>
-                    <button type="submit" name="action" value="Middleweight">
-                        Middleweight
-                    </button>
-                    <button type="submit" name="action" value="LightHeavyweight">
-                        LightHeavyWeight
-                    </button>
-                    <button type="submit" name="action" value="Heavyweight">
-                        Heavyweight
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div>
-            <h2>{{chosen_class}}</h2>
-            {% for fighter in fighters %}
-            <a href="/fighter/{{fighter['fighter_id']}}">
-                <div><img src="{{fighter['pic']}}"></div>
-                <div>{{fighter['name']}}</div>
-                <div>{{fighter['elo']}}</div>
+
+<style>
+/* General styling */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.methodology {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Form buttons */
+.ranking-buttons {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.ranking-buttons form button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #4a148c; /* dark purple */
+    background-color: #7b1fa2; /* purple */
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ranking-buttons form button:hover {
+    background-color: #1976d2; /* blue */
+    border-color: #115293;
+}
+
+/* Fighter cards grid */
+.fighter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+/* Individual fighter card */
+.fighter-card {
+    border: 2px solid black; /* default black border */
+    border-radius: 10px;
+    width: 180px;
+    text-align: center;
+    padding: 10px;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+}
+
+.fighter-card:hover {
+    border-color: #1976d2; /* blue on hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.fighter-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.fighter-card .fighter-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.fighter-card .fighter-elo {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .fighter-card {
+    background-color: #1e1e1e;
+    border-color: #bb86fc; /* purple-ish border */
+}
+
+body.dark-mode .fighter-card:hover {
+    border-color: #03a9f4; /* blue on hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .ranking-buttons form button {
+    background-color: #bb86fc;
+    color: #121212;
+    border-color: #9c27b0;
+}
+
+body.dark-mode .ranking-buttons form button:hover {
+    background-color: #03a9f4;
+    color: white;
+    border-color: #0288d1;
+}
+
+body.dark-mode .methodology {
+    color: #e0e0e0;
+}
+
+body.dark-mode a {
+    color: #03a9f4;
+}
+</style>
+
+<div style="text-align: right; margin: 10px;">
+    <button id="darkModeToggle" style="
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background-color: #1976d2;
+        color: white;
+    ">Dark Mode</button>
+</div>
+
+
+<div class="methodology">
+    <h1>Methodology</h1>
+    <p>The k factor of my ELO equation is 32 however it can go up to 36 if the fighter got a knockout or a submission, also depending on how early the win was. A first round KO shows the difference in levels between two fighters: they are very far apart.</p>
+    <p>However I only take UFC fights into account.</p>
+    <p>ELO rankings in sports like UFC are not always accurate due to the low volume of matches, however they show interesting insights.</p>
+</div>
+
+<div class="ranking-buttons">
+    <form action="/rankings" method="POST">
+        <button type="submit" name="action" value="p4p">Pound-for-pound</button>
+        <button type="submit" name="action" value="Flyweight">Flyweight</button>
+        <button type="submit" name="action" value="Bantamweight">Bantamweight</button>
+        <button type="submit" name="action" value="Featherweight">Featherweight</button>
+        <button type="submit" name="action" value="Lightweight">Lightweight</button>
+        <button type="submit" name="action" value="Welterweight">Welterweight</button>
+        <button type="submit" name="action" value="Middleweight">Middleweight</button>
+        <button type="submit" name="action" value="LightHeavyweight">LightHeavyweight</button>
+        <button type="submit" name="action" value="Heavyweight">Heavyweight</button>
+    </form>
+</div>
+
+<div>
+    <h2>{{chosen_class}}</h2>
+
+    <div class="fighter-grid">
+        {% for fighter in fighters %}
+            <a href="/fighter/{{fighter['fighter_id']}}" class="fighter-card">
+                <img src="{{fighter['picture']}}" alt="pic not found">
+                <div class="fighter-name">{{fighter['name']}}</div>
+                <div class="fighter-elo">ELO: {{fighter['elo']}}</div>
             </a>
-            {% endfor %}
-        </div>
+        {% endfor %}
     </div>
+</div>
+
+<script>
+// Toggle dark mode
+const darkModeToggle = document.getElementById('darkModeToggle');
+
+function enableDarkMode(enable) {
+    if(enable) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+    } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+    }
+}
+
+// Check saved preference on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if(darkMode === 'true') {
+        enableDarkMode(true);
+    }
+});
+
+darkModeToggle.addEventListener('click', () => {
+    const isDark = document.body.classList.contains('dark-mode');
+    enableDarkMode(!isDark);
+});
+</script>
 
 {% endblock %}

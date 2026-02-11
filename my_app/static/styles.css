@@ -21,3 +21,26 @@ nav .navbar-brand .green
 {
     color: #2e944b;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown {
+    width: 300px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+ul li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+ul li:hover {
+    background: #eee;
+}
+
+

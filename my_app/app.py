@@ -6,7 +6,7 @@ from my_app.utilities import login_required, apology
 import sqlite3 as sq
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, date
-from my_app.utilities import get_upcoming_events_list, get_upcoming_event_info, get_completed_event_info
+from my_app.utilities import *
 from my_app.plots import *
 # from my_app.analysis import elo_analysis, career_analysis, fight_analysis
 from my_app.analysis import *
@@ -72,7 +72,7 @@ def index():
 @app.route('/roster', methods=['GET', 'POST'])
 def roster():
     default_weight, default_country, default_team = ('', '', '')
-    db = get_db_no_row()
+    conn, db = get_db()
     countries = [row[0] for row in db.execute('select distinct country from fighters').fetchall()]
     teams = [row[0] for row in db.execute('select distinct team from fighters').fetchall()]
     fighters = []
@@ -89,7 +89,7 @@ def roster():
         if team == default_team:
             team = None
 
-        query = 'select fighter_id, name from fighters'
+        query = 'select * from fighters'
         filters = []
         answers = []
 
@@ -159,9 +159,82 @@ def fights(sub):
 
     return render_template('fights.html', events=rows, upcoming_events=upcoming_events, sub=sub, fights=fights)
 
-@app.route('/match-ups')
+@app.route('/match-ups', methods=["GET", "POST"])
 def match_ups():
-    return render_template('match_ups.html')
+    # I ALREADY MADE ALL OF THIS BUT I JUST USED AI TO CLEAN IT UP
+    conn, db = get_db()
+    all_fighters = get_all_fighters(db)
+    fighter_names = [row['name'] for row in all_fighters]
+
+    # Default fighters
+    default_fighter1 = 'khabib nurmagomedov'
+    default_fighter2 = 'conor mcgregor'
+
+    # Function to get all the data for a given pair of fighters
+    def get_fight_data(fighter1_name, fighter2_name):
+        fighter_bio_1, fighter_bio_2 = get_two_fighters(fighter1_name, fighter2_name, db)
+        fighter_data_1 = get_fighter_data(fighter_bio_1['id'], db)
+        fighter_data_2 = get_fighter_data(fighter_bio_2['id'], db)
+
+
+        strike_fig, grappling_fig, career_fig = plot_mergers(fighter_bio_1['id'], fighter_bio_2['id'], db)
+        heat1, heat2 = (
+            strike_heatmap(fighter_bio_1['id'], db).to_html(full_html=False),
+            strike_heatmap(fighter_bio_2['id'], db).to_html(full_html=False)
+        )
+
+        comparison_strike_plot, _ = comparison_plot(fighter_bio_1['id'], fighter_bio_2['id'], db, compare_type="striking")
+        comparison_grappling_plot, _ = comparison_plot(fighter_bio_1['id'], fighter_bio_2['id'], db, compare_type="grappling")
+        comparison_career_plot, career_data  = comparison_plot(fighter_bio_1['id'], fighter_bio_2['id'], db, compare_type="career")
+
+        compare_plots = [
+            comparison_strike_plot.to_html(full_html=False),
+            comparison_grappling_plot.to_html(full_html=False),
+            comparison_career_plot.to_html(full_html=False)
+        ]
+
+        global_scores = [
+            get_global_score(db, fighter_bio_1['id']),
+            get_global_score(db, fighter_bio_2['id'])
+        ]
+
+        career_data = career_data_cleaner(career_data)
+
+        return (
+            fighter_bio_1, fighter_bio_2,
+            fighter_data_1, fighter_data_2,
+            strike_fig, grappling_fig, career_fig,
+            heat1, heat2,
+            compare_plots, career_data,
+            global_scores
+        )
+
+    # Start with default matchup
+    fighter_bio_1, fighter_bio_2, fighter_data_1, fighter_data_2, strike_fig, grappling_fig, career_fig, \
+    heat1, heat2, compare_plots, career_data, global_scores = get_fight_data(default_fighter1, default_fighter2)
+
+    # Try POST data if available
+    if request.method == 'POST':
+        try:
+            fighter1 = request.form.get("fighter1", default_fighter1)
+            fighter2 = request.form.get("fighter2", default_fighter2)
+            fighter_bio_1, fighter_bio_2, fighter_data_1, fighter_data_2, strike_fig, grappling_fig, career_fig, \
+            heat1, heat2, compare_plots, career_data, global_scores = get_fight_data(fighter1, fighter2)
+        except Exception as e:
+            # If any exception occurs, fallback to default fighters (already loaded above)
+            flash("This fighter either doesn't have registered stats in espn or he/she doesn't exist")
+            pass
+
+    return render_template(
+        'match_ups.html', names=fighter_names,
+        fighter_1=fighter_bio_1, fighter_2=fighter_bio_2,
+        fighter_data_1=fighter_data_1, fighter_data_2=fighter_data_2,
+        strike_fig=strike_fig, grappling_fig=grappling_fig, career_fig=career_fig,
+        heat1=heat1, heat2=heat2, compare_plots=compare_plots,
+        career_data=career_data, global_scores=global_scores
+    )
+
+
 
 @app.route('/predictions')
 def predictions():
@@ -264,8 +337,8 @@ def rankings():
     fighters = []
     action = None
     # chosen_class = None
-    original_query = 'Select f.fighter_id, f.name, e.elo from fighters f join elo e on f.fighter_id = e.fighter_id'
-    query = 'Select f.fighter_id, f.name, e.elo from fighters f join elo e on f.fighter_id = e.fighter_id'
+    original_query = 'Select f.fighter_id, f.name, f.picture, e.elo from fighters f join elo e on f.fighter_id = e.fighter_id'
+    query = 'Select f.fighter_id, f.name, f.picture, e.elo from fighters f join elo e on f.fighter_id = e.fighter_id'
     answers = []
     if request.method == "POST":
         action = request.form.get('action')

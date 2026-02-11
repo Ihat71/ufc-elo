@@ -7,6 +7,7 @@ from pathlib import Path
 from PIL import Image
 import numpy as np
 import plotly.graph_objects as go
+from my_app.analysis import get_scaled_attributes
 
 db_path = Path(__file__).parent.parent / 'data' / 'testing.db'
 
@@ -126,10 +127,12 @@ def strike_heatmap(fighter_id, db, normalize=True):
 
     stats = db.execute(
         f"""
-        SELECT sdhl, sdbl, sdll, sdh_acc, sdb_acc, sdl_acc
-        FROM aggregate_striking
-        WHERE fighter_id = {fighter_id}
-        """
+        SELECT s.sdhl, s.sdbl, s.sdll, s.sdh_acc, s.sdb_acc, s.sdl_acc, f.name
+        FROM aggregate_striking s
+        JOIN fighters f
+        ON s.fighter_id = f.fighter_id
+        WHERE s.fighter_id = ?
+        """, (fighter_id,)
     ).fetchone()
 
     if stats is None:
@@ -169,7 +172,7 @@ def strike_heatmap(fighter_id, db, normalize=True):
     ))
 
     fig.update_layout(
-        title=f"Strike Targeting Heatmap (Fighter {fighter_id})",
+        title=f"Strike Targeting Heatmap (Fighter {stats['name']})",
         xaxis_showgrid=False,
         yaxis_showgrid=False,
         xaxis_visible=False,
@@ -182,11 +185,11 @@ def strike_heatmap(fighter_id, db, normalize=True):
 
 def career_plot(fighter_id, db):
     
-  stats = db.execute('''select g.wrestling, g.bjj, g.striking, g.gnp, c.career_score, g.global_rating_scaled, g.global_rating from aggregate_global g join aggregate_career c on g.fighter_id = c.fighter_id where g.fighter_id = ?''', (fighter_id,)).fetchone()
+  stats = db.execute('''select g.wrestling, g.bjj, g.striking, g.gnp, c.career_score, g.global_rating_scaled, g.global_rating, s.true_ko_power_scaled as ko_power from aggregate_global g join aggregate_career c on g.fighter_id = c.fighter_id join aggregate_striking s on g.fighter_id = s.fighter_id where g.fighter_id = ?''', (fighter_id,)).fetchone()
   
   df = pd.DataFrame(dict(
-    r=[round(stats['wrestling']), round(stats['bjj']), round(stats['striking']), round(stats['gnp']), round(stats['career_score'])],
-    theta=['Wrestling', 'BJJ', 'Striking', 'GNP', 'Career']
+    r=[round(stats['wrestling']), round(stats['bjj']), round(stats['ko_power']), round(stats['striking']), round(stats['gnp']), round(stats['career_score'])],
+    theta=['Wrestling', 'BJJ', 'X Factor Power', 'Striking', 'GNP', 'Career']
       )
     )
     
@@ -199,6 +202,128 @@ def career_plot(fighter_id, db):
       )
   
   return fig
+
+def comparison_plot(fighter1, fighter2, db, compare_type="striking"):
+    
+    import plotly.graph_objects as go
+
+    categories_dict = {
+        'striking': ['ss_acc', 'true_ko_power', 'tsl_pm', 'leg_kicks', 'str_def'],
+        'grappling': ['td_def', 'tk_acc', 'td_pm', 'control_pm', 'subs_pm', 'sub_attempts_faced_pm', 'gnp_pm'],
+    }
+
+    fighters = {}
+    list_of_features = []
+    query = None
+
+    if compare_type == "career":
+        fighters['fighter1_weak'] = get_scaled_attributes(best=False, db=db, fighter_id=fighter1, quantity=3)
+        fighters['fighter2_weak'] = get_scaled_attributes(best=False, db=db, fighter_id=fighter2, quantity=3)
+
+        fighters['fighter1_strength'] = get_scaled_attributes(best=True, db=db, fighter_id=fighter1, quantity=3)
+        fighters['fighter2_strength'] = get_scaled_attributes(best=True, db=db, fighter_id=fighter2, quantity=3)
+
+        for _, val in fighters.items():
+            for key, _ in val.items():
+                list_of_features.append(key.replace('_scaled', ''))
+
+        list_of_features = list(set(list_of_features))
+        elements = ', '.join(list_of_features)
+
+        query = (
+            'select ' + elements + ', opp_avg_elo '
+            'from aggregate_striking s '
+            'join aggregate_grappling g on s.fighter_id = g.fighter_id '
+            'join aggregate_clinching c on s.fighter_id = c.fighter_id '
+            'where s.fighter_id = ?'
+        )
+
+
+    if compare_type not in ['striking', 'grappling', 'career']:
+        return None
+
+
+    if not query:
+        list_of_features = categories_dict[compare_type]
+        elements = ', '.join(list_of_features)
+        query = f'select {elements} from aggregate_{compare_type} where fighter_id = ?'
+
+    f1 = db.execute(query, (fighter1,)).fetchone()
+    f2 = db.execute(query, (fighter2,)).fetchone()
+
+    if not (f1 and f2):
+        return None
+
+    fighter1_values = list(dict(f1).values())
+    fighter2_values = list(dict(f2).values())
+
+    # making the visual scaling independant 
+    scaled_f1 = []
+    scaled_f2 = []
+
+    for v1, v2 in zip(fighter1_values, fighter2_values):
+        max_val = max(abs(v1), abs(v2))
+
+        if max_val == 0:
+            scaled_f1.append(0)
+            scaled_f2.append(0)
+        else:
+            scaled_f1.append(v1 / max_val)
+            scaled_f2.append(v2 / max_val)
+
+    fighter1_plot = [-v for v in scaled_f1]
+    fighter2_plot = scaled_f2
+
+    # making the stats human readable
+    readable_stats = []
+
+    for stat in list_of_features:
+        label = stat
+
+        label = label.replace("ss", "significant strike")
+        label = label.replace("tsl", "total strikes landed")
+        label = label.replace("_pm", " / minute")
+        label = label.replace("_", " ")
+        label = label.replace("opp", 'opponent')
+        
+
+        label = label.title()
+
+        readable_stats.append(label)
+
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        y=readable_stats,
+        x=fighter1_plot,
+        name="Fighter 1",
+        orientation="h",
+        marker_color="blue",
+        text=[round(v, 3) for v in fighter1_values],
+        textposition="inside"
+    ))
+
+    fig.add_trace(go.Bar(
+        y=readable_stats,
+        x=fighter2_plot,
+        name="Fighter 2",
+        orientation="h",
+        marker_color="purple",
+        text=[round(v, 3) for v in fighter2_values],
+        textposition="inside"
+    ))
+
+    fig.update_layout(
+        barmode="relative",
+        title="Fighter Comparison",
+        xaxis=dict(range=[-1, 1])
+    )
+
+    fig.update_yaxes(autorange="reversed")
+
+    return fig, fighters
+
 
 
 # conn = sq.connect(db_path)

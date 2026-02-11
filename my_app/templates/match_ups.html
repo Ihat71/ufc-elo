@@ -5,17 +5,349 @@
 {% endblock %}
 
 {% block main %}
-<div align="left">
 
+<style>
+:root {
+    --fighter1-color: #1976d2;
+    --fighter2-color: #7b1fa2;
+}
 
-</div>
+.fighter-blue {
+    color: var(--fighter1-color);
+}
+.fighter-purple {
+    color: var(--fighter2-color);
+}
 
-<div align="center">
+.fighter-blue img {
+    border: 4px solid var(--fighter1-color);
+}
+.fighter-purple img {
+    border: 4px solid var(--fighter2-color);
+}
 
-</div>
+.matchup-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 60px auto;
+    gap: 40px;
+}
 
-<div align="right">
-    
-</div>
+.fighter-column {
+    flex: 1;
+    position: relative;
+    text-align: center;
+}
+
+.fighter-column img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.fighter-column input {
+    width: 90%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+.dropdown ul {
+    position: absolute;
+    width: 90%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    list-style: none;
+    padding: 0;
+    margin-top: 2px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.dropdown li {
+    padding: 8px;
+    cursor: pointer;
+}
+.dropdown li:hover {
+    background: #f0f0f0;
+}
+
+.vs-box {
+    flex: 2;
+}
+
+.vs-nav {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.vs-nav button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background: #f5f5f5;
+    cursor: pointer;
+}
+
+.vs-nav button.active {
+    background: #d32f2f;
+    color: white;
+    border-color: #b71c1c;
+}
+
+.vs-nav button:hover:not(.active) {
+    background: #e0e0e0;
+}
+
+.vs-content-wrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.vs-content {
+    display: none;
+    padding: 10px;
+}
+
+.vs-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.vs-content table th,
+.vs-content table td {
+    padding: 6px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.submit-area {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.submit-area button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #d32f2f;
+    color: white;
+    cursor: pointer;
+}
+
+.submit-area button:hover {
+    background: #b71c1c;
+}
+
+.heatmaps {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.overall-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.overall-column {
+    flex: 1;
+}
+
+.overall-column ul {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+</style>
+
+<form method="POST" action="/match-ups">
+    <div class="matchup-container">
+
+        <!-- Fighter 1 -->
+        <div class="fighter-column dropdown fighter-blue">
+            {% if fighter_1['picture'] %}
+                <img src="{{ fighter_1['picture'] }}">
+            {% endif %}
+            <h3><a href="/fighter/{{ fighter_1.id }}">{{ fighter_1.name }}</a></h3>
+
+            <input type="text" id="search1" name="fighter1"
+                   value="{{ fighter1_input or fighter_1.name }}"
+                   oninput="filterList('search1', 'results1')" autocomplete="off">
+            <ul id="results1"></ul>
+
+            <div class="fighter-stats">
+                {% for key, val in fighter_1.items() %}
+                    {% if key != 'id' and key != 'picture' and key != 'name' %}
+                        <p><strong>{{ key|capitalize }}:</strong> {{ val }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Center tabs -->
+        <div class="vs-box">
+            <div class="vs-nav">
+                <button type="button" class="vs-tab active" onclick="switchTab('table', event)">Table</button>
+                <button type="button" class="vs-tab" onclick="switchTab('striking', event)">Striking</button>
+                <button type="button" class="vs-tab" onclick="switchTab('grappling', event)">Grappling</button>
+                <button type="button" class="vs-tab" onclick="switchTab('overall', event)">Overall</button>
+            </div>
+
+            <div class="vs-content-wrapper">
+                <!-- Table tab -->
+                <div id="table-tab" class="vs-content" style="display:block;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="fighter-blue">{{ fighter_1.name }}</th>
+                                <th>STAT</th>
+                                <th class="fighter-purple">{{ fighter_2.name }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, val in fighter_data_1.items() %}
+                                <tr>
+                                    <td class="fighter-blue">{{ val }}</td>
+                                    <td>{{ key|capitalize }}</td>
+                                    <td class="fighter-purple">{{ fighter_data_2[key] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Striking tab -->
+                <div id="striking-tab" class="vs-content">
+                    {{strike_fig | safe}}
+                    <div class="heatmaps">
+                        {{heat1 | safe}}
+                        {{heat2 | safe}}
+                    </div>
+                    <div>
+                        {{compare_plots[0] | safe}}
+                    </div>
+                </div>
+
+                <!-- Grappling tab -->
+                <div id="grappling-tab" class="vs-content">
+                    {{grappling_fig | safe}}
+                    <div>
+                        {{compare_plots[1] | safe}}
+                    </div>
+                </div>
+
+                <!-- Overall tab -->
+                <div id="overall-tab" class="vs-content">
+                    {{career_fig | safe}}
+                    <div class="overall-container">
+                        <!-- Fighter 1 -->
+                        <div class="overall-column fighter-blue">
+                            <h3>{{fighter_1.name}}</h3>
+                            <h3>Score: {{global_scores[0]['global_rating_scaled'] | round(0)}}</h3>
+                            <p>Strengths</p>
+                            <ul>
+                                {% for key, val in career_data['fighter1_strength'].items() %}
+                                    <li>{{key}} : {{val}}</li>
+                                {% endfor %}
+                            </ul>
+                            <p>Weaknesses</p>
+                            <ul>
+                                {% for key, val in career_data['fighter1_weak'].items() %}
+                                    <li>{{key}} : {{val}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- Fighter 2 -->
+                        <div class="overall-column fighter-purple">
+                            <h3>{{fighter_2.name}}</h3>
+                            <h3>Score: {{global_scores[1]['global_rating_scaled'] | round(0)}}</h3>
+                            <p>Strengths</p>
+                            <ul>
+                                {% for key, val in career_data['fighter2_strength'].items() %}
+                                    <li>{{key}} : {{val}}</li>
+                                {% endfor %}
+                            </ul>
+                            <p>Weaknesses</p>
+                            <ul>
+                                {% for key, val in career_data['fighter2_weak'].items() %}
+                                    <li>{{key}} : {{val}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        {{compare_plots[2] | safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fighter 2 -->
+        <div class="fighter-column dropdown fighter-purple">
+            {% if fighter_2['picture'] %}
+                <img src="{{ fighter_2['picture'] }}">
+            {% endif %}
+            <h3><a href="/fighter/{{ fighter_2.id }}">{{ fighter_2.name }}</a></h3>
+
+            <input type="text" id="search2" name="fighter2"
+                   value="{{ fighter2_input or fighter_2.name }}"
+                   oninput="filterList('search2', 'results2')" autocomplete="off">
+            <ul id="results2"></ul>
+
+            <div class="fighter-stats">
+                {% for key, val in fighter_2.items() %}
+                    {% if key != 'id' and key != 'picture' and key != 'name' %}
+                        <p><strong>{{ key|capitalize }}:</strong> {{ val }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-area">
+        <button type="submit">Compare Fighters</button>
+    </div>
+</form>
+
+<script>
+const fighters = JSON.parse('{{ names | tojson | safe }}');
+
+function filterList(inputId, resultsId) {
+    const input = document.getElementById(inputId).value.toLowerCase();
+    const results = document.getElementById(resultsId);
+    results.innerHTML = "";
+    if (!input) return;
+
+    const matches = fighters.filter(name => name.toLowerCase().includes(input)).slice(0, 15);
+    matches.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        li.onclick = () => {
+            document.getElementById(inputId).value = name;
+            results.innerHTML = "";
+        };
+        results.appendChild(li);
+    });
+}
+
+function switchTab(tabId, event) {
+    document.querySelectorAll('.vs-content').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.vs-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId + '-tab').style.display = 'block';
+    if(event) event.currentTarget.classList.add('active');
+}
+</script>
 
 {% endblock %}

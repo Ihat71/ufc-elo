@@ -5,7 +5,7 @@ import sqlite3 as sq
 from datetime import datetime
 import logging
 from elo import get_dates, to_table_date, elo_equation, elo_history_table
-from scraper import get_espn_stats
+from scraper import get_espn_stats, get_espn_ids
 from db_setup import get_column_query
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from selenium import webdriver
@@ -14,7 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import random, time
-
+from analysis import *
 
 db_path = (Path(__file__).parent).parent / "data" / "testing.db"
 events_url = "http://ufcstats.com/statistics/events/completed?page=all"
@@ -57,11 +57,14 @@ def update_events():
         
         return event_list
 
-def get_fighter(name):
+def get_fighter(name, conn):
+    cursor = conn.cursor()
     first_name, last_name = name.split(" ", 1)
     last_name_letter = last_name[0]
     url = f"http://ufcstats.com/statistics/fighters?char={last_name_letter}&page=all"
     page = requests.get(url)
+    seen_ids = cursor.execute('select distinct fighter_id from advanced_striking;').fetchall()
+
     if page.status_code == 200:
         soup = BeautifulSoup(page.text, "html.parser")
         tbody = soup.find("tbody")
@@ -105,26 +108,31 @@ def get_fighter(name):
                 belt = "--"
             break
         
-        with sq.connect(db_path) as conn:
-            cursor = conn.cursor()
 
-            cursor.execute("insert into fighters (name, height, weight, reach, stance, wins, losses, draws, champ_status, url) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-                                (name, height, 
-                                            weight, reach, stance, wins
-                                                    , losses, draws, belt, fighter_url))
-            conn.commit()
+        cursor.execute("insert into fighters (name, height, weight, reach, stance, wins, losses, draws, champ_status, url) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+                            (name, height, 
+                                        weight, reach, stance, wins
+                                                , losses, draws, belt, fighter_url))
 
-def put_elo(name):
-    with sq.connect(db_path) as conn:
-        cursor = conn.cursor()
-        fighter_id = cursor.execute('select fighter_id from fighters where name = ?', (name,)).fetchone()
-        cursor.execute('insert into elo (fighter_id) values (?)', (fighter_id[0],))
         conn.commit()
+
+        new_id = cursor.execute('select fighter_id from fighters where name = ?', (name,)).fetchone()
+        if new_id:
+            url, _ = get_espn_ids(seen_ids, (new_id, name))
+            return url
+
+
+def put_elo(name, conn):
+    cursor = conn.cursor()
+    fighter_id = cursor.execute('select fighter_id from fighters where name = ?', (name,)).fetchone()
+    cursor.execute('insert into elo (fighter_id) values (?)', (fighter_id[0],))
+    conn.commit()
 
     
         
 def update_records_and_fights():
     event_list = update_events()
+    event_list = sorted(event_list, key=lambda x: x[1])
     with sq.connect(db_path) as conn:
         cursor = conn.cursor()
         for url, date in event_list:
@@ -152,12 +160,12 @@ def update_records_and_fights():
                 logger.info(f"Processing fight: {fighter_a} vs {fighter_b}")
 
                 if not cursor.execute('select * from fighters where name = ?', (fighter_a,)).fetchone():
-                    get_fighter(fighter_a)
-                    put_elo(fighter_a)
+                    new_url_a = get_fighter(fighter_a, conn)
+                    put_elo(fighter_a, conn)
                     logger.info(f'put into fighters and elo table the new fighter {fighter_a}')
                 if not cursor.execute('select * from fighters where name = ?', (fighter_b,)).fetchone():
-                    get_fighter(fighter_b)
-                    put_elo(fighter_b)
+                    new_url_b = get_fighter(fighter_b, conn)
+                    put_elo(fighter_b, conn)
                     logger.info(f'put into fighters and elo table the new fighter {fighter_b}')
 
                 row = cursor.execute('select fighter_id from fighters where name = ?', (fighter_a,)).fetchone()
@@ -250,9 +258,9 @@ def update_records_and_fights():
 
                 #this is where the espn stats updater starts:
                 espn_url_a = cursor.execute('select espn_url from advanced_striking where fighter_id = ?;', (id_a,)).fetchone()
-                espn_url_a = espn_url_a[0] if espn_url_a else None
+                espn_url_a = espn_url_a[0] if espn_url_a else new_url_a
                 espn_url_b = cursor.execute('select espn_url from advanced_striking where fighter_id = ?;', (id_b,)).fetchone()
-                espn_url_b = espn_url_b[0] if espn_url_b else None
+                espn_url_b = espn_url_b[0] if espn_url_b else new_url_b
 
                 logger.debug('updating advanced stats now...')
                 if swapped == False:
@@ -272,35 +280,58 @@ def update_records_and_fights():
             # except Exception as e:
             #     logger.error(f"exception {e} happened when trying to access the urls for records and fights for url {url} in date {date}")
 
-def espn_update(url, id, name, date, conn):
-    date = date.replace('.', '')
-    cursor = conn.cursor()
-    # date = datetime.strptime(date, '%b %d, %Y')
-    # date = datetime.strftime(date, '%b %d, %Y')
-    striking, clinch, ground, status = get_espn_stats(url, name)
 
-    stats_dict = {'advanced_striking':striking, 'advanced_clinch':clinch, 'advanced_ground':ground}
+def espn_update(url, id, name, date, conn):
+    """
+    Updates ESPN stats for a fighter for a given date.
+    
+    date: str, format e.g. "Feb. 14, 2023" (from your DB)
+    """
+    cursor = conn.cursor()
+    # Convert incoming date to datetime object
+    try:
+        fight_date = datetime.strptime(date, "%b. %d, %Y")
+    except ValueError:
+        # fallback if month doesn't have a dot
+        fight_date = datetime.strptime(date, "%b %d, %Y")
+    
+    striking, clinch, ground, status = get_espn_stats(url, name)
+    stats_dict = {'advanced_striking': striking, 'advanced_clinch': clinch, 'advanced_ground': ground}
+
     found = False
     for table, stats in stats_dict.items():
         for fights in stats.values():
             for fight in fights:
-                if fight.get('date') == date:
+                # Convert fight date from ESPN into datetime too
+                espn_date_str = fight.get('date')
+                if not espn_date_str:
+                    continue
+                try:
+                    espn_date = datetime.strptime(espn_date_str, "%b. %d, %Y")
+                except ValueError:
+                    try:
+                        espn_date = datetime.strptime(espn_date_str, "%b %d, %Y")
+                    except ValueError:
+                        logger.warning(f"Could not parse ESPN date: {espn_date_str}")
+                        continue
+
+                if espn_date == fight_date:
                     logger.info('fight found')
                     column_query, values = get_column_query(fight)
                     query = f'insert into {table} {column_query} values {values}'
-                    #last minute check
+                    # clean up '-' values
                     for key in fight:
-                        #im adding .strip just in case
-                        if fight[f'{key}'] and fight[f'{key}'].strip() == '-':
-                            fight[f'{key}'] = None
-                    # print('step 3')
+                        if fight[key] and fight[key].strip() == '-':
+                            fight[key] = None
                     params = (id, url, *fight.values())
                     cursor.execute(query, params)
-                    logger.info(f'successfully insterted into the table {table} the stats {fight} for {name}')
+                    logger.info(f'successfully inserted into {table} the stats {fight} for {name}')
                     found = True
                     break
-    if found == False:
+
+    if not found:
         logger.info('fight not found')
+
 
 
 #yes I plugged in my previous update advanced stats function to cloud sonnet and copied its reviewd version, however
@@ -478,7 +509,7 @@ def update_fighters(espn_url, fighter_name, fighter_id):
     return (fighter_pic, country, birthdate, team)
 
 
-def update_fighters_threaded(type):
+def update_fighters_profile_threaded(type):
     '''type 1 does a general update while type 2 does an update only to the fighters that werent covered the first time'''
     with sq.connect(db_path) as conn:
         cursor = conn.cursor()
@@ -644,11 +675,44 @@ def all_fighters_gctrl():
             )
         conn.commit()
 
+def update_individual_fighter_aggregate_stats(fighter_id, db, conn):
+    name = db.execute('select url, name from fighters where fighter_id = ?', (fighter_id,)).fetchone()
+    if not name:
+        logger.error(f'no fighter found with ID {fighter_id}')
+        return None
+    
+    control_time = get_ground_control(name['url'], name['name'], fighter_id)
+    db.execute(
+        'UPDATE advanced_stats SET control_time=? WHERE fighter_id=?',
+        (control_time, fighter_id)
+    )
+    total_analysis_update(fighter_id, name['name'], db, conn)
 
-# def main():
-#     #two things to fix: fetching fighters in update records and also the winner detection
-#     update_records_and_fights()
-#     update_advanced_stats()
+def update_fighters_aggregate_stats():
+    with sq.connect(db_path) as conn:
+        conn.row_factory = sq.Row
+        db = conn.cursor()
 
-# if __name__ == "__main__":
-#     main()
+        for fighter_id in fighters_updated:
+            update_individual_fighter_aggregate_stats(fighter_id, db, conn)
+
+def new_fighter_clean_up():
+    # for fighters who have a registered fighter id but not an espn url.
+    with sq.connect(db_path) as conn:
+        conn.row_factory = sq.Row
+        db = conn.cursor()
+
+        fighters = db.execute('select * from fighters where fighter_id NOT IN (select fighter_id from advanced_striking)').fetchall()
+
+        for fighter in fighters:
+            ...
+    
+
+
+#two things to fix: fetching fighters in update records and also the winner detection
+# update_events()
+# update_records_and_fights()
+# update_advanced_stats()
+# update_fighters_aggregate_stats()
+
+

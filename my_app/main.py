@@ -21,12 +21,12 @@ def setup():
     # advanced_espn_setup()
 
 def update():
-    # update_events()
     # update_records_and_fights()
     # update_advanced_stats()
+    # update_fighters_aggregate_stats()
     #update_fighters_threaded()
     # update_fighters_threaded(type=2)
-    all_fighters_gctrl()
+    # all_fighters_gctrl()
     ...
 def main():
     update()

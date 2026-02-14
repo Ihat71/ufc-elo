@@ -43,6 +43,52 @@ LEAGUE_AVGS = {
 PRIOR_ATTEMPTS = 50
 PRIOR_MINS = 20
 
+features = {
+    'striking': [
+                'ts_acc', 'ss_acc', 'sdh_acc', 'sdb_acc', 'sdl_acc', 'tsl', 'sdhl', 'sdbl', 'sdll',
+                'total_ssl_acc', 'total_ssa_percentage', 'kd_pm', 'tsl_pm',
+                'true_ko_power', 'avg_ko_opp_durability', 'avg_ko_opp_elo',
+                'SLpM', 'SApM', 'str_def', 'ko_pm',
+                'body_percentage', 'head_percentage', 'leg_percentage', 'effective_volume', 'leg_kicks', 'sig_acc'
+            ],
+    'clinching': [
+                'scbl', 'schl', 'scll', 'scb_acc', 'sch_acc', 'scl_acc', 'clinch_strikes_pm', 'effective_accuracy'
+            ],
+    'grappling': [
+                'tdl', 'tk_acc', 'sm', 'td_def', 'sub_avg', 'control_time', 'effective_takedowns',
+                'td_pm', 'effective_gnp', 'bjj_advances', 'effective_sub_threat', 'control_pm', 'td_pressure',
+                'effective_control', 'opp_avg_elo', 'subs_pm', 'sub_attempts_pm', 'bjj_defence', 'gnp_pm'
+            ],
+    'global': [
+                'wrestling_adj',
+                'bjj_adj',
+                'gnp_acj',
+                'striking_adj',
+                'global_rating'
+            ],
+    'career': [
+                'peak_elo',
+                'elo',
+                'highest_win_streak',
+                'min_maxed_peak_elo',
+                'min_maxed_win_elo',
+                'min_maxed_loss_elo',
+                'elo_score',
+                'fall_off_rate',
+                'title_score',
+                'win_score',
+                'finish_rate'
+            ]
+}
+
+art_style_high_low = {
+    'striking' : (0.96, 0.04),
+    'clinching' : (0.96, 0.04),
+    'grappling' : (0.99, 0.01),
+    'global' : (0.995, 0.005),
+    'career' : (0.9995, 0.0005)
+}
+
 def bayesian_shrinkage(
     values,
     minutes,
@@ -340,7 +386,7 @@ def global_rating(conn=None, id=None, career_hash=None):
 
     return df
 
-def career_ranking_analysis(conn, fighter_id):
+def career_ranking_analysis(conn=None, fighter_id=2373):
     conn.row_factory = sq.Row
     db = conn.cursor()
 
@@ -593,7 +639,15 @@ def fighter_striking_analysis(fighter_id, conn=None):
 
     percent_cols = ['body_percentage', 'head_percentage', 'leg_percentage', 'str_def']
 
-    df[percent_cols] = df[percent_cols].apply(lambda col: col.str.rstrip('%').astype(float) / 100)
+    for col in percent_cols:
+        df[col] = (
+            df[col]
+            .astype(str)              # force string
+            .str.replace('%', '', regex=False)
+            .replace('None', None)
+        )
+        df[col] = pd.to_numeric(df[col], errors='coerce') / 100
+
 
     #---- more accruate defense -----
     total_elo = 0
@@ -1042,6 +1096,8 @@ def total_fighting_analysis(art_style):
         conn.row_factory = sq.Row
         db = conn.cursor()
         fighters = db.execute('select DISTINCT a.fighter_id, f.name from advanced_clinch a join fighters f on a.fighter_id = f.fighter_id').fetchall()
+        features_to_scale = features[art_style]
+
 
         if art_style == 'striking':
             fighters_striking = []
@@ -1061,16 +1117,6 @@ def total_fighting_analysis(art_style):
 
             # print(league_avgs)
 
-
-            features_to_scale = [
-                'ts_acc', 'ss_acc', 'sdh_acc', 'sdb_acc', 'sdl_acc', 'tsl', 'sdhl', 'sdbl', 'sdll',
-                'total_ssl_acc', 'total_ssa_percentage', 'kd_pm', 'tsl_pm',
-                'true_ko_power', 'avg_ko_opp_durability', 'avg_ko_opp_elo',
-                'SLpM', 'SApM', 'str_def', 'ko_pm',
-                'body_percentage', 'head_percentage', 'leg_percentage', 'effective_volume', 'leg_kicks', 'sig_acc'
-            ]
-
-
             fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.04, up=0.96)
 
                     
@@ -1087,10 +1133,6 @@ def total_fighting_analysis(art_style):
             
             fighters_df = pd.concat(fighters_clinching).reset_index()
 
-            features_to_scale = [
-                'scbl', 'schl', 'scll', 'scb_acc', 'sch_acc', 'scl_acc', 'clinch_strikes_pm', 'effective_accuracy'
-            ]
-
             fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.04, up=0.96)
 
             fighters_df["Muay"] = 0.2 * fighters_df['clinch_strikes_pm_scaled'] + 0.8 * fighters_df['effective_accuracy_scaled']
@@ -1102,12 +1144,6 @@ def total_fighting_analysis(art_style):
                 fighters_grappling.append(grappling_df)      
             
             fighters_df = pd.concat(fighters_grappling).reset_index()
-
-            features_to_scale = [
-                'tdl', 'tk_acc', 'sm', 'td_def', 'sub_avg', 'control_time', 'effective_takedowns',
-                'td_pm', 'effective_gnp', 'bjj_advances', 'effective_sub_threat', 'control_pm', 'td_pressure',
-                'effective_control', 'opp_avg_elo', 'subs_pm', 'sub_attempts_pm', 'bjj_defence', 'gnp_pm'
-            ]
 
             fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.01, up=0.99)
 
@@ -1124,14 +1160,6 @@ def total_fighting_analysis(art_style):
                 global_fighters.append(global_df)      
             
             fighters_df = pd.concat(global_fighters).reset_index()
-
-            features_to_scale = [
-                'wrestling_adj',
-                'bjj_adj',
-                'gnp_acj',
-                'striking_adj',
-                'global_rating'
-            ]
 
             fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.005, up=0.995)
 
@@ -1150,20 +1178,6 @@ def total_fighting_analysis(art_style):
             
             fighters_df = pd.concat(fighter_career, ignore_index=True)
 
-            features_to_scale = [
-                'peak_elo',
-                'elo',
-                'highest_win_streak',
-                'min_maxed_peak_elo',
-                'min_maxed_win_elo',
-                'min_maxed_loss_elo',
-                'elo_score',
-                'fall_off_rate',
-                'title_score',
-                'win_score',
-                'finish_rate'
-            ]
-
             fighters_df = get_z_score(features_to_scale=features_to_scale, df=fighters_df, low=0.0005, up=0.9995)
 
             fighters_df['career_score'] = 0.65 * fighters_df['elo_score_scaled'] + 0.35 * fighters_df['win_score_scaled']
@@ -1175,6 +1189,7 @@ def total_fighting_analysis(art_style):
             fighters_df.loc[mask, 'career_score'] *= ( 1 + (fighters_df.loc[mask, 'title_score'] - 0.8) / ((3 - 0.8) * 3))
 
             fighters_df['career_score'] = fighters_df['career_score'].clip(upper=100)
+
 
 
 
@@ -1301,6 +1316,7 @@ def get_z_score(features_to_scale=None, df=None, low=None, up=None):
         iqr = q3 - q1
 
         if iqr == 0:
+            # this is why title score scaled is 50 for all fighters
             df[col + '_scaled'] = 50
             continue
 
@@ -1338,14 +1354,139 @@ def get_scaled_attributes(best=True, db=None, fighter_id = 2373, quantity=0):
 
     return sorted_dict
 
+def total_analysis_update(fighter_id, name, db, conn):
+    striking_df = fighter_striking_analysis(fighter_id, conn)
+    clinching_df = fighter_clinch_analysis(fighter_id=fighter_id, conn=conn)
+    grappling_df = fighter_grappling_analysis(fighter_id=fighter_id, name=name, conn=conn)
+    global_df = global_rating(conn, fighter_id)
+    career_df = career_ranking_analysis(conn, fighter_id)
+
+
+    df_list = {
+        'striking':striking_df, 
+        'clinching':clinching_df, 
+        'grappling':grappling_df, 
+        'global':global_df, 
+        'career':career_df
+    }
+
+    for key, fighter_df in df_list.items():
+        query = f'select * from aggregate_{key}'
+        total_df = pd.read_sql_query(query, con=conn)
+        features_to_scale = features[key]
+        high, low = art_style_high_low[key]
+        fighter_df = get_individual_z_score(features_to_scale, fighter_df, total_df, low, high)
+
+        if key == 'striking':
+            fighter_df['SApM_scaled'] = 100 - fighter_df['SApM_scaled']
+
+            fighter_df['Boxing'] = 0.35 * fighter_df['true_ko_power_scaled'] + 0.15 * fighter_df['effective_volume_scaled'] + 0.25 * fighter_df['str_def_scaled'] + 0.25 * fighter_df['SApM_scaled']
+            fighter_df['KickBoxing'] = 0.25 * fighter_df['true_ko_power_scaled'] + 0.15 * fighter_df['effective_volume_scaled'] + 0.20 * fighter_df['str_def_scaled'] + 0.10 * fighter_df['SApM_scaled'] + 0.30 * fighter_df['leg_kicks_scaled']
+        elif key == 'clinching':
+            fighter_df["Muay"] = 0.2 * fighter_df['clinch_strikes_pm_scaled'] + 0.8 * fighter_df['effective_accuracy_scaled']
+        elif key == 'grappling':
+            fighter_df["Wrestling"] = 0.34 * fighter_df['effective_takedowns_scaled'] + 0.33 * fighter_df['effective_control_scaled'] + 0.33 * fighter_df['td_def_scaled']
+            fighter_df["BJJ"] = 0.7 * fighter_df['effective_sub_threat_scaled'] + 0.3 * fighter_df['bjj_defence_scaled']
+            fighter_df['GNP'] = fighter_df['effective_gnp_scaled'] 
+        elif key == 'career':
+            fighter_df['career_score'] = 0.65 * fighter_df['elo_score_scaled'] + 0.35 * fighter_df['win_score_scaled']
+
+            fighter_df['career_score'] *= fighter_df['fall_off_penalty']
+
+            mask = fighter_df['title_score'] > 0.8
+
+            fighter_df.loc[mask, 'career_score'] *= ( 1 + (fighter_df.loc[mask, 'title_score'] - 0.8) / ((3 - 0.8) * 3))
+
+            fighter_df['career_score'] = fighter_df['career_score'].clip(upper=100)
+        
+        logger.info(f'successfully updated the aggregate data for {fighter_id}')
+
+        update_sql_table_dynamic(fighter_df, f'aggregate_{key}', 'fighter_id', conn)
+
+def get_individual_z_score(
+    features_to_scale=None,
+    fighter_df=None,
+    total_df=None,
+    low=None,
+    up=None
+):
+    """
+    Compute scaled z-scores for individual fighters using
+    population statistics.
+
+    features_to_scale : columns to scale
+    fighter_df        : dataframe containing fighter(s) to transform
+    total_df          : full population dataframe (reference distribution)
+    low               : lower quantile clip (ex: 0.02)
+    up                : upper quantile clip (ex: 0.98)
+    """
+
+    for col in features_to_scale:
+
+        # --- Population distribution ---
+        series = total_df[col]
+
+        # --- Same logic as your original function ---
+        median = series.median()
+        q1 = series.quantile(0.25)
+        q3 = series.quantile(0.75)
+        iqr = q3 - q1
+
+        # Prevent divide-by-zero
+        if iqr == 0:
+            fighter_df[col + "_scaled"] = 50
+            continue
+
+        # --- Individual z-score (KEY CHANGE) ---
+        z = (fighter_df[col] - median) / iqr
+
+        # --- Compute clipping bounds from POPULATION ---
+        pop_z = (series - median) / iqr
+
+        lower_bound = pop_z.quantile(low)
+        upper_bound = pop_z.quantile(up)
+
+        z_clipped = z.clip(lower=lower_bound, upper=upper_bound)
+
+        # --- Map using population scale ---
+        scaled = (
+            (z_clipped - lower_bound)
+            / (upper_bound - lower_bound)
+        ) * 99 + 1
+
+        fighter_df[col + "_scaled"] = scaled.round(2)
+
+    return fighter_df
+
+def update_sql_table_dynamic(df, table_name, id_col, conn):
+    """
+    Updates multiple columns in a SQL table dynamically from a dataframe.
+    
+    df        : DataFrame with all data (including ID column)
+    table_name: SQL table to update
+    id_col    : column to match rows in SQL
+    conn      : sqlite3 connection
+    """
+    columns = [c for c in df.columns if c != id_col]  # exclude ID column
+    
+    # Build SET clause dynamically
+    set_clause = ", ".join([f"{col} = ?" for col in columns])
+    query = f"UPDATE {table_name} SET {set_clause} WHERE {id_col} = ?"
+    
+    # Prepare values for executemany
+    row = df.iloc[0]  # get the first (and only) row as a Series
+    values = tuple(row[col] for col in columns) + (row[id_col],)
+    
+    cursor = conn.cursor()
+    cursor.execute(query, values)
+    conn.commit()
 
 
 
-# total_fighting_analysis('grappling')
+
 # with sq.connect(db_path) as conn:
-#     # fighter_striking_analysis(2373, conn)
-#     # global_rating(conn=conn, id=1881)
-#     career_ranking_analysis(conn, 2373)
+#     for key, val in art_style_high_low.items():
+#         total_fighting_analysis(key)
 
 # total_fighting_analysis('career')
 

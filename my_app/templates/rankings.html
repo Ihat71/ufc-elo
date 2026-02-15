@@ -147,6 +147,7 @@ body.dark-mode a {
 
 <div class="ranking-buttons">
     <form action="/rankings" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" name="action" value="p4p">Pound-for-pound</button>
         <button type="submit" name="action" value="Flyweight">Flyweight</button>
         <button type="submit" name="action" value="Bantamweight">Bantamweight</button>

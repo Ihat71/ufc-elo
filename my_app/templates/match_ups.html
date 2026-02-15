@@ -172,6 +172,7 @@
 </style>
 
 <form method="POST" action="/match-ups">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="matchup-container">
 
         <!-- Fighter 1 -->

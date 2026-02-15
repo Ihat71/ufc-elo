@@ -46,6 +46,7 @@
     <div>
         <div>
             <form action="" method = "POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button name="action" value="career">Career</button>
             <button name="action" value="ranking">Ranking</button>
             <button name="action" value="striking">Striking</button>
@@ -375,6 +376,7 @@
                     </div>
 
                     <form id="numForm" method="POST" action="{{ url_for('fighter', id=id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <label for="num">Pick number of strengths/weaknesses:</label>
                         <input type="number" id="num" name="num" min="1" max="25" value="{{ quantity }}">
                         <button type="submit" name="action" value="overall">Submit</button>

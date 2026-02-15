@@ -1,6 +1,10 @@
 from flask import Flask, flash, redirect, render_template, request, session, g
 from flask_session import Session
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_wtf.csrf import CSRFProtect
 import logging
+import os
 from pathlib import Path
 from my_app.utilities import login_required, apology
 import sqlite3 as sq
@@ -10,13 +14,30 @@ from my_app.utilities import *
 from my_app.plots import *
 # from my_app.analysis import elo_analysis, career_analysis, fight_analysis
 from my_app.analysis import *
+from dotenv import load_dotenv
 
 #this is going to be the file for my website
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    # SESSION_COOKIE_SECURE=True,    
+    SESSION_COOKIE_SAMESITE="Lax"
+)
+
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-me")
+
+if not app.config["SECRET_KEY"]:
+    raise RuntimeError('SECRET_KEY not set!')
+
+limiter = Limiter(get_remote_address, app=app)
+limiter.init_app(app)
+
+csrf = CSRFProtect(app)
 # Custom filter
 # app.jinja_env.filters["usd"] = usd
 
@@ -43,19 +64,21 @@ def get_db():
     if "db" not in g:
         conn = sq.connect(db_path)
         conn.row_factory = sq.Row
+        g.conn = conn
         g.db = conn.cursor()
-    return conn, g.db
+    return g.conn, g.db
+
 
 def get_db_no_row():
-    if "db" not in g:
-        g.db = sq.connect(db_path)
-    return g.db
+    if "conn" not in g:
+        g.conn = sq.connect(db_path)
+    return g.conn
 
 @app.teardown_appcontext
 def close_db(error):
-    db = g.pop("db", None)
-    if db is not None:
-        db.close()
+    conn = g.pop("conn", None)
+    if conn is not None:
+        conn.close()
 
 @app.after_request
 def after_request(response):
@@ -66,10 +89,12 @@ def after_request(response):
     return response
 
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
 
 @app.route('/roster', methods=['GET', 'POST'])
+@login_required
 def roster():
     default_weight, default_country, default_team = ('', '', '')
     conn, db = get_db()
@@ -129,6 +154,7 @@ def roster():
 
 
 @app.route('/fights/<sub>/', methods=['GET', 'POST'])
+@login_required
 def fights(sub):
     conn, db = get_db()
     rows = []
@@ -151,6 +177,7 @@ def fights(sub):
             fights = get_completed_event_info(url=cursor[0]['event_url'])
             print('fights: ', fights)
         else:
+            upcoming_session = session.get('fights_upcoming', [])
             for event in session['fights_upcoming']:
                 if event['event_id'] == sub:
                     fights = get_upcoming_event_info(url=event['event_url'])
@@ -160,6 +187,7 @@ def fights(sub):
     return render_template('fights.html', events=rows, upcoming_events=upcoming_events, sub=sub, fights=fights)
 
 @app.route('/match-ups', methods=["GET", "POST"])
+@login_required
 def match_ups():
     # I ALREADY MADE ALL OF THIS BUT I JUST USED AI TO CLEAN IT UP
     conn, db = get_db()
@@ -237,10 +265,12 @@ def match_ups():
 
 
 @app.route('/predictions')
+@login_required
 def predictions():
     return render_template('predictions.html')
 
 @app.route("/login", methods=["GET", "POST"])
+@limiter.limit('5 per minute')
 def login():
     """Log user in"""
     conn, db = get_db()
@@ -251,11 +281,14 @@ def login():
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return apology("Invalid Credentials", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return apology("Invalid Credentials", 403)
+        
+        elif len(request.form.get("password")) < 8:
+            return apology("Password must be at least 8 characters long", 403)
 
         # Query database for username
         rows = db.execute(
@@ -266,11 +299,11 @@ def login():
         if len(rows) != 1 or not check_password_hash(
             rows[0]["hash"], request.form.get("password")
         ):
-            return apology("invalid username and/or password", 403)
+            return apology("Invalid Credentials", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-        session["username"] = request.form.get("username")
+        # session["username"] = request.form.get("username")
 
         # Redirect user to home page
         return redirect("/")
@@ -294,19 +327,22 @@ def register():
             return apology("Write a password!")
         elif password != confirmation:
             return apology("Wrong confirmation")
+        elif len(password) < 8:
+            return apology("Password should be at least 8 characters")
 
         try:
             db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, generate_password_hash(password)))
             conn.commit()
-        except ValueError:
+        except sq.IntegrityError:
             return apology("Already registered!")
     return render_template("register.html")
 
 @app.route('/search/', methods=['GET', 'POST'])
+@login_required
 def search():
     conn, db = get_db()
     fighters_list = []
-    fighter_search = request.args.get('query')
+    fighter_search = request.args.get('query', '')
     fighter_search_first_name = fighter_search + "%"
     fighter_search_last_name = "%" + fighter_search
     match_1 = db.execute('select * from fighters where name like ?', (fighter_search_first_name.lower().title().strip(),)).fetchall()
@@ -318,9 +354,9 @@ def search():
         elif match_2 and not match_1:
             fighters_list = match_2
         elif match_2 and match_1:
-            if len(match_1)>len(match_2):
+            if len(match_1) > len(match_2):
                 fighters_list = match_1
-            elif len(match_2)>=len(match_2):
+            elif len(match_2)>=len(match_1):
                 fighters_list = match_2
     else:
         # this is to make sure that if the search is only 1 letter long the searches are first name (starts from the first letter only) searches
@@ -332,6 +368,7 @@ def search():
     return render_template('search.html', matched_number = matches, fighters_list=fighters_list)
 
 @app.route('/rankings', methods=['GET', 'POST'])
+@login_required
 def rankings():
     conn, db = get_db()
     fighters = []
@@ -360,11 +397,14 @@ def rankings():
     return render_template('rankings.html', fighters=fighters, chosen_class=action)
 
 @app.route('/fighter/<id>', methods=['GET', 'POST'])
+@login_required
 def fighter(id):
     selection = 'career'
     quantity = 1
     conn, db = get_db()
     fighter = db.execute('select * from fighters where fighter_id = ?', (id,)).fetchall()
+    if fighter is None:
+        return apology('fighter not found')
     fighter = dict(fighter[0])
     fighter['birthday'] = date.today().year - datetime.strptime(fighter['birthday'], '%m/%d/%Y').year if fighter['birthday'] != None else None
 
@@ -408,6 +448,7 @@ def fighter(id):
                            strengths=strengths, quantity=quantity)
 
 @app.route('/versus/<fight_id>/', methods=['GET', 'POST'])
+@login_required
 def versus(fight_id):
     conn, db = get_db()
     fight = db.execute('select * from records where fight_id = ?', (fight_id,)).fetchone()
@@ -418,8 +459,9 @@ def versus(fight_id):
 
 
 @app.route('/logout')
+@login_required
 def logout():
     session.clear()
-    return redirect('/')
+    return redirect('/login')
 
 

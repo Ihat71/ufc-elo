@@ -155,9 +155,11 @@ def elo_history_table(fighter_ids, initial_ratings, new_ratings, winner, method,
 
 
 
-def main():
-    make_elo_table()
-    get_elo()
+# def main():
+#     make_elo_table()
+#     get_elo()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+import os
+print(os.environ.get("SECRET_KEY"))

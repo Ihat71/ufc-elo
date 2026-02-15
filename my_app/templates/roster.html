@@ -135,6 +135,7 @@ body.dark-mode a {
     <h1>Fighter Roster</h1>
 
     <form action="/roster" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div style="max-width: 400px; margin: 0 auto;">
             <h3>Fighter Categories</h3>
             <label for="weight_class">Categories</label>
